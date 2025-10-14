@@ -3,9 +3,14 @@ import NavbarComponent from './components/NavbarComponent.vue'
 </script>
 
 <template>
-  <NavbarComponent />
-
-  <router-view />
+  <div id="app">
+    <div class="bg-gradient"></div>
+    <div class="content-layer">
+      <NavbarComponent />
+      <router-view />
+    </div>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>
