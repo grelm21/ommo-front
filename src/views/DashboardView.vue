@@ -1,6 +1,8 @@
 <script setup>
+import { onMounted } from 'vue'
 import NamesForm from '../components/NamesForm.vue'
 import OptionsComponent from '../components/OptionsComponent.vue'
+
 </script>
 
 <template>

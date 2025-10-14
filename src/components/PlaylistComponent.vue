@@ -1,4 +1,13 @@
-<script setup></script>
+<script setup>
+import { onMounted } from 'vue'
+import { usePromiseStore } from '@/stores/promiseStore'
+
+const promiseStore = usePromiseStore()
+
+onMounted(async () => {
+  await promiseStore.fetchItems()
+})
+</script>
 
 <template>
   <div>
