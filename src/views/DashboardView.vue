@@ -33,7 +33,7 @@ import OptionsComponent from '../components/OptionsComponent.vue'
 .container-dash::before {
   content: "";
   position: absolute;
-  top: -15%;
+  top: -20%;
   left: -5%;
   right: -5%;
   bottom: -5%;
@@ -49,7 +49,7 @@ import OptionsComponent from '../components/OptionsComponent.vue'
 }
 .bg-heart {
   position: absolute;
-  top: 0;
+  top: -10%;
   left: 50%;
   transform: translateX(-50%);
   width: 45%;
