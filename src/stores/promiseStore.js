@@ -3,8 +3,10 @@ import axios from "@/services/api";
 
 export const usePromiseStore = defineStore("promiseStore", {
 	state: () => ({
-		items: [],
-		item: null,
+	  /** @type {PromiseItem[]} */
+		promises: [],
+		/** @type {PromiseItem} */
+		promise: null,
 		isLoading: true,
 		error: null,
 	}),
@@ -16,12 +18,11 @@ export const usePromiseStore = defineStore("promiseStore", {
 			return await axios
 				.get("/promises")
 				.then((response) => {
-					this.items = response.data;
-					this.item = this.items[0];
-					if (this.items.length === 0) {
+					this.promises = response.data;
+					if (this.promises.length === 0) {
 						this.error = "No promises found";
 					}
-					console.log(this.items);
+					console.log(this.promises);
 				})
 				.catch((err) => {
 					this.error = err;
