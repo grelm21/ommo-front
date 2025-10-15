@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
 import axios from "@/services/api";
 
-export const usePromiseStore = defineStore("promiseStore", {
+export const useContractStore = defineStore("contractStore", {
 	state: () => ({
-	  /** @type {PromiseItem[]} */
-		promises: [],
-		/** @type {PromiseItem} */
-		promise: null,
+	  /** @type {Contract[]} */
+		contracts: [],
+		/** @type {Contract | null} */
+		contract: null,
 		isLoading: true,
 		error: null,
 	}),
@@ -14,15 +14,12 @@ export const usePromiseStore = defineStore("promiseStore", {
 		// currentLocation: (state) => state.items[0] || null,
 	},
 	actions: {
-		async fetchItems() {
+		async createContract(contract) {
 			return await axios
-				.get("/promises")
+				.post("/contracts", contract)
 				.then((response) => {
-					this.promises = response.data;
-					if (this.promises.length === 0) {
-						this.error = "No promises found";
-					}
-					console.log(this.promises);
+					this.contract = response.data;
+					console.log(this.contract);
 				})
 				.catch((err) => {
 					this.error = err;
