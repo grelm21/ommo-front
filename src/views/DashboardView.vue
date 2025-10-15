@@ -3,8 +3,52 @@ import NamesForm from '../components/NamesForm.vue'
 import OptionsComponent from '../components/OptionsComponent.vue'
 import heart from '@/assets/heart-button.svg'
 import triangle from '@/assets/triangle.svg'
-</script>
+import audio from '@/assets/audio.svg'
+import audioVectors from '@/assets/audio-vectors.svg'
+import { onMounted, onUnmounted, ref } from 'vue'
+import TimerTitle from '@/components/icons/TimerTitle.vue'
 
+
+const targetDate = new Date('2025-11-11T00:00:00').getTime()
+const days = ref(0)
+const hours = ref(0)
+const minutes = ref(0)
+const seconds = ref(0)
+
+let timer = null
+
+const updateTimer = () => {
+  const now = new Date().getTime()
+  const distance = targetDate - now
+
+  if (distance < 0) {
+    // Если дата прошла
+    days.value = 0
+    hours.value = 0
+    minutes.value = 0
+    seconds.value = 0
+    clearInterval(timer)
+    return
+  }
+
+  // Расчет временных единиц
+  days.value = Math.floor(distance / (1000 * 60 * 60 * 24))
+  hours.value = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+  minutes.value = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+  seconds.value = Math.floor((distance % (1000 * 60)) / 1000)
+}
+
+onMounted(() => {
+  updateTimer() // Первый запуск сразу
+  timer = setInterval(updateTimer, 1000)
+})
+
+onUnmounted(() => {
+  if (timer) {
+    clearInterval(timer)
+  }
+})
+</script>
 <template>
   <div class="container-dash">
     <div class="text-effects-container">
@@ -45,23 +89,33 @@ import triangle from '@/assets/triangle.svg'
       <div class="content-wrapper">
         <img :src="triangle" class="triangle-img" />
 
-        <!-- Текст "Скоро премьера песни" -->
-        <h1 class="premiere-text">Скоро премьера песни</h1>
+        <h1 class="premiere-text russo-one-regular">Скоро премьера песни</h1>
 
-        <!-- Основной заголовок -->
         <div class="main-title-container">
-      <span class="main-title handjet-extra-bold">
-        ОММО-Страховка любви
-      </span>
+          <span class="main-title handjet-extra-bold">
+            ОММО-Страховка любви
+          </span>
           <span class="main-title-shadow handjet-extra-bold">
-        ОММО-Страховка любви
-      </span>
+            ОММО-Страховка любви
+          </span>
         </div>
       </div>
     </div>
 
-    <div>
+    <div class="timer-container" data-text="Премьера через:">
+      <TimerTitle class="w-[348px]" />
+      <span class="timer-text russo-one-regular">
+        {{ days }} д. {{ hours }} ч. {{ minutes }} м. {{ seconds }} с.
+      </span>
+      <div class="relative inline-block">
+        <!-- Контейнер для audio с отступами -->
+        <div class="pt-14 pl-8">
+          <img :src="audio" class="w-[280px] relative z-10" />
+        </div>
 
+        <!-- Audio vectors позиционируется относительно того же контейнера -->
+        <img :src="audioVectors" class="audio-vectors" />
+      </div>
     </div>
 
     <!-- Дата -->
@@ -70,13 +124,17 @@ import triangle from '@/assets/triangle.svg'
     </div>
 
     <!-- Кнопка -->
-    <div class="flex justify-end pr-96 bottom-0">
+    <div class="grid gap-y-5 justify-end pr-48">
       <button class="contract-button russo-one-regular">
         <span class="contract-button-inner">
           <img :src="heart" class="w-[32px]" />
           Подписать контракт любви
         </span>
       </button>
+      <span class="roboto-mono-regular text-white text-xl text-end">
+        Заполните контракт на страхование любви,<br />
+        поделитесь им в соцсетях
+      </span>
     </div>
   </div>
 
@@ -134,23 +192,16 @@ import triangle from '@/assets/triangle.svg'
   @apply relative min-h-96;
 }
 
+
 .triangle-img {
-  width: 520px;
-  margin: 0 auto;
-  display: block;
+  @apply block mx-auto w-[520px];
 }
 
 /* Текст "Скоро премьера песни" */
+
 .premiere-text {
-  font-family: 'Russo One', sans-serif;
-  font-size: 28px;
-  font-weight: 400;
-  line-height: 100%;
-  color: #fff;
-  margin: 0;
-  display: inline-block;
-  position: absolute;
-  top: 23%; /* Регулируйте положение */
+  @apply inline-block absolute text-white text-[28px] font-normal leading-[100%] m-0 z-10 whitespace-nowrap;
+  top: 23%;
   left: 50%;
   transform: translate(-48%, -50%) rotate(-3deg);
   filter: url('#textDistortion') url('#textStroke') drop-shadow(0 0 12px rgba(50, 63, 190, 0.7));
@@ -159,24 +210,18 @@ import triangle from '@/assets/triangle.svg'
     3px -3px 0 #202c97,
     -3px 3px 0 #202c97,
     3px 3px 0 #202c97;
-  z-index: 10;
-  white-space: nowrap; /* Запрет переноса строк */
 }
 
-/* Контейнер для основного заголовка */
 .main-title-container {
-  position: absolute;
-  top: 35%; /* Регулируйте положение ниже первого текста */
+  @apply absolute z-10 whitespace-nowrap;
+  top: 35%;
   left: 50%;
   transform: translate(-48%, -50%) rotate(-3deg);
-  z-index: 10;
-  white-space: nowrap; /* Запрет переноса строк */
   letter-spacing: 4px;
 }
 
-/* Главный заголовок */
 .main-title {
-  @apply text-[64px];
+  @apply relative block text-[64px];
   color: #00eeff;
   filter: url('#textDistortion');
   text-shadow:
@@ -185,21 +230,14 @@ import triangle from '@/assets/triangle.svg'
     -2px 2px 0 #525ed0,
     2px 2px 0 #525ed0,
     0 0 36px rgba(82, 94, 208, 0.9);
-  position: relative;
-  display: block;
 }
 
-/* Нижняя тень */
 .main-title-shadow {
-  @apply text-[64px];
-  position: absolute;
-  top: 1rem;
+  @apply absolute block text-[64px] w-full;
+  top: 0.7rem;
   left: 0.5rem;
-  color: #ff00f233;
-  opacity: 0.2;
+  color: rgba(255, 0, 242, 0.3);
   z-index: -1;
-  display: block;
-  width: 100%;
 }
 
 /* Кнопка подписания контракта */
@@ -222,5 +260,28 @@ import triangle from '@/assets/triangle.svg'
   width: 0;
   height: 0;
   visibility: hidden;
+}
+.timer-text {
+  @apply rotate-[-3deg] text-[40px] z-50 pl-8 m-0 leading-[100%] whitespace-nowrap;
+  font-family: 'Russo One', sans-serif;
+  font-weight: 400;
+  background-image:
+    url('@/assets/noise.svg'),
+    linear-gradient(90deg, rgba(255, 255, 255, 1), rgba(201, 223, 246, 1));
+  background-repeat: repeat, no-repeat;
+  background-position: center;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 12px rgba(7, 98, 209, 0.5));
+}
+
+.timer-container {
+  @apply absolute flex flex-col m-0 top-[7%] left-[53%] leading-[100%];
+}
+
+.audio-vectors {
+  @apply absolute w-[750px] top-[60%] left-[37%] transform -translate-x-1/2 -translate-y-1/2 z-0;
+  transform: translate(-50%, -50%) scale(1.6);
 }
 </style>
