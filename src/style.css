@@ -98,21 +98,10 @@
   }
 
   .contract-button {
-    /* Кнопка подписать контракт */
-    /*width: 491px;*/
-    /*height: 85px;*/
-    /* Автолейаут */
-    /*display: flex;*/
-    /*flex-direction: row;*/
-    /*justify-content: center;*/
-    /*align-items: center;*/
-    /*gap: 12px;*/
-    /*padding: 28px 52px 28px 52px;*/
     border-radius: 12px;
     box-shadow: 0px 0px 16px 0px rgba(184, 93, 191, 1);
     background: linear-gradient(135.00deg, rgba(128.39578247070312, 43.329383850097656, 134.47198486328125, 1),rgba(117.07401275634766, 17.51943588256836, 47.38581085205078, 1) 100%);
 
-    /* Для фильтра шума */
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -132,10 +121,9 @@
     background: url('@/assets/noise.svg');
     pointer-events: none;
     mix-blend-mode: multiply;
-    z-index: 5; /* Поверх фона, но под контентом */
+    z-index: 5;
   }
 
-  /* Скрытый SVG с фильтром */
   .noise-filter {
     position: absolute;
     width: 0;
@@ -143,6 +131,5 @@
     opacity: 0;
     pointer-events: none;
   }
-  /* Контент кнопки должен быть выше шума */
 
 }
