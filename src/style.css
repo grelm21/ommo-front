@@ -1,8 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
+
+  .russo-one-regular {
+    font-family: "Russo One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
 
   html, body {
     @apply m-0 p-0;
@@ -88,4 +96,53 @@
       }
     }
   }
+
+  .contract-button {
+    /* Кнопка подписать контракт */
+    /*width: 491px;*/
+    /*height: 85px;*/
+    /* Автолейаут */
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*gap: 12px;*/
+    /*padding: 28px 52px 28px 52px;*/
+    border-radius: 12px;
+    box-shadow: 0px 0px 16px 0px rgba(184, 93, 191, 1);
+    background: linear-gradient(135.00deg, rgba(128.39578247070312, 43.329383850097656, 134.47198486328125, 1),rgba(117.07401275634766, 17.51943588256836, 47.38581085205078, 1) 100%);
+
+    /* Для фильтра шума */
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+  }
+
+  /* Псевдоэлемент с фильтром шума поверх всей кнопки */
+  .contract-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: url('@/assets/noise.svg');
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    z-index: 5; /* Поверх фона, но под контентом */
+  }
+
+  /* Скрытый SVG с фильтром */
+  .noise-filter {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+  /* Контент кнопки должен быть выше шума */
+
 }

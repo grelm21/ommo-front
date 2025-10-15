@@ -20,17 +20,16 @@ const openTelegram = () => {
 
 <template>
   <div
-    class="flex justify-between font-bold h-[100px] items-center px-96 sticky top-0 shadow-md z-50">
+    class="flex justify-between font-bold h-[100px] items-center px-64 sticky top-0 z-50">
     <div class="inline-flex flex-0 items-center gap-4 col-span-11">
       <img :src="logo" class="h-[80px] w-[100px]" />
-      <span>Премьера песни "Контракт любви" 10.11.2025</span>
     </div>
     <div class="flex gap-8">
-      <button class="flex items-center justify-end h-[40px] w-[40px]" type="button" @click="openVk">
-        <VkIcon />
-      </button>
       <button class="flex items-center justify-end h-[40px] w-[40px]" type="button" @click="openYouTube">
         <YouTubeIcon />
+      </button>
+      <button class="flex items-center justify-end h-[40px] w-[40px]" type="button" @click="openVk">
+        <VkIcon />
       </button>
       <button class="flex items-center justify-end h-[40px] w-[40px]" type="button" @click="openTelegram">
         <TelegramIcon />

@@ -2,7 +2,7 @@
 import { onMounted } from 'vue'
 import NamesForm from '../components/NamesForm.vue'
 import OptionsComponent from '../components/OptionsComponent.vue'
-
+import heart from '@/assets/heart-button.svg'
 </script>
 
 <template>
@@ -14,7 +14,15 @@ import OptionsComponent from '../components/OptionsComponent.vue'
       песни подтвердите договор и послушайте новый змечательный трек от нашей группы
     </div>
     <div class="flex justify-center w-full">
-      <img src="@/assets/song_date.svg" class="w-[50%] pt-32" />
+      <img src="@/assets/song_date.svg" class="w-[75%] pt-32" />
+    </div>
+    <div class="absolute right-96 bottom-0">
+      <button class="contract-button font-bold text-white text-[24px] russo-one-regular">
+        <span class="flex justify-center items-center gap-3 py-7 px-14">
+          <img :src="heart" class="w-[32px]" />
+          Подписать контракт любви
+        </span>
+      </button>
     </div>
   </div>
 
@@ -31,7 +39,7 @@ import OptionsComponent from '../components/OptionsComponent.vue'
 }
 
 .container-dash::before {
-  content: "";
+  content: '';
   position: absolute;
   top: -20%;
   left: -5%;
@@ -47,12 +55,13 @@ import OptionsComponent from '../components/OptionsComponent.vue'
 .stick {
   @apply sticky top-[65px];
 }
+
 .bg-heart {
   position: absolute;
-  top: -10%;
+  top: -15%;
   left: 50%;
   transform: translateX(-50%);
-  width: 45%;
+  width: 74%;
   height: auto;
   aspect-ratio: 1 / 1;
   background-image: url('@/assets/bg-heart.svg');
@@ -63,6 +72,4 @@ import OptionsComponent from '../components/OptionsComponent.vue'
   z-index: -1;
   opacity: 0.8;
 }
-
-
 </style>
