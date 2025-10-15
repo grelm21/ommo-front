@@ -3,6 +3,49 @@ import NamesForm from '../components/NamesForm.vue'
 import OptionsComponent from '../components/OptionsComponent.vue'
 import heart from '@/assets/heart-button.svg'
 import triangle from '@/assets/triangle.svg'
+import { onMounted, onUnmounted, ref } from 'vue'
+import TimerTitle from '@/components/icons/TimerTitle.vue'
+
+
+const targetDate = new Date('2025-11-11T00:00:00').getTime()
+const days = ref(0)
+const hours = ref(0)
+const minutes = ref(0)
+const seconds = ref(0)
+
+let timer = null
+
+const updateTimer = () => {
+  const now = new Date().getTime()
+  const distance = targetDate - now
+
+  if (distance < 0) {
+    // Если дата прошла
+    days.value = 0
+    hours.value = 0
+    minutes.value = 0
+    seconds.value = 0
+    clearInterval(timer)
+    return
+  }
+
+  // Расчет временных единиц
+  days.value = Math.floor(distance / (1000 * 60 * 60 * 24))
+  hours.value = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+  minutes.value = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+  seconds.value = Math.floor((distance % (1000 * 60)) / 1000)
+}
+
+onMounted(() => {
+  updateTimer() // Первый запуск сразу
+  timer = setInterval(updateTimer, 1000)
+})
+
+onUnmounted(() => {
+  if (timer) {
+    clearInterval(timer)
+  }
+})
 </script>
 
 <template>
@@ -60,8 +103,11 @@ import triangle from '@/assets/triangle.svg'
       </div>
     </div>
 
-    <div>
-
+    <div class="timer-container" data-text="Премьера через:">
+      <TimerTitle class="w-[348px]" />
+      <span class="timer-text">
+        {{ days }} д. {{ hours }} ч. {{ minutes }} м. {{ seconds }} с.
+      </span>
     </div>
 
     <!-- Дата -->
@@ -222,5 +268,29 @@ import triangle from '@/assets/triangle.svg'
   width: 0;
   height: 0;
   visibility: hidden;
+}
+
+.timer-text {
+  @apply rotate-[-3deg] text-[40px] z-50 pl-8;
+  font-family: 'Russo One', sans-serif;
+  font-weight: 400;
+  line-height: 100%;
+  margin: 0;
+  background-image:
+    url('@/assets/noise.svg'),
+    linear-gradient(90deg, rgba(255, 255, 255, 1), rgba(201, 223, 246, 1));
+  background-repeat: repeat, no-repeat;
+  background-position: center;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 12px rgba(7, 98, 209, 0.5));
+  z-index: 50; /* Повышаем z-index для основного текста */
+  white-space: nowrap;
+}
+
+
+.timer-container {
+  @apply absolute flex flex-col m-0 top-[7%] left-[53%] leading-[100%];
 }
 </style>
