@@ -1,31 +1,43 @@
 <script setup>
-import logo from '@/assets/logo.jpeg'
+import logo from '@/assets/logo-no-bg.svg'
 import PlaylistComponent from './PlaylistComponent.vue'
+import VkIcon from '@/components/icons/VkIcon.vue'
+import YouTubeIcon from '@/components/icons/YouTubeIcon.vue'
+import NoteIcon from '@/components/icons/NoteIcon.vue'
+import TelegramIcon from '@/components/icons/TelegramIcon.vue'
+
+const openYouTube = () => {
+  window.open('https://youtube.com/@ommo_ommo_ommo?si=WaPUf-Z6CVzSkuv', '_blank');
+};
+const openVk = () => {
+  window.open('https://vk.com/club232985627', '_blank');
+};
+const openTelegram = () => {
+  window.open('https://t.me/OMMO_spb', '_blank');
+};
+
 </script>
 
 <template>
   <div
-    class="grid grid-cols-12 font-bold h-[72px] items-center px-5 sticky top-0 shadow-md z-50">
+    class="flex justify-between font-bold h-[100px] items-center px-64 sticky top-0 z-50">
     <div class="inline-flex flex-0 items-center gap-4 col-span-11">
-      <img :src="logo" class="h-[50px] w-[50px]" />
-      <span>Премьера песни "Контракт любви" 10.11.2025</span>
+      <img :src="logo" class="h-[80px] w-[100px]" />
     </div>
-    <button class="flex items-center justify-end" type="button" data-dropdown-toggle="dropdown">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="32"
-        height="32"
-        fill="currentColor"
-        class="bi bi-music-note-beamed"
-        viewBox="0 0 16 16"
-      >
-        <path
-          d="M6 13c0 1.105-1.12 2-2.5 2S1 14.105 1 13s1.12-2 2.5-2 2.5.896 2.5 2m9-2c0 1.105-1.12 2-2.5 2s-2.5-.895-2.5-2 1.12-2 2.5-2 2.5.895 2.5 2"
-        />
-        <path fill-rule="evenodd" d="M14 11V2h1v9zM6 3v10H5V3z" />
-        <path d="M5 2.905a1 1 0 0 1 .9-.995l8-.8a1 1 0 0 1 1.1.995V3L5 4z" />
-      </svg>
-    </button>
+    <div class="flex gap-8">
+      <button class="flex items-center justify-end h-[40px] w-[40px]" type="button" @click="openYouTube">
+        <YouTubeIcon />
+      </button>
+      <button class="flex items-center justify-end h-[40px] w-[40px]" type="button" @click="openVk">
+        <VkIcon />
+      </button>
+      <button class="flex items-center justify-end h-[40px] w-[40px]" type="button" @click="openTelegram">
+        <TelegramIcon />
+      </button>
+      <button class="flex items-center justify-end text-[#B06FFF] h-[40px] w-[40px]" type="button" data-dropdown-toggle="dropdown">
+       <NoteIcon />
+      </button>
+    </div>
     <div
       id="dropdown"
       class="z-10 hidden divide-y divide-gray-100 shadow-sm dark:bg-gray-700"
