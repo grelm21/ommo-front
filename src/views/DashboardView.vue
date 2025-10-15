@@ -120,11 +120,15 @@ onUnmounted(() => {
 
     <!-- Дата -->
     <div class="flex justify-center w-full">
-      <img src="@/assets/song_date.svg" class="w-[75%]" />
+      <img src="@/assets/song_date.svg" class="w-[75%] relative z-10" />
+      <div class="w-[15%] absolute flex justify-center gap-36">
+        <img src="@/assets/left-note.svg" class="" />
+        <img src="@/assets/right-note.svg" class="" />
+      </div>
     </div>
 
     <!-- Кнопка -->
-    <div class="grid gap-y-5 justify-end pr-48">
+    <div class="grid gap-y-5 justify-end pr-48 mt-8">
       <button class="contract-button russo-one-regular">
         <span class="contract-button-inner">
           <img :src="heart" class="w-[32px]" />
