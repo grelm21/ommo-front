@@ -55,13 +55,22 @@
     pointer-events: none;
   }
 
-  .bg-grid {
-    position: fixed;
-    inset: 0;
-    background-image: url('@/assets/grid-tile.svg');
-    background-size: 80px 80px;
-    background-repeat: repeat;
+  .bg-stars {
+    position: absolute;
+    inset: 5%;
+    background-image: url('@/assets/bg-stars.svg');
+    background-repeat: no-repeat;
     pointer-events: none;
+    z-index: 2;
+  }
+
+  .bg-vectors {
+    position: absolute;
+    inset: 0;
+    background: url('@/assets/bg-vectors.svg');
+    background-size: contain;
+    pointer-events: none;
+    z-index: 1;
   }
 
   .content-layer {

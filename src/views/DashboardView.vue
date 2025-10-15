@@ -176,7 +176,7 @@ onUnmounted(() => {
   transform: translateX(-50%);
   width: 70%;
   aspect-ratio: 1 / 1;
-  background: url('@/assets/bg-heart.svg') center/contain no-repeat;
+  background: url('@/assets/bg-heart.svg')  center/contain no-repeat;
   opacity: 0.8;
   z-index: -1;
   pointer-events: none;
