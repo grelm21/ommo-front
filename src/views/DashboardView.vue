@@ -140,6 +140,9 @@ onUnmounted(() => {
         поделитесь им в соцсетях
       </span>
     </div>
+    <div class="arrow">
+      <img src="@/assets/arrow-string.svg" class="" />
+    </div>
   </div>
 
   <div class="stick flex w-full justify-center mt-4">
@@ -162,7 +165,7 @@ onUnmounted(() => {
   top: -20%;
   left: -5%;
   right: -5%;
-  bottom: -5%;
+  bottom: -15%;
   background-image: url('@/assets/grid-tile.svg');
   background-size: 80px 80px;
   background-repeat: repeat;
@@ -214,6 +217,13 @@ onUnmounted(() => {
     3px -3px 0 #202c97,
     -3px 3px 0 #202c97,
     3px 3px 0 #202c97;
+}
+
+.arrow {
+  @apply absolute;
+  bottom: -10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .main-title-container {
