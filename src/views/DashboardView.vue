@@ -120,11 +120,15 @@ onUnmounted(() => {
 
     <!-- Дата -->
     <div class="flex justify-center w-full">
-      <img src="@/assets/song_date.svg" class="w-[75%]" />
+      <img src="@/assets/song_date.svg" class="w-[75%] relative z-10" />
+      <div class="w-[15%] absolute flex justify-center gap-36">
+        <img src="@/assets/left-note.svg" class="" />
+        <img src="@/assets/right-note.svg" class="" />
+      </div>
     </div>
 
     <!-- Кнопка -->
-    <div class="grid gap-y-5 justify-end pr-48">
+    <div class="grid gap-y-5 justify-end pr-48 mt-8">
       <button class="contract-button russo-one-regular">
         <span class="contract-button-inner">
           <img :src="heart" class="w-[32px]" />
@@ -135,6 +139,9 @@ onUnmounted(() => {
         Заполните контракт на страхование любви,<br />
         поделитесь им в соцсетях
       </span>
+    </div>
+    <div class="arrow">
+      <img src="@/assets/arrow-string.svg" class="" />
     </div>
   </div>
 
@@ -158,7 +165,7 @@ onUnmounted(() => {
   top: -20%;
   left: -5%;
   right: -5%;
-  bottom: -5%;
+  bottom: -15%;
   background-image: url('@/assets/grid-tile.svg');
   background-size: 80px 80px;
   background-repeat: repeat;
@@ -176,7 +183,7 @@ onUnmounted(() => {
   transform: translateX(-50%);
   width: 70%;
   aspect-ratio: 1 / 1;
-  background: url('@/assets/bg-heart.svg') center/contain no-repeat;
+  background: url('@/assets/bg-heart.svg')  center/contain no-repeat;
   opacity: 0.8;
   z-index: -1;
   pointer-events: none;
@@ -210,6 +217,13 @@ onUnmounted(() => {
     3px -3px 0 #202c97,
     -3px 3px 0 #202c97,
     3px 3px 0 #202c97;
+}
+
+.arrow {
+  @apply absolute;
+  bottom: -10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .main-title-container {
