@@ -6,6 +6,7 @@ import NavbarComponent from './components/NavbarComponent.vue'
   <div id="app">
     <div class="bg-gradient bg-stars"></div>
     <div class="bg-vectors"></div>
+    <div class="bg-grid"></div>
     <div class="content-layer">
       <NavbarComponent />
       <router-view />

@@ -25,24 +25,15 @@ const openTelegram = () => {
       <img :src="logo" class="h-[80px] w-[100px]" />
     </div>
     <div class="flex gap-8">
-      <button class="flex items-center justify-end h-[40px] w-[40px]" type="button" @click="openYouTube">
+      <button class="flex items-center justify-end h-[40px] w-[40px] hover-scale" type="button" @click="openYouTube">
         <YouTubeIcon />
       </button>
-      <button class="flex items-center justify-end h-[40px] w-[40px]" type="button" @click="openVk">
+      <button class="flex items-center justify-end h-[40px] w-[40px] hover-scale" type="button" @click="openVk">
         <VkIcon />
       </button>
-      <button class="flex items-center justify-end h-[40px] w-[40px]" type="button" @click="openTelegram">
+      <button class="flex items-center justify-end h-[40px] w-[40px] hover-scale" type="button" @click="openTelegram">
         <TelegramIcon />
       </button>
-      <button class="flex items-center justify-end text-[#B06FFF] h-[40px] w-[40px]" type="button" data-dropdown-toggle="dropdown">
-       <NoteIcon />
-      </button>
-    </div>
-    <div
-      id="dropdown"
-      class="z-10 hidden divide-y divide-gray-100 shadow-sm dark:bg-gray-700"
-    >
-      <PlaylistComponent />
     </div>
   </div>
 
