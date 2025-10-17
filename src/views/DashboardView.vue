@@ -7,7 +7,8 @@ import audio from '@/assets/audio.svg'
 import audioVectors from '@/assets/audio-vectors.svg'
 import { onMounted, onUnmounted, ref } from 'vue'
 import TimerTitle from '@/components/icons/TimerTitle.vue'
-
+import NoteIcon from '@/components/icons/NoteIcon.vue'
+import PlaylistComponent from '@/components/PlaylistComponent.vue'
 
 const targetDate = new Date('2025-11-11T00:00:00').getTime()
 const days = ref(0)
@@ -36,6 +37,32 @@ const updateTimer = () => {
   hours.value = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
   minutes.value = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
   seconds.value = Math.floor((distance % (1000 * 60)) / 1000)
+}
+
+const namesFormRef = ref(null)
+
+const scrollToNamesForm = () => {
+  if (namesFormRef.value) {
+    const element = namesFormRef.value
+
+    // Добавляем класс для подсветки
+    element.classList.add('highlight-form')
+
+    // Точное центрирование
+    const elementRect = element.getBoundingClientRect()
+    const absoluteElementTop = elementRect.top + window.pageYOffset
+    const middle = absoluteElementTop - (window.innerHeight / 2) + (elementRect.height / 1.5)
+
+    window.scrollTo({
+      top: middle,
+      behavior: 'smooth'
+    })
+
+    // Убираем подсветку через 2 секунды
+    setTimeout(() => {
+      element.classList.remove('highlight-form')
+    }, 2000)
+  }
 }
 
 onMounted(() => {
@@ -92,12 +119,8 @@ onUnmounted(() => {
         <h1 class="premiere-text russo-one-regular">Скоро премьера песни</h1>
 
         <div class="main-title-container">
-          <span class="main-title handjet-extra-bold">
-            ОММО-Страховка любви
-          </span>
-          <span class="main-title-shadow handjet-extra-bold">
-            ОММО-Страховка любви
-          </span>
+          <span class="main-title handjet-extra-bold"> ОММО-Страховка любви </span>
+          <span class="main-title-shadow handjet-extra-bold"> ОММО-Страховка любви </span>
         </div>
       </div>
     </div>
@@ -110,17 +133,23 @@ onUnmounted(() => {
       <div class="relative inline-block">
         <!-- Контейнер для audio с отступами -->
         <div class="pt-14 pl-8">
-          <img :src="audio" class="w-[280px] relative z-10" />
-        </div>
+          <div class="w-[280px]">
+            <img :src="audio" class="relative"/>
 
-        <!-- Audio vectors позиционируется относительно того же контейнера -->
-        <img :src="audioVectors" class="audio-vectors" />
+            <button
+              class="absolute left-44 top-36 transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-500 ease-in-out hover:scale-125 z-50"
+              type="button"
+              data-dropdown-toggle="dropdown">
+              <NoteIcon class="w-[70px]" />
+            </button>
+          </div>
+          <img :src="audioVectors" class="audio-vectors" />
+        </div>
       </div>
     </div>
-
     <!-- Дата -->
     <div class="flex justify-center w-full">
-      <img src="@/assets/song_date.svg" class="w-[75%] relative z-10" />
+      <img src="@/assets/premier-date.svg" class="w-[72%] relative z-10" />
       <div class="w-[15%] absolute flex justify-center gap-36">
         <img src="@/assets/left-note.svg" class="" />
         <img src="@/assets/right-note.svg" class="" />
@@ -129,7 +158,7 @@ onUnmounted(() => {
 
     <!-- Кнопка -->
     <div class="grid gap-y-5 justify-end pr-48 mt-8">
-      <button class="contract-button russo-one-regular">
+      <button class="contract-button russo-one-regular" @click="scrollToNamesForm">
         <span class="contract-button-inner">
           <img :src="heart" class="w-[32px]" />
           Подписать контракт любви
@@ -145,11 +174,15 @@ onUnmounted(() => {
     </div>
   </div>
 
-  <div class="stick flex w-full justify-center mt-4">
+  <div ref="namesFormRef" class="flex w-full justify-center mt-10">
     <NamesForm />
   </div>
 
   <OptionsComponent />
+
+  <div id="dropdown" class="z-25 hidden divide-y divide-gray-100 shadow-sm dark:bg-gray-700">
+    <PlaylistComponent />
+  </div>
 </template>
 
 <style scoped>
@@ -166,7 +199,7 @@ onUnmounted(() => {
   left: -5%;
   right: -5%;
   bottom: -15%;
-  background-image: url('@/assets/grid-tile.svg');
+  //background-image: url('@/assets/grid-tile.svg');
   background-size: 80px 80px;
   background-repeat: repeat;
   background-position: center;
@@ -183,12 +216,11 @@ onUnmounted(() => {
   transform: translateX(-50%);
   width: 70%;
   aspect-ratio: 1 / 1;
-  background: url('@/assets/bg-heart.svg')  center/contain no-repeat;
+  background: url('@/assets/bg-heart.svg') center/contain no-repeat;
   opacity: 0.8;
   z-index: -1;
   pointer-events: none;
 }
-
 
 /* Треугольник сверху */
 .text-effects-container {
@@ -198,7 +230,6 @@ onUnmounted(() => {
 .content-wrapper {
   @apply relative min-h-96;
 }
-
 
 .triangle-img {
   @apply block mx-auto w-[520px];
@@ -254,19 +285,12 @@ onUnmounted(() => {
   z-index: -1;
 }
 
-/* Кнопка подписания контракта */
-.contract-button {
-  @apply font-bold text-white text-[24px] bg-transparent transition-transform hover:scale-105;
-}
-
 .contract-button-inner {
   @apply flex justify-center items-center gap-3 py-7 px-14;
 }
 
 /* Липкий контейнер под формой */
-.stick {
-  @apply sticky top-[65px];
-}
+
 
 /* SVG с фильтрами скрыт визуально, но остаётся в DOM */
 .filter-svg {
@@ -275,8 +299,9 @@ onUnmounted(() => {
   height: 0;
   visibility: hidden;
 }
+
 .timer-text {
-  @apply rotate-[-3deg] text-[40px] z-50 pl-8 m-0 leading-[100%] whitespace-nowrap;
+  @apply -rotate-3 text-[40px] z-50 pl-8 m-0 leading-[100%] whitespace-nowrap;
   font-family: 'Russo One', sans-serif;
   font-weight: 400;
   background-image:
@@ -291,11 +316,63 @@ onUnmounted(() => {
 }
 
 .timer-container {
-  @apply absolute flex flex-col m-0 top-[7%] left-[53%] leading-[100%];
+  @apply absolute grid m-0 top-[7%] left-[53%] leading-[100%];
 }
 
 .audio-vectors {
   @apply absolute w-[750px] top-[60%] left-[37%] transform -translate-x-1/2 -translate-y-1/2 z-0;
   transform: translate(-50%, -50%) scale(1.6);
+}
+.highlight-form {
+  position: relative;
+  /* Фиксируем размеры */
+  width: 100%;
+  height: 100%;
+}
+
+.highlight-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(7, 98, 209, 0.3) 0%,
+    rgba(176, 111, 255, 0.1) 40%,
+    transparent 70%
+  );
+  opacity: 0;
+  z-index: -1;
+  border-radius: 10px;
+  animation: gradient-pulse 4s ease-in-out;
+  /* Важно: не влияет на размеры */
+  transform: translateZ(0);
+  pointer-events: none;
+}
+
+
+@keyframes gradient-pulse {
+  0% {
+    opacity: 0;
+    transform: translateZ(0) scale(0.95);
+  }
+  25% {
+    opacity: 0.8;
+    transform: translateZ(0) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateZ(0) scale(1.05);
+  }
+  75% {
+    opacity: 0.8;
+    transform: translateZ(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateZ(0) scale(0.95);
+  }
 }
 </style>

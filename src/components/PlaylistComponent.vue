@@ -14,8 +14,8 @@ onMounted(async () => {
     <iframe
       frameborder="0"
       allow="clipboard-write"
-      style="border: none; width: 614px; height: 556px"
-      width="614"
+      style="border: none; width: 400px; height: 556px"
+      width="400"
       height="556"
       src="https://music.yandex.ru/iframe/playlist/PortGrad/1002"
       >Слушайте

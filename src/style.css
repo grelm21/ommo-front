@@ -82,6 +82,20 @@
     z-index: 1;
   }
 
+  .bg-grid {
+    position: absolute;
+    top: -20%;
+    left: -5%;
+    right: -5%;
+    bottom: -15%;
+    background-image: url('@/assets/grid-tile.svg');
+    background-size: 80px 80px;
+    background-repeat: repeat;
+    background-position: center;
+    z-index: 0;
+    pointer-events: none;
+  }
+
   .content-layer {
     position: relative;
     z-index: 10;
@@ -133,6 +147,7 @@
   }
 
   .contract-button {
+    @apply font-bold text-white text-[24px] bg-transparent transition-transform duration-500 ease-in-out hover:scale-110;
     border-radius: 12px;
     box-shadow: 0px 0px 16px 0px rgba(184, 93, 191, 1);
     background: linear-gradient(135.00deg, rgba(128.39578247070312, 43.329383850097656, 134.47198486328125, 1),rgba(117.07401275634766, 17.51943588256836, 47.38581085205078, 1) 100%);
@@ -141,6 +156,10 @@
     overflow: hidden;
     cursor: pointer;
     border: none;
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-500 ease-in-out hover:scale-110 hover:drop-shadow-[0_0_12px_rgba(50,63,190,0.9)];
   }
 
   /* Псевдоэлемент с фильтром шума поверх всей кнопки */
