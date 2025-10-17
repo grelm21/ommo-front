@@ -1,5 +1,5 @@
 <script setup>
-import NamesForm from '../components/NamesForm.vue'
+import FormComponent from '../components/FormComponent.vue'
 import OptionsComponent from '../components/OptionsComponent.vue'
 import heart from '@/assets/heart-button.svg'
 import triangle from '@/assets/triangle.svg'
@@ -146,7 +146,7 @@ onUnmounted(() => {
   </div>
 
   <div class="stick flex w-full justify-center mt-4">
-    <NamesForm />
+    <FormComponent />
   </div>
 
   <OptionsComponent />
