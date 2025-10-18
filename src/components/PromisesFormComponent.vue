@@ -35,7 +35,7 @@ onMounted(async () => {
           <!--   autocomplete="off" -->
           <!--   placeholder="Имя" -->
           <!-- /> -->
-          <DropDown :options="promises" v-model="partnerOne" />
+          <DropDown :options="promiseStore.promisesWithImages" v-model="partnerOne" />
         </div>
       </div>
       <div class="flex w-full justify-center items-center mt-[8px]">
@@ -46,7 +46,7 @@ onMounted(async () => {
           contractStore.partner_two.name || 'Имя партнера'
         }}</lable>
         <div class="input-wrapper">
-          <DropDown :options="promises" v-model="partnerTwo" />
+          <DropDown :options="promiseStore.promisesWithImages" v-model="partnerTwo" />
         </div>
       </div>
     </div>
