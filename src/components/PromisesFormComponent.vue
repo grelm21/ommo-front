@@ -1,36 +1,52 @@
-<script setup></script>
+<script setup>
+import { onMounted } from 'vue'
+import { ref } from 'vue'
+import { useContractStore } from '@/stores/contractStore'
+const contractStore = useContractStore()
+import { usePromiseStore } from '@/stores/promiseStore'
+const promiseStore = usePromiseStore()
+
+import DropDown from '@/components/elements/DropDown.vue'
+
+const promises = ref([])
+const partnerOne = ref('')
+const partnerTwo = ref('')
+
+onMounted(async () => {
+  await promiseStore.fetchItems()
+  promises.value = promiseStore.promises
+})
+</script>
 
 <template>
-  <form class="flex flex-col w-full items-center justify-center">
+  <form class="flex flex-col w-full items-center justify-center" @submit.prevent="handleSubmit">
     <div class="name-inputs">
-      <div class="title-placeholder handjet-normal">Введите ваши имена</div>
+      <div class="title-placeholder handjet-normal">Выберите пункты договора</div>
       <div>
-        <lable for="partnerOne" class="input-label handjet-normal">Ваше имя</lable>
+        <lable for="partnerOne" class="input-label handjet-normal">{{
+          contractStore.partner_one.name || 'Ваше имя'
+        }}</lable>
         <div class="input-wrapper">
-          <input
-            id="partnerOne"
-            v-model="partnerOne"
-            type="text"
-            class="caveat-bold"
-            autocomplete="off"
-            placeholder="Имя"
-          />
+          <!-- <input -->
+          <!--   id="partnerOne" -->
+          <!--   v-model="partnerOne" -->
+          <!--   type="text" -->
+          <!--   class="caveat-bold" -->
+          <!--   autocomplete="off" -->
+          <!--   placeholder="Имя" -->
+          <!-- /> -->
+          <DropDown :options="promises" v-model="partnerOne" />
         </div>
       </div>
       <div class="flex w-full justify-center items-center mt-[8px]">
         <img src="@/assets/plus.svg" class="flex w-[32px] text-center" />
       </div>
       <div>
-        <lable for="partnerTwo" class="input-label handjet-normal">Имя партнера</lable>
+        <lable for="partnerTwo" class="input-label handjet-normal">{{
+          contractStore.partner_two.name || 'Имя партнера'
+        }}</lable>
         <div class="input-wrapper">
-          <input
-            id="partnerTwo"
-            v-model="partnerTwo"
-            type="text"
-            class="caveat-bold"
-            autocomplete="off"
-            placeholder="Имя"
-          />
+          <DropDown :options="promises" v-model="partnerTwo" />
         </div>
       </div>
     </div>
@@ -73,30 +89,6 @@
   border-radius: 9999px;
   width: 100%;
 
-  input {
-    position: relative;
-    border-radius: 9999px;
-    border: 5px solid #802b86;
-    height: 68px;
-    width: 100%;
-    padding: 0 32px;
-    background: none;
-    /* url('@/assets/noise.svg'); */
-    /* mix-blend-mode: multiply; */
-    color: #ffffff;
-    font-size: 28px;
-
-    &::placeholder {
-      color: #9fa7b2;
-    }
-
-    &:focus,
-    &:hover {
-      border: 5px solid #b215f6;
-      box-shadow: 0 0 12px 0 #5415f680;
-    }
-  }
-
   &::before {
     content: '';
     position: absolute;
@@ -113,6 +105,12 @@
     z-index: 5;
     opacity: 0.1;
   }
+}
+
+   select option {
+  padding: 12px;
+  background: white;
+  color: #2d3748;
 }
 
 .name-submit {
@@ -149,6 +147,6 @@
   background: url('@/assets/noise.svg');
   pointer-events: none;
   mix-blend-mode: multiply;
-  z-index: 5;
+  z-index: 0;
 }
 </style>

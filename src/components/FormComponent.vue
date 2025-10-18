@@ -1,27 +1,21 @@
 <script setup>
-import { ref } from 'vue'
 import { useContractStore } from '@/stores/contractStore'
-import NamesForm from './NamesFormConponent.vue'
 const contractStore = useContractStore()
+import NamesForm from './NamesFormComponent.vue'
+import PromisesForm from './PromisesFormComponent.vue'
 
-const partnerOne = ref('')
-const partnerTwo = ref('')
-
-const handleSubmit = async () => {
-  await contractStore.updatePartnerOne(partnerOne.value, null)
-  await contractStore.updatePartnerTwo(partnerTwo.value, null)
-}
 </script>
 
 <template>
-  <div class="form-container" @submit.prevent="handleSubmit">
+  <div class="form-container">
     <div class="flashing-square"></div>
     <div class="heart"></div>
     <div class="title-container">
       <div class="title caveat-bold">"LOVE CONTRACT 2025"</div>
       <div class="title-shadow caveat-bold">"LOVE CONTRACT 2025"</div>
     </div>
-    <NamesForm />
+    <NamesForm v-show="contractStore.state === 'names'" />
+    <PromisesForm v-show="contractStore.state === 'promises'" />
   </div>
 </template>
 
