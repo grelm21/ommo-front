@@ -12,6 +12,12 @@ export const usePromiseStore = defineStore("promiseStore", {
 	}),
 	getters: {
 		// currentLocation: (state) => state.items[0] || null,
+    promisesWithImages: (state) => {
+      return state.promises.map(promise => ({
+        ...promise,
+        image: new URL(`/src/assets/ommo_icons/${promise.code}.svg`, import.meta.url).href
+      }))
+    }
 	},
 	actions: {
 		async fetchItems() {

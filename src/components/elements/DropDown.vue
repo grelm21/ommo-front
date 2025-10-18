@@ -21,7 +21,7 @@ const dropDown = ref(null)
 
 const toggleOptionSelect = (option) => {
   selectedOption.value = option
-  emit('update:modelValue', option)
+  emit('update:modelValue', option.code)
   isDropdownVisible.value = false
 }
 
@@ -47,17 +47,26 @@ onBeforeUnmount(() => {
       :class="{ 'dropdown-selected-option--active': isDropdownVisible }"
       @click="isDropdownVisible = true"
     >
-      Обязуюсь {{ selectedOption?.code || '...' }}
+      Обязуюсь
+      <img v-if="selectedOption?.image" :src="selectedOption?.image" class="option-image-selected"/>
+      {{ selectedOption?.code || '...' }}
     </div>
     <transition name="slide-fade">
       <div class="options-wrapper" v-if="isDropdownVisible">
-        <div
-          class="option"
-          v-for="(option, index) in props.options"
-          :key="index"
-          @click="toggleOptionSelect(option)"
-        >
-          {{ option.code }}
+        <div class="options-grid">
+          <div
+            class="option"
+            v-for="(option, index) in props.options"
+            :key="index"
+            @click="toggleOptionSelect(option)"
+          >
+            <img
+              v-if="option.image"
+              :src="option.image"
+              class="option-image-grid"
+            />
+            <span class="option-text">{{ option.code }}</span>
+          </div>
         </div>
       </div>
     </transition>
@@ -75,8 +84,8 @@ onBeforeUnmount(() => {
 
 .dropdown-selected-option {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 12px;
   position: relative;
   border-radius: 9999px;
   border: 5px solid #802b86;
@@ -89,9 +98,14 @@ onBeforeUnmount(() => {
 }
 
 .dropdown-selected-option--active {
-  display: flex;
   border: 5px solid #b215f6;
   box-shadow: 0 0 12px 0 #5415f680;
+}
+
+.option-image-selected {
+  width: 24px;
+  height: 24px;
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
 }
 
 .options-wrapper {
@@ -100,33 +114,73 @@ onBeforeUnmount(() => {
   top: -8px;
   left: 0;
   width: 100%;
-  max-height: 256px;
+  max-height: 400px;
   overflow-y: auto;
   z-index: 20;
   margin-top: 8px;
   background-color: #10012B;
   border: 5px solid #b215f6;
   box-shadow: 0 0 12px 0 #5415f680;
-  color: #8A35DE
+  color: #8A35DE;
 }
 
-.option:hover {
-  background-color: #c5c5c5;
+/* Сетка 2 колонки */
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 16px;
 }
 
 .option {
-  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 8px;
   box-sizing: border-box;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 80px;
+  color: white;
+  text-align: center;
 }
 
-.option:last-of-type {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+.option:hover {
+  background-color: rgba(138, 53, 222, 0.3);
+  transform: translateY(-2px);
+}
+
+.option-image-grid {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 8px;
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+
+.option:hover .option-image-grid {
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+
+.option-text {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.2s ease-in;
 }
 
 .slide-fade-enter-from,
 .slide-fade-leave-to {
-  transform: translateX(20px);
+  transform: translateY(-10px);
   opacity: 0;
 }
 </style>
