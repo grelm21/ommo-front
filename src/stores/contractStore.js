@@ -9,19 +9,25 @@ export const useContractStore = defineStore('contractStore', {
     contract: null,
     partner_one: {
       name: '',
-      promise_id: '111',
+      promise_id: 1,
     },
     partner_two: {
       name: '',
-      promise_id: null,
+      promise_id: 2,
     },
     isLoading: true,
     error: null,
+    state: 'names',
+    states: ['names', 'promises', 'contract'],
   }),
   getters: {
     // currentLocation: (state) => state.items[0] || null,
   },
   actions: {
+    updateState(currentState) {
+      this.state = this.states[this.states.indexOf(currentState) + 1]
+      console.log(this.state)
+    },
     async updatePartnerOne(name, promise_id) {
       if (name) {
         this.partner_one.name = name
