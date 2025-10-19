@@ -21,7 +21,7 @@ const dropDown = ref(null)
 
 const toggleOptionSelect = (option) => {
   selectedOption.value = option
-  emit('update:modelValue', option.code)
+  emit('update:modelValue', option.id)
   isDropdownVisible.value = false
 }
 

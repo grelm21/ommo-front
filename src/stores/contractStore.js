@@ -7,11 +7,11 @@ export const useContractStore = defineStore('contractStore', {
     contracts: [],
     /** @type {Contract | null} */
     contract: null,
-    partner_one: {
+    partnerOne: {
       name: '',
       promise_id: 1,
     },
-    partner_two: {
+    partnerTwo: {
       name: '',
       promise_id: 2,
     },
@@ -30,16 +30,20 @@ export const useContractStore = defineStore('contractStore', {
     },
     async updatePartnerOne(name, promise_id) {
       if (name) {
-        this.partner_one.name = name
+        this.partnerOne.name = name
       }
       if (promise_id) {
-        this.partner_one.promise_id = promise_id
+        this.partnerOne.promise_id = promise_id
       }
-      console.log(this.partner_one)
+      console.log(this.partnerOne)
     },
-    updatePartnerTwo(name, promise_id) {
-      this.partner_two.name = name
-      this.partner_two.promise_id = promise_id
+    async updatePartnerTwo(name, promise_id) {
+      if (name) {
+        this.partnerTwo.name = name
+      }
+      if (promise_id) {
+        this.partnerTwo.promise_id = promise_id
+      }
     },
     async createContract(contract) {
       return await axios
