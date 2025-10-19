@@ -7,11 +7,9 @@ const partnerOne = ref('')
 const partnerTwo = ref('')
 
 const handleSubmit = async () => {
-    console.log(contractStore.state)
   await contractStore.updatePartnerOne(partnerOne.value, null)
   await contractStore.updatePartnerTwo(partnerTwo.value, null)
   await contractStore.updateState(contractStore.state)
-  console.log(contractStore.state)
 }
 </script>
 
@@ -51,7 +49,7 @@ const handleSubmit = async () => {
     </div>
     <button type="submit" class="name-submit russo-one-regular">
       <div>Продолжить</div>
-      <img src="@/assets/arrow.svg" class="w-[25px]" />
+      <img src="@/assets/arrow-next.svg" class="w-[25px]" />
     </button>
   </form>
 </template>

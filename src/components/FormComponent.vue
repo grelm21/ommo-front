@@ -3,11 +3,14 @@ import { useContractStore } from '@/stores/contractStore'
 const contractStore = useContractStore()
 import NamesForm from './NamesFormComponent.vue'
 import PromisesForm from './PromisesFormComponent.vue'
+import ContractForm from './ContractComponent.vue'
 
 </script>
 
 <template>
   <div class="form-container">
+    <img src="@/assets/arrow-back.svg" class="absolute top-0 left-0 opacity-50 w-[28px] h-[28px]
+      ms-[40px] mt-[20px] cursor-pointer" @click="goBack" v-show="contractStore.state !== 'names'" />
     <div class="flashing-square"></div>
     <div class="heart"></div>
     <div class="title-container">
@@ -16,6 +19,7 @@ import PromisesForm from './PromisesFormComponent.vue'
     </div>
     <NamesForm v-show="contractStore.state === 'names'" />
     <PromisesForm v-show="contractStore.state === 'promises'" />
+    <ContractForm v-show="contractStore.state === 'contract'" />
   </div>
 </template>
 
