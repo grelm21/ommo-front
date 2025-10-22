@@ -14,7 +14,10 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <form class="flex flex-col w-full items-center justify-center"  @submit.prevent="handleSubmit">
+  <form
+    class="flex flex-col w-full items-center justify-center"
+    @submit.prevent="handleSubmit"
+  >
     <div class="name-inputs">
       <div class="title-placeholder handjet-normal">Введите ваши имена</div>
       <div>
@@ -26,7 +29,9 @@ const handleSubmit = async () => {
             type="text"
             class="caveat-bold"
             autocomplete="off"
-            placeholder="Имя"
+            required
+            v-required-error
+            placeholder="Ваше имя"
           />
         </div>
       </div>
@@ -42,6 +47,8 @@ const handleSubmit = async () => {
             type="text"
             class="caveat-bold"
             autocomplete="off"
+            required
+            v-required-error
             placeholder="Имя"
           />
         </div>
@@ -94,20 +101,8 @@ const handleSubmit = async () => {
     width: 100%;
     padding: 0 32px;
     background: none;
-    /* url('@/assets/noise.svg'); */
-    /* mix-blend-mode: multiply; */
     color: #ffffff;
     font-size: 28px;
-
-    &::placeholder {
-      color: #9fa7b2;
-    }
-
-    &:focus,
-    &:hover {
-      border: 5px solid #b215f6;
-      box-shadow: 0 0 12px 0 #5415f680;
-    }
   }
 
   &::before {

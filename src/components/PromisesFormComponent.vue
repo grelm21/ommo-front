@@ -34,7 +34,7 @@ const handleSubmit = async () => {
           contractStore.partnerOne.name || 'Ваше имя'
         }}</lable>
         <div class="input-wrapper">
-          <DropDown :options="promiseStore.promisesWithImages" v-model="partnerOne" />
+          <DropDown :options="promiseStore.promisesWithImages" id="partnerOne" v-model="partnerOne"  />
         </div>
       </div>
       <div class="flex w-full justify-center items-center mt-[8px]">
@@ -45,7 +45,7 @@ const handleSubmit = async () => {
           contractStore.partnerTwo.name || 'Имя партнера'
         }}</lable>
         <div class="input-wrapper">
-          <DropDown :options="promiseStore.promisesWithImages" v-model="partnerTwo" />
+          <DropDown :options="promiseStore.promisesWithImages" id="partnerTwo"  v-model="partnerTwo" />
         </div>
       </div>
     </div>

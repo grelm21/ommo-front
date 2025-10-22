@@ -6,6 +6,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  id: {
+    type: String,
+    required: true,
+  },
   modelValue: {
     default: null,
   },
@@ -19,9 +23,13 @@ const isDropdownVisible = ref(false)
 
 const dropDown = ref(null)
 
+const dropInput = ref(null)
+
 const toggleOptionSelect = (option) => {
   selectedOption.value = option
-  emit('update:modelValue', option.id)
+  dropInput.value.value = option.code
+  dropInput.value.dispatchEvent(new Event('input', { bubbles: true }))
+  emit('update:modelValue', option.code)
   isDropdownVisible.value = false
 }
 
@@ -42,13 +50,19 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="dropdown-wrapper caveat-bold" ref="dropDown">
+
     <div
       class="dropdown-selected-option"
       :class="{ 'dropdown-selected-option--active': isDropdownVisible }"
       @click="isDropdownVisible = true"
     >
+      <input type="text" :id="id" class="hidden" ref="dropInput" required v-required-error />
       Обязуюсь
-      <img v-if="selectedOption?.image" :src="selectedOption?.image" class="option-image-selected"/>
+      <img
+        v-if="selectedOption?.image"
+        :src="selectedOption?.image"
+        class="option-image-selected"
+      />
       {{ selectedOption?.code || '...' }}
     </div>
     <transition name="slide-fade">
@@ -60,11 +74,7 @@ onBeforeUnmount(() => {
             :key="index"
             @click="toggleOptionSelect(option)"
           >
-            <img
-              v-if="option.image"
-              :src="option.image"
-              class="option-image-grid"
-            />
+            <img v-if="option.image" :src="option.image" class="option-image-grid" />
             <span class="option-text">{{ option.code }}</span>
           </div>
         </div>
@@ -80,6 +90,8 @@ onBeforeUnmount(() => {
   margin: 0 auto;
   color: white;
   width: 100%;
+
+
 }
 
 .dropdown-selected-option {
@@ -95,6 +107,11 @@ onBeforeUnmount(() => {
   box-shadow: 0 0 12px 0 #802b8699;
   color: #ffffff;
   font-size: 28px;
+
+    &.has-error {
+    border: 5px solid #d2115e !important;
+    box-shadow: 0 0 12px 0 #d2115e;
+  }
 }
 
 .dropdown-selected-option--active {
@@ -118,10 +135,10 @@ onBeforeUnmount(() => {
   overflow-y: auto;
   z-index: 20;
   margin-top: 8px;
-  background-color: #10012B;
+  background-color: #10012b;
   border: 5px solid #b215f6;
   box-shadow: 0 0 12px 0 #5415f680;
-  color: #8A35DE;
+  color: #8a35de;
 }
 
 /* Сетка 2 колонки */
