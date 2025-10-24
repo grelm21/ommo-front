@@ -2,9 +2,13 @@
 import { useContractStore } from '@/stores/contractStore'
 const contractStore = useContractStore()
 
+import { onMounted, ref } from 'vue'
+
 import VkIcon from '@/components/icons/VkIcon.vue'
 import YouTubeIcon from '@/components/icons/YouTubeIcon.vue'
 import TelegramIcon from '@/components/icons/TelegramIcon.vue'
+
+const vkContainer = ref(null)
 
 const openYouTube = () => {
   window.open('https://youtube.com/@ommo_ommo_ommo?si=WaPUf-Z6CVzSkuv', '_blank')
@@ -15,6 +19,19 @@ const openVk = () => {
 const openTelegram = () => {
   window.open('https://t.me/OMMO_spb', '_blank')
 }
+
+onMounted(() => {
+  if (window.VK && window.VK.Share) {
+    vkContainer.value.innerHTML = window.VK.Share.button(
+      {},
+      {
+        type: 'custom',
+        text: `<div class='flex justify-center handjet-normal text-[20px] text-white underline
+          cursor-pointer'> Поделиться в ВК </div>`,
+      }
+    )
+  }
+})
 </script>
 
 <template>
@@ -64,9 +81,17 @@ const openTelegram = () => {
         </button>
       </div>
       <div>
-        <div class="flex justify-center handjet-normal text-[32px] text-white underline
-          cursor-pointer">Поделиться</div>
-        <div class="flex justify-center handjet-normal text-[20px] text-white underline cursor-pointer">
+        <div
+          class="flex justify-center handjet-normal text-[32px] text-white underline cursor-pointer"
+        >
+          <div
+            ref="vkContainer"
+            class="flex justify-center handjet-normal text-[32px] text-white underline cursor-pointer"
+          />
+        </div>
+        <div
+          class="flex justify-center handjet-normal text-[20px] text-white underline cursor-pointer"
+        >
           Скачать контракт в .pdf
         </div>
       </div>

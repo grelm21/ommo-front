@@ -29,7 +29,7 @@ const toggleOptionSelect = (option) => {
   selectedOption.value = option
   dropInput.value.value = option.code
   dropInput.value.dispatchEvent(new Event('input', { bubbles: true }))
-  emit('update:modelValue', option.code)
+  emit('update:modelValue', option.id)
   isDropdownVisible.value = false
 }
 

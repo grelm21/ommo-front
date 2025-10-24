@@ -22,6 +22,12 @@ export const useContractStore = defineStore('contractStore', {
   }),
   getters: {
     // currentLocation: (state) => state.items[0] || null,
+    params: (state) => ({
+      contract: {
+        partner_one: state.partnerOne,
+        partner_two: state.partnerTwo,
+      },
+    }),
   },
   actions: {
     updateState(currentState) {
@@ -45,9 +51,9 @@ export const useContractStore = defineStore('contractStore', {
         this.partnerTwo.promise_id = promise_id
       }
     },
-    async createContract(contract) {
+    async createContract() {
       return await axios
-        .post('/contracts', contract)
+        .post('/contracts', this.params)
         .then((response) => {
           this.contract = response.data
           console.log(this.contract)

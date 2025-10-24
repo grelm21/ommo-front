@@ -21,7 +21,8 @@ const handleSubmit = async () => {
   await contractStore.updatePartnerOne(null, partnerOne.value)
   await contractStore.updatePartnerTwo(null, partnerTwo.value)
   await contractStore.updateState(contractStore.state)
-  console.log(contractStore.partnerOne)
+
+  await contractStore.createContract()
   }
 </script>
 
