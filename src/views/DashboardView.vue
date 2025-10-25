@@ -187,6 +187,13 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+/* ===============================
+   ДЕФОЛТНЫЕ СТИЛИ (без @media)
+   Порядок сохранён: container-dash -> text-effects -> content -> triangle ->
+   premiere-text -> main-title -> date -> arrow -> filter-svg -> timer ->
+   timer-text -> audio-vectors -> contract/button -> highlight-form
+   =============================== */
+
 /* Контейнер блока */
 .container-dash {
   @apply flex flex-col text-2xl w-screen justify-center relative overflow-visible z-0;
@@ -200,7 +207,7 @@ onUnmounted(() => {
   left: -5%;
   right: -5%;
   bottom: -15%;
-  //background-image: url('@/assets/grid-tile.svg');
+  /* background-image: url('@/assets/grid-tile.svg'); */
   background-size: 80px 80px;
   background-repeat: repeat;
   background-position: center;
@@ -223,35 +230,9 @@ onUnmounted(() => {
   pointer-events: none;
 }
 
-@media (max-width: 640px) {
-  .container-dash::after {
-    top: -5%;
-    width: 95%;
-  }
-}
-
-@media (max-width: 400px) {
-  .container-dash::after {
-    top: 0;
-    width: 100%;
-  }
-}
-
 /* Контейнер с треугольником и текстом */
 .text-effects-container {
   @apply relative pr-[600px];
-}
-
-@media (max-width: 1024px) {
-  .text-effects-container {
-    @apply pr-[300px];
-  }
-}
-
-@media (max-width: 640px) {
-  .text-effects-container {
-    @apply pr-0;
-  }
 }
 
 /* Контентный блок */
@@ -262,18 +243,6 @@ onUnmounted(() => {
 /* Треугольник */
 .triangle-img {
   @apply block mx-auto w-[520px];
-}
-
-@media (max-width: 1024px) {
-  .triangle-img {
-    @apply w-[300px];
-  }
-}
-
-@media (max-width: 640px) {
-  .triangle-img {
-    @apply w-[300px];
-  }
 }
 
 /* Текст "Скоро премьера песни" */
@@ -290,22 +259,7 @@ onUnmounted(() => {
     3px 3px 0 #202c97;
 }
 
-@media (max-width: 1024px) {
-  .premiere-text {
-    @apply text-[22px];
-    top: 20%;
-    transform: translate(-50%, -50%) rotate(-3deg);
-  }
-}
-
-@media (max-width: 640px) {
-  .premiere-text {
-    @apply text-[18px];
-    top: 15%;
-    transform: translate(-50%, -50%) rotate(-3deg);
-  }
-}
-
+/* Main title */
 .main-title-container {
   @apply absolute z-10 whitespace-nowrap;
   top: 37%;
@@ -326,24 +280,6 @@ onUnmounted(() => {
     0 0 36px rgba(82, 94, 208, 0.9);
 }
 
-@media (max-width: 1024px) {
-  .main-title {
-    @apply relative block text-[36px];
-  }
-  .main-title-container {
-    top: 25%;
-  }
-}
-
-@media (max-width: 640px) {
-  .main-title {
-    @apply relative block text-[36px];
-  }
-  .main-title-container {
-    top: 25%;
-  }
-}
-
 .main-title-shadow {
   @apply absolute block text-[64px] w-full;
   top: 0.7rem;
@@ -352,34 +288,12 @@ onUnmounted(() => {
   z-index: -1;
 }
 
-@media (max-width: 1024px) {
-  .main-title-shadow {
-    @apply absolute block text-[36px] w-full;
-  }
-}
-
-@media (max-width: 640px) {
-  .main-title-shadow {
-    @apply absolute block text-[36px] w-full;
-  }
-}
-
+/* Дата */
 .date-container {
   @apply flex justify-center w-full;
 }
 
-@media (max-width: 1024px) {
-  .date-container {
-    @apply pt-36;
-  }
-}
-
-@media (max-width: 640px) {
-  .date-container {
-    @apply pt-36;
-  }
-}
-
+/* Стрелка */
 .arrow {
   @apply absolute;
   bottom: -10%;
@@ -387,16 +301,7 @@ onUnmounted(() => {
   transform: translate(-50%, -50%);
 }
 
-@media (max-width: 640px) {
-  .arrow {
-    display: none;
-  }
-}
-
-
-/* Липкий контейнер под формой */
-
-/* SVG с фильтрами скрыт визуально, но остаётся в DOM */
+/* SVG-фильтры (скрыт) */
 .filter-svg {
   position: absolute;
   width: 0;
@@ -404,40 +309,12 @@ onUnmounted(() => {
   visibility: hidden;
 }
 
+/* Таймер-контейнер */
 .timer-container {
   @apply absolute grid m-0 top-[7%] left-[53%] leading-[100%];
 }
 
-@media (max-width: 1280px) {
-  .timer-container {
-    top: 10%;
-    left: 50%;
-  }
-}
-
-@media (max-width: 1024px) {
-  .timer-container {
-    top: 25%;
-    left: 50%;
-  }
-}
-
-@media (max-width: 768px) {
-  .timer-container {
-    top: 25%;
-    left: 50%;
-    transform: translateX(-50%) scale(0.85);
-  }
-}
-
-@media (max-width: 640px) {
-  .timer-container {
-    top: 25%;
-    left: 50%;
-    transform: translateX(-50%) scale(0.7);
-  }
-}
-
+/* Текст таймера */
 .timer-text {
   @apply -rotate-3 text-[40px] z-50 pl-8 m-0 leading-[100%] whitespace-nowrap;
   font-family: 'Russo One', sans-serif;
@@ -453,86 +330,30 @@ onUnmounted(() => {
   filter: drop-shadow(0 0 12px rgba(7, 98, 209, 0.5));
 }
 
-@media (max-width: 768px) {
-  .timer-text {
-    @apply text-[28px] pl-12;
-  }
-}
-
-@media (max-width: 640px) {
-  .timer-text {
-    @apply text-[28px] pl-12;
-  }
-}
-
+/* Аудио вектор(ы) */
 .audio-vectors {
   @apply absolute w-[750px] top-[60%] left-[37%] transform -translate-x-1/2 -translate-y-1/2 z-0;
   transform: translate(-50%, -50%) scale(1.6);
 }
 
-@media (max-width: 768px) {
-  .audio-vectors {
-    @apply left-[47%];
-  }
-}
-
-@media (max-width: 640px) {
-  .audio-vectors {
-    @apply left-[47%];
-  }
-}
-
-
+/* Кнопка контракта - внутренний контент */
 .contract-button-inner {
   @apply flex justify-center items-center gap-3 py-7 px-14;
 }
 
-@media (max-width: 768px) {
-  .contract-button-inner {
-    @apply py-5 px-2;
-  }
-}
-
-@media (max-width: 640px) {
-  .contract-button-inner {
-    @apply py-5 px-2;
-  }
-}
-
+/* Маленькое сердечко в кнопке */
 .little-heart {
   @apply w-[32px];
 }
 
-@media (max-width: 768px) {
-  .little-heart {
-    @apply w-[20px];
-  }
-}
-
-@media (max-width: 640px) {
-  .little-heart {
-    @apply w-[20px];
-  }
-}
-
+/* Текст под кнопкой */
 .under-button-text {
   @apply text-xl text-white text-end;
 }
 
-@media (max-width: 768px) {
-  .under-button-text {
-    @apply text-sm;
-  }
-}
-
-@media (max-width: 640px) {
-  .under-button-text {
-    @apply text-sm;
-  }
-}
+/* Highlight form (пульсация) */
 .highlight-form {
   position: relative;
-  /* Фиксируем размеры */
   width: 100%;
   height: 100%;
 }
@@ -554,7 +375,6 @@ onUnmounted(() => {
   z-index: -1;
   border-radius: 10px;
   animation: gradient-pulse 4s ease-in-out;
-  /* Важно: не влияет на размеры */
   transform: translateZ(0);
   pointer-events: none;
 }
@@ -581,4 +401,173 @@ onUnmounted(() => {
     transform: translateZ(0) scale(0.95);
   }
 }
+@media (max-width: 1280px) {
+  .timer-container {
+    top: 10%;
+    left: 50%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .text-effects-container {
+    @apply pr-[300px];
+  }
+
+  .triangle-img {
+    @apply w-[300px];
+  }
+
+  /* premiere-text */
+  .premiere-text {
+    @apply text-[22px];
+    top: 20%;
+    transform: translate(-50%, -50%) rotate(-3deg);
+  }
+
+  .main-title,
+  .main-title-shadow {
+    @apply text-[36px];
+  }
+  .main-title-container {
+    top: 25%;
+  }
+
+  .date-container {
+    @apply pt-36;
+  }
+
+  .timer-container {
+    top: 25%;
+    left: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  /* text-effects-container */
+  .text-effects-container {
+    @apply pr-0;
+  }
+
+  /* premiere-text */
+  .premiere-text {
+    @apply text-[18px];
+    top: 15%;
+    transform: translate(-50%, -50%) rotate(-3deg);
+  }
+
+  .main-title-container {
+    top: 25%;
+  }
+
+  .timer-container {
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.85);
+  }
+
+  .timer-text {
+    @apply text-[28px] pl-12;
+  }
+
+  .audio-vectors {
+    @apply left-[47%];
+  }
+
+  .contract-button-inner {
+    @apply py-5 px-2;
+  }
+
+  .little-heart {
+    @apply w-[20px];
+  }
+
+  .under-button-text {
+    @apply text-sm;
+  }
+
+  .arrow {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .container-dash::after {
+    top: -5%;
+    width: 95%;
+  }
+
+  .text-effects-container {
+    @apply pr-0;
+  }
+
+  .triangle-img {
+    @apply w-[300px];
+  }
+
+  .premiere-text {
+    @apply text-[18px];
+    top: 15%;
+    transform: translate(-50%, -50%) rotate(-3deg);
+  }
+
+  .main-title {
+    @apply text-[36px];
+  }
+  .main-title-container {
+    top: 25%;
+  }
+  .main-title-shadow {
+    @apply text-[36px];
+  }
+
+  .date-container {
+    @apply pt-36;
+  }
+
+  .timer-container {
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.7);
+  }
+
+  .timer-text {
+    @apply text-[28px] pl-12;
+  }
+
+  .audio-vectors {
+    @apply left-[47%];
+  }
+
+  .contract-button-inner {
+    @apply py-5 px-2;
+  }
+
+  .little-heart {
+    @apply w-[20px];
+  }
+
+  .under-button-text {
+    @apply text-sm;
+  }
+
+  .arrow {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  /* main-title sizes */
+  .main-title,
+  .main-title-shadow {
+    @apply text-[32px];
+  }
+}
+
+@media (max-width: 400px) {
+  .container-dash::after {
+    top: 0;
+    width: 100%;
+  }
+}
+
 </style>
