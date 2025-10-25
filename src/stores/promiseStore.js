@@ -17,6 +17,9 @@ export const usePromiseStore = defineStore("promiseStore", {
         ...promise,
         image: new URL(`/src/assets/ommo_icons/${promise.code}.svg`, import.meta.url).href
       }))
+    },
+    byId: (state) => (id) => {
+      return state.promises.find(promise => promise.id === id)
     }
 	},
 	actions: {

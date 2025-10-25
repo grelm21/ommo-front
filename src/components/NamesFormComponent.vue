@@ -1,27 +1,34 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useContractStore } from '@/stores/contractStore'
 const contractStore = useContractStore()
 
 const partnerOne = ref('')
 const partnerTwo = ref('')
 
+watch(
+  () => contractStore.state,
+  (newState, oldState) => {
+    if (oldState === 'contract') {
+      partnerOne.value = ''
+      partnerTwo.value = ''
+    }
+  },
+)
+
 const handleSubmit = async () => {
   await contractStore.updatePartnerOne(partnerOne.value, null)
   await contractStore.updatePartnerTwo(partnerTwo.value, null)
-  await contractStore.updateState(contractStore.state)
+  await contractStore.stateForward(contractStore.state)
 }
 </script>
 
 <template>
-  <form
-    class="flex flex-col w-full items-center justify-center"
-    @submit.prevent="handleSubmit"
-  >
+  <form class="flex flex-col w-full items-center justify-center" @submit.prevent="handleSubmit">
     <div class="name-inputs">
       <div class="title-placeholder handjet-normal">Введите ваши имена</div>
       <div>
-        <lable for="partnerOne" class="input-label handjet-normal">Ваше имя</lable>
+        <label for="partnerOne" class="input-label handjet-normal">Ваше имя</label>
         <div class="input-wrapper">
           <input
             id="partnerOne"
@@ -39,7 +46,7 @@ const handleSubmit = async () => {
         <img src="@/assets/plus.svg" class="flex w-[32px] text-center" />
       </div>
       <div>
-        <lable for="partnerTwo" class="input-label handjet-normal">Имя партнера</lable>
+        <label for="partnerTwo" class="input-label handjet-normal">Имя партнера</label>
         <div class="input-wrapper">
           <input
             id="partnerTwo"

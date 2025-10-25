@@ -5,12 +5,16 @@ import NamesForm from './NamesFormComponent.vue'
 import PromisesForm from './PromisesFormComponent.vue'
 import ContractForm from './ContractComponent.vue'
 
+const backHandler = () => {
+  contractStore.stateBackward()
+}
+
 </script>
 
 <template>
   <div class="form-container">
     <img src="@/assets/arrow-back.svg" class="absolute top-0 left-0 opacity-50 w-[28px] h-[28px]
-      ms-[40px] mt-[20px] cursor-pointer" @click="goBack" v-show="contractStore.state !== 'names'" />
+      ms-[40px] mt-[20px] cursor-pointer" @click="backHandler" v-show="contractStore.state !== 'names'" />
     <div class="flashing-square"></div>
     <div class="heart"></div>
     <div class="title-container">

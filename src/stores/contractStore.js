@@ -30,9 +30,25 @@ export const useContractStore = defineStore('contractStore', {
     }),
   },
   actions: {
-    updateState(currentState) {
+    stateForward(currentState) {
       this.state = this.states[this.states.indexOf(currentState) + 1]
-      console.log(this.state)
+    },
+    stateBackward() {
+      if (this.state === 'contract') {
+        this.clearData()
+      }
+      this.state = 'names'
+    },
+    clearData() {
+      this.contract = null
+      this.partnerOne = {
+        name: '',
+        promise_id: 1,
+      }
+      this.partnerTwo = {
+        name: '',
+        promise_id: 2,
+      }
     },
     async updatePartnerOne(name, promise_id) {
       if (name) {

@@ -1,14 +1,34 @@
 <script setup>
 import { useContractStore } from '@/stores/contractStore'
 const contractStore = useContractStore()
+import { usePromiseStore } from '@/stores/promiseStore'
+const promiseStore = usePromiseStore()
 
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 import VkIcon from '@/components/icons/VkIcon.vue'
 import YouTubeIcon from '@/components/icons/YouTubeIcon.vue'
 import TelegramIcon from '@/components/icons/TelegramIcon.vue'
 
 const vkContainer = ref(null)
+
+const promiseOne = ref(null)
+const promiseTwo = ref(null)
+
+const nameOne = ref(null)
+const nameTwo = ref(null)
+
+watch(
+  () => contractStore.contract,
+  (newContract) => {
+    if (newContract) {
+      promiseOne.value = promiseStore.byId(newContract.partners[0]?.promise_id)
+      promiseTwo.value = promiseStore.byId(newContract.partners[1]?.promise_id)
+      nameOne.value = newContract.partners[0]?.name || contractStore.partnerOne.name
+      nameTwo.value = newContract.partners[1]?.name || contractStore.partnerTwo.name
+    }
+  },
+)
 
 const openYouTube = () => {
   window.open('https://youtube.com/@ommo_ommo_ommo?si=WaPUf-Z6CVzSkuv', '_blank')
@@ -28,7 +48,7 @@ onMounted(() => {
         type: 'custom',
         text: `<div class='flex justify-center handjet-normal text-[20px] text-white underline
           cursor-pointer'> Поделиться в ВК </div>`,
-      }
+      },
     )
   }
 })
@@ -39,21 +59,15 @@ onMounted(() => {
     <div class="name-inputs">
       <div class="title-placeholder handjet-normal">Ваш договор</div>
       <div>
-        <lable for="partnerOne" class="input-label caveat-bold">{{
-          contractStore.partnerOne.name || 'Ваше имя'
-        }}</lable>
+        <label for="partnerOne" class="input-label caveat-bold">{{ nameOne }}</label>
         <div class="promise-text caveat-extrabold">
-          Все что я обещаю, я обещаю, вне зависимости от того, что произойдет в будущем, я сделаю
-          все, что нужно, чтобы произойти мой договор.
+          {{ promiseOne?.description || '' }}
         </div>
       </div>
       <div>
-        <lable for="partnerTwo" class="input-label caveat-bold">{{
-          contractStore.partnerTwo.name || 'Имя партнера'
-        }}</lable>
+        <label for="partnerTwo" class="input-label caveat-bold">{{ nameTwo }}</label>
         <div class="promise-text caveat-extrabold">
-          Все что я обещаю, я обещаю, вне зависимости от того, что произойдет в будущем, я сделаю
-          все, что нужно, чтобы произойти мой договор.
+          {{ promiseTwo?.description || '' }}
         </div>
       </div>
       <div class="flex gap-[8px] items-center justify-center">
