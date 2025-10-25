@@ -20,7 +20,7 @@ onMounted(async () => {
 const handleSubmit = async () => {
   await contractStore.updatePartnerOne(null, partnerOne.value)
   await contractStore.updatePartnerTwo(null, partnerTwo.value)
-  await contractStore.updateState(contractStore.state)
+  await contractStore.stateForward(contractStore.state)
 
   await contractStore.createContract()
   }
@@ -31,9 +31,9 @@ const handleSubmit = async () => {
     <div class="name-inputs">
       <div class="title-placeholder handjet-normal">Выберите пункты договора</div>
       <div>
-        <lable for="partnerOne" class="input-label caveat-bold">{{
+        <label for="partnerOne" class="input-label caveat-bold">{{
           contractStore.partnerOne.name || 'Ваше имя'
-        }}</lable>
+        }}</label>
         <div class="input-wrapper">
           <DropDown :options="promiseStore.promisesWithImages" id="partnerOne" v-model="partnerOne"  />
         </div>
@@ -42,9 +42,9 @@ const handleSubmit = async () => {
         <img src="@/assets/plus.svg" class="flex w-[32px] text-center" />
       </div>
       <div>
-        <lable for="partnerTwo" class="input-label caveat-bold">{{
+        <label for="partnerTwo" class="input-label caveat-bold">{{
           contractStore.partnerTwo.name || 'Имя партнера'
-        }}</lable>
+        }}</label>
         <div class="input-wrapper">
           <DropDown :options="promiseStore.promisesWithImages" id="partnerTwo"  v-model="partnerTwo" />
         </div>
