@@ -51,11 +51,11 @@ const scrollToNamesForm = () => {
     // Точное центрирование
     const elementRect = element.getBoundingClientRect()
     const absoluteElementTop = elementRect.top + window.pageYOffset
-    const middle = absoluteElementTop - (window.innerHeight / 2) + (elementRect.height / 1.5)
+    const middle = absoluteElementTop - window.innerHeight / 2 + elementRect.height / 1.5
 
     window.scrollTo({
       top: middle,
-      behavior: 'smooth'
+      behavior: 'smooth',
     })
 
     // Убираем подсветку через 2 секунды
@@ -132,14 +132,15 @@ onUnmounted(() => {
       </span>
       <div class="relative inline-block">
         <!-- Контейнер для audio с отступами -->
-        <div class="pt-14 pl-8">
+        <div class="xl:pt-14 pt-8 pl-8">
           <div class="w-[280px]">
-            <img :src="audio" class="relative"/>
+            <img :src="audio" class="relative" />
 
             <button
               class="absolute left-44 top-36 transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-500 ease-in-out hover:scale-125 z-50"
               type="button"
-              data-dropdown-toggle="dropdown">
+              data-dropdown-toggle="dropdown"
+            >
               <NoteIcon class="w-[70px]" />
             </button>
           </div>
@@ -148,7 +149,7 @@ onUnmounted(() => {
       </div>
     </div>
     <!-- Дата -->
-    <div class="flex justify-center w-full">
+    <div class="date-container">
       <img src="@/assets/premier-date.svg" class="w-[72%] relative z-10" />
       <div class="w-[15%] absolute flex justify-center gap-36">
         <img src="@/assets/left-note.svg" class="" />
@@ -157,14 +158,14 @@ onUnmounted(() => {
     </div>
 
     <!-- Кнопка -->
-    <div class="grid gap-y-5 justify-end pr-48 mt-8">
+    <div class="grid gap-y-5 justify-end md:pr-24 sm:pr-12 xl:pr-48 mt-8">
       <button class="contract-button russo-one-regular" @click="scrollToNamesForm">
         <span class="contract-button-inner">
-          <img :src="heart" class="w-[32px]" />
+          <img :src="heart" class="little-heart" />
           Подписать контракт любви
         </span>
       </button>
-      <span class="roboto-mono-regular text-white text-xl text-end">
+      <span class="roboto-mono-regular under-button-text">
         Заполните контракт на страхование любви,<br />
         поделитесь им в соцсетях
       </span>
@@ -211,7 +212,7 @@ onUnmounted(() => {
 .container-dash::after {
   content: '';
   position: absolute;
-  top: -15%;
+  top: -10%;
   left: 50%;
   transform: translateX(-50%);
   width: 70%;
@@ -222,21 +223,60 @@ onUnmounted(() => {
   pointer-events: none;
 }
 
-/* Треугольник сверху */
+@media (max-width: 640px) {
+  .container-dash::after {
+    top: -5%;
+    width: 95%;
+  }
+}
+
+@media (max-width: 400px) {
+  .container-dash::after {
+    top: 0;
+    width: 100%;
+  }
+}
+
+/* Контейнер с треугольником и текстом */
 .text-effects-container {
   @apply relative pr-[600px];
 }
 
+@media (max-width: 1024px) {
+  .text-effects-container {
+    @apply pr-[300px];
+  }
+}
+
+@media (max-width: 640px) {
+  .text-effects-container {
+    @apply pr-0;
+  }
+}
+
+/* Контентный блок */
 .content-wrapper {
   @apply relative min-h-96;
 }
 
+/* Треугольник */
 .triangle-img {
   @apply block mx-auto w-[520px];
 }
 
-/* Текст "Скоро премьера песни" */
+@media (max-width: 1024px) {
+  .triangle-img {
+    @apply w-[300px];
+  }
+}
 
+@media (max-width: 640px) {
+  .triangle-img {
+    @apply w-[300px];
+  }
+}
+
+/* Текст "Скоро премьера песни" */
 .premiere-text {
   @apply inline-block absolute text-white text-[28px] font-normal leading-[100%] m-0 z-10 whitespace-nowrap;
   top: 23%;
@@ -250,16 +290,25 @@ onUnmounted(() => {
     3px 3px 0 #202c97;
 }
 
-.arrow {
-  @apply absolute;
-  bottom: -10%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+@media (max-width: 1024px) {
+  .premiere-text {
+    @apply text-[22px];
+    top: 20%;
+    transform: translate(-50%, -50%) rotate(-3deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .premiere-text {
+    @apply text-[18px];
+    top: 15%;
+    transform: translate(-50%, -50%) rotate(-3deg);
+  }
 }
 
 .main-title-container {
   @apply absolute z-10 whitespace-nowrap;
-  top: 35%;
+  top: 37%;
   left: 50%;
   transform: translate(-48%, -50%) rotate(-3deg);
   letter-spacing: 4px;
@@ -277,6 +326,24 @@ onUnmounted(() => {
     0 0 36px rgba(82, 94, 208, 0.9);
 }
 
+@media (max-width: 1024px) {
+  .main-title {
+    @apply relative block text-[36px];
+  }
+  .main-title-container {
+    top: 25%;
+  }
+}
+
+@media (max-width: 640px) {
+  .main-title {
+    @apply relative block text-[36px];
+  }
+  .main-title-container {
+    top: 25%;
+  }
+}
+
 .main-title-shadow {
   @apply absolute block text-[64px] w-full;
   top: 0.7rem;
@@ -285,12 +352,49 @@ onUnmounted(() => {
   z-index: -1;
 }
 
-.contract-button-inner {
-  @apply flex justify-center items-center gap-3 py-7 px-14;
+@media (max-width: 1024px) {
+  .main-title-shadow {
+    @apply absolute block text-[36px] w-full;
+  }
 }
 
-/* Липкий контейнер под формой */
+@media (max-width: 640px) {
+  .main-title-shadow {
+    @apply absolute block text-[36px] w-full;
+  }
+}
 
+.date-container {
+  @apply flex justify-center w-full;
+}
+
+@media (max-width: 1024px) {
+  .date-container {
+    @apply pt-36;
+  }
+}
+
+@media (max-width: 640px) {
+  .date-container {
+    @apply pt-36;
+  }
+}
+
+.arrow {
+  @apply absolute;
+  bottom: -10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 640px) {
+  .arrow {
+    display: none;
+  }
+}
+
+
+/* Липкий контейнер под формой */
 
 /* SVG с фильтрами скрыт визуально, но остаётся в DOM */
 .filter-svg {
@@ -298,6 +402,40 @@ onUnmounted(() => {
   width: 0;
   height: 0;
   visibility: hidden;
+}
+
+.timer-container {
+  @apply absolute grid m-0 top-[7%] left-[53%] leading-[100%];
+}
+
+@media (max-width: 1280px) {
+  .timer-container {
+    top: 10%;
+    left: 50%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .timer-container {
+    top: 25%;
+    left: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .timer-container {
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.85);
+  }
+}
+
+@media (max-width: 640px) {
+  .timer-container {
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.7);
+  }
 }
 
 .timer-text {
@@ -315,13 +453,82 @@ onUnmounted(() => {
   filter: drop-shadow(0 0 12px rgba(7, 98, 209, 0.5));
 }
 
-.timer-container {
-  @apply absolute grid m-0 top-[7%] left-[53%] leading-[100%];
+@media (max-width: 768px) {
+  .timer-text {
+    @apply text-[28px] pl-12;
+  }
+}
+
+@media (max-width: 640px) {
+  .timer-text {
+    @apply text-[28px] pl-12;
+  }
 }
 
 .audio-vectors {
   @apply absolute w-[750px] top-[60%] left-[37%] transform -translate-x-1/2 -translate-y-1/2 z-0;
   transform: translate(-50%, -50%) scale(1.6);
+}
+
+@media (max-width: 768px) {
+  .audio-vectors {
+    @apply left-[47%];
+  }
+}
+
+@media (max-width: 640px) {
+  .audio-vectors {
+    @apply left-[47%];
+  }
+}
+
+
+.contract-button-inner {
+  @apply flex justify-center items-center gap-3 py-7 px-14;
+}
+
+@media (max-width: 768px) {
+  .contract-button-inner {
+    @apply py-5 px-2;
+  }
+}
+
+@media (max-width: 640px) {
+  .contract-button-inner {
+    @apply py-5 px-2;
+  }
+}
+
+.little-heart {
+  @apply w-[32px];
+}
+
+@media (max-width: 768px) {
+  .little-heart {
+    @apply w-[20px];
+  }
+}
+
+@media (max-width: 640px) {
+  .little-heart {
+    @apply w-[20px];
+  }
+}
+
+.under-button-text {
+  @apply text-xl text-white text-end;
+}
+
+@media (max-width: 768px) {
+  .under-button-text {
+    @apply text-sm;
+  }
+}
+
+@media (max-width: 640px) {
+  .under-button-text {
+    @apply text-sm;
+  }
 }
 .highlight-form {
   position: relative;
@@ -351,7 +558,6 @@ onUnmounted(() => {
   transform: translateZ(0);
   pointer-events: none;
 }
-
 
 @keyframes gradient-pulse {
   0% {

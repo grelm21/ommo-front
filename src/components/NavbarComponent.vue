@@ -20,11 +20,11 @@ const openTelegram = () => {
 
 <template>
   <div
-    class="flex justify-between font-bold h-[100px] items-center px-64 sticky top-0 z-50">
+    class="flex justify-between font-bold h-[80px] sm:h-[100px] items-center px-4 sm:px-16 lg:px-64 sticky top-0 z-50">
     <div class="inline-flex flex-0 items-center gap-4 col-span-11">
-      <img :src="logo" class="h-[80px] w-[100px]" />
+      <img :src="logo" class="h-[50px] w-[70px] sm:h-[80px] sm:w-[100px]" />
     </div>
-    <div class="flex gap-8">
+    <div class="flex gap-4 sm:gap-8">
       <button class="flex items-center justify-end h-[40px] w-[40px] hover-scale" type="button" @click="openYouTube">
         <YouTubeIcon />
       </button>
