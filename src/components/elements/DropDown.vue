@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, defineEmits, onMounted, onBeforeUnmount, ref } from 'vue'
+import { defineProps, defineEmits, onMounted, onBeforeUnmount, ref, computed } from 'vue'
 
 const props = defineProps({
   options: {
@@ -39,6 +39,13 @@ const closeDropdown = (element) => {
   }
 }
 
+const displayText = computed(() => {
+  if (!selectedOption.value) {
+    return 'Обязуюсь ...'
+  }
+  return selectedOption.value.short_description || selectedOption.value.code
+})
+
 onMounted(() => {
   window.addEventListener('click', closeDropdown)
 })
@@ -57,13 +64,13 @@ onBeforeUnmount(() => {
       @click="isDropdownVisible = true"
     >
       <input type="text" :id="id" class="hidden" ref="dropInput" required v-required-error />
-      Обязуюсь
       <img
         v-if="selectedOption?.image"
         :src="selectedOption?.image"
         class="option-image-selected"
       />
-      {{ selectedOption?.code || '...' }}
+      <span class="text-[22px]"
+            :class="{ 'text-gray-placeholder': !selectedOption, 'text-white': selectedOption }">{{ displayText }}</span>
     </div>
     <transition name="slide-fade">
       <div class="options-wrapper" v-if="isDropdownVisible">
@@ -75,7 +82,7 @@ onBeforeUnmount(() => {
             @click="toggleOptionSelect(option)"
           >
             <img v-if="option.image" :src="option.image" class="option-image-grid" />
-            <span class="option-text">{{ option.code }}</span>
+            <span class="option-text">{{ option.short_description }}</span>
           </div>
         </div>
       </div>
@@ -106,7 +113,7 @@ onBeforeUnmount(() => {
   padding: 0 32px;
   box-shadow: 0 0 12px 0 #802b8699;
   color: #ffffff;
-  font-size: 28px;
+  font-size: 24px;
 
     &.has-error {
     border: 5px solid #d2115e !important;
@@ -185,6 +192,14 @@ onBeforeUnmount(() => {
   font-weight: bold;
   text-align: center;
   line-height: 1.2;
+}
+
+.text-gray-placeholder {
+  color: #9da5ae;
+}
+
+.text-white {
+  color: #ffffff;
 }
 
 .slide-fade-enter-active {
