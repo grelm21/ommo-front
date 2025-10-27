@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from 'vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useContractStore } from '@/stores/contractStore'
 const contractStore = useContractStore()
 import { usePromiseStore } from '@/stores/promiseStore'
@@ -9,8 +9,8 @@ const promiseStore = usePromiseStore()
 import DropDown from '@/components/elements/DropDown.vue'
 
 const promises = ref([])
-const partnerOne = ref('')
-const partnerTwo = ref('')
+const partnerOne = ref(null)
+const partnerTwo = ref(null)
 
 onMounted(async () => {
   await promiseStore.fetchItems()

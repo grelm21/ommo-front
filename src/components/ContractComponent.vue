@@ -4,7 +4,7 @@ const contractStore = useContractStore()
 import { usePromiseStore } from '@/stores/promiseStore'
 const promiseStore = usePromiseStore()
 
-import { onMounted, ref, watch } from 'vue'
+import { onUpdated, ref, watch } from 'vue'
 
 import VkIcon from '@/components/icons/VkIcon.vue'
 import YouTubeIcon from '@/components/icons/YouTubeIcon.vue'
@@ -17,6 +17,7 @@ const promiseTwo = ref(null)
 
 const nameOne = ref(null)
 const nameTwo = ref(null)
+const id = ref(contractStore.contract?.id)
 
 watch(
   () => contractStore.contract,
@@ -26,6 +27,7 @@ watch(
       promiseTwo.value = promiseStore.byId(newContract.partners[1]?.promise_id)
       nameOne.value = newContract.partners[0]?.name || contractStore.partnerOne.name
       nameTwo.value = newContract.partners[1]?.name || contractStore.partnerTwo.name
+      id.value = newContract.id
     }
   },
 )
@@ -40,17 +42,32 @@ const openTelegram = () => {
   window.open('https://t.me/OMMO_spb', '_blank')
 }
 
-onMounted(() => {
-  if (window.VK && window.VK.Share) {
-    vkContainer.value.innerHTML = window.VK.Share.button(
-      {},
-      {
-        type: 'custom',
-        text: `<div class='flex justify-center handjet-normal text-[20px] text-white underline
-          cursor-pointer'> Поделиться в ВК </div>`,
-      },
-    )
-  }
+// onUpdated(() => {
+//   if (window.VK && window.VK.Share) {
+//     vkContainer.value.innerHTML = window.VK.Share.button(
+//       {
+//         url: import.meta.env.VITE_URL + "?contract=" + id.value,
+//         title: 'Я подписал контракт любви со своей второй половинкой! А ты?'
+//       },
+//       {
+//         type: 'custom',
+//         text: `<div class='flex justify-center handjet-normal text-[20px] text-white underline
+//           cursor-pointer'> Поделиться в ВК </div>`,
+//       },
+//     )
+//   }
+// })
+
+onUpdated(() => {
+  const url = import.meta.env.VITE_URL + '?contract=' + id.value
+  const text = 'Я подписал контракт любви со свой второй половинкой! А ты?'
+  const shareUrl = `https://vk.com/share.php?url=${encodeURIComponent(url)}&comment=${encodeURIComponent(text)}`
+
+  vkContainer.value.innerHTML = `
+    <a href="${shareUrl}" target="_blank" rel="noopener noreferrer"
+      class="flex justify-center handjet-normal text-[20px] text-white underline cursor-pointer">
+      Поделиться в ВК
+    </a>`
 })
 </script>
 
@@ -69,6 +86,11 @@ onMounted(() => {
         <div class="promise-text caveat-extrabold">
           {{ promiseTwo?.description || '' }}
         </div>
+      </div>
+      <div class="flex text-justify handjet-normal text-[20px] text-white">
+        Поздравляем! Вы составили контракт любви. Он вступит в силу 10 ноября, когда выйдет наша новая
+        песня. Для полной активации необходимо прослушать нашу песню =).<br />А пока, подпишитесь на наш
+        плейлист на стримингах, поделитесь контрактом с друзьями в ВК и скачайте .pdf версию!
       </div>
       <div class="flex gap-[8px] items-center justify-center">
         <div class="subscribe handjet-normal">Подписаться на нас:</div>

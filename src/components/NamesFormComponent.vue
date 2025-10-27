@@ -3,8 +3,8 @@ import { ref, watch } from 'vue'
 import { useContractStore } from '@/stores/contractStore'
 const contractStore = useContractStore()
 
-const partnerOne = ref('')
-const partnerTwo = ref('')
+const partnerOne = ref(contractStore.partnerOne.name)
+const partnerTwo = ref(contractStore.partnerTwo.name)
 
 watch(
   () => contractStore.state,

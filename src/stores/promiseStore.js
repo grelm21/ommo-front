@@ -5,8 +5,6 @@ export const usePromiseStore = defineStore("promiseStore", {
 	state: () => ({
 	  /** @type {PromiseItem[]} */
 		promises: [],
-		/** @type {PromiseItem} */
-		promise: null,
 		isLoading: true,
 		error: null,
 	}),

@@ -9,11 +9,11 @@ export const useContractStore = defineStore('contractStore', {
     contract: null,
     partnerOne: {
       name: '',
-      promise_id: 1,
+      promise_id: null,
     },
     partnerTwo: {
       name: '',
-      promise_id: 2,
+      promise_id: null,
     },
     isLoading: true,
     error: null,
@@ -43,11 +43,11 @@ export const useContractStore = defineStore('contractStore', {
       this.contract = null
       this.partnerOne = {
         name: '',
-        promise_id: 1,
+        promise_id: null,
       }
       this.partnerTwo = {
         name: '',
-        promise_id: 2,
+        promise_id: null,
       }
     },
     async updatePartnerOne(name, promise_id) {
@@ -70,6 +70,21 @@ export const useContractStore = defineStore('contractStore', {
     async createContract() {
       return await axios
         .post('/contracts', this.params)
+        .then((response) => {
+          this.contract = response.data
+          console.log(this.contract)
+        })
+        .catch((err) => {
+          this.error = err
+        })
+        .finally(() => {
+          this.isLoading = false
+        })
+    },
+
+    async fetchContract(id){
+      return await axios
+        .get(`/contracts/${id}`)
         .then((response) => {
           this.contract = response.data
           console.log(this.contract)

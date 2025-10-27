@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted } from 'vue'
 import { useContractStore } from '@/stores/contractStore'
 const contractStore = useContractStore()
 import NamesForm from './NamesFormComponent.vue'
@@ -8,6 +9,15 @@ import ContractForm from './ContractComponent.vue'
 const backHandler = () => {
   contractStore.stateBackward()
 }
+
+onMounted(async () => {
+  const urlParams = new URLSearchParams(window.location.search)
+
+  if(urlParams.get('contract')) {
+    contractStore.state = "contract"
+    await contractStore.fetchContract(urlParams.get('contract'))
+  }
+})
 
 </script>
 
@@ -21,9 +31,9 @@ const backHandler = () => {
       <div class="title caveat-bold">"LOVE CONTRACT 2025"</div>
       <div class="title-shadow caveat-bold">"LOVE CONTRACT 2025"</div>
     </div>
-    <NamesForm v-show="contractStore.state === 'names'" />
-    <PromisesForm v-show="contractStore.state === 'promises'" />
-    <ContractForm v-show="contractStore.state === 'contract'" />
+    <NamesForm v-if="contractStore.state === 'names'" />
+    <PromisesForm v-if="contractStore.state === 'promises'" />
+    <ContractForm v-if="contractStore.state === 'contract'" />
   </div>
 </template>
 
