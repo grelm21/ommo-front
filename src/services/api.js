@@ -1,8 +1,9 @@
 import axios from "axios";
 import router from "@/router";
+const baseURL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const api = axios.create({
-	baseURL: import.meta.env.VITE_API_URL || "http://localhost:3000",
+	baseURL: import.meta.env.VITE_API_URL || "http://localhost:3001",
 });
 
 api.interceptors.response.use(
