@@ -1,0 +1,67 @@
+<script setup></script>
+
+<template>
+  <div class="footer-container handjet-extra-bold">
+    <span class="produced-by">Produced by</span>
+    <span class="group-name-container">
+      <span class="group-name">Чумоданная</span>
+      <span class="group-name-shadow">Чумоданная</span>
+    </span>
+    <span class="year-text">2025</span>
+  </div>
+</template>
+
+<style scoped>
+.footer-container {
+  @apply flex gap-x-10 text-4xl text-white justify-center py-7 items-center;
+  position: relative;
+  background: linear-gradient(135deg, rgba(21, 0, 54, 1), rgba(27, 3, 35, 1));
+}
+
+.footer-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('@/assets/noise.svg');
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.produced-by {
+}
+
+.group-name-container {
+  @apply relative flex text-[44px];
+}
+
+.group-name {
+  text-shadow:
+    -2px -2px 0 #7a07d1,
+    2px -2px 0 #7a07d1,
+    -2px 2px 0 #7a07d1,
+    2px 2px 0 #7a07d1,
+    0 0 36px rgba(82, 94, 208, 0.9);
+  z-index: 10;
+}
+
+.group-name-shadow {
+  @apply absolute flex -top-2 -left-2 ;
+
+  text-shadow:
+    -2px -2px 0 #421165,
+    2px -2px 0 #421165,
+    -2px 2px 0 #421165,
+    2px 2px 0 #421165,
+    0 0 36px #421165;
+  color: #421165;
+  z-index: 5;
+}
+
+.year-text {
+  @apply text-[#D4AFFF] text-3xl;
+}
+</style>
