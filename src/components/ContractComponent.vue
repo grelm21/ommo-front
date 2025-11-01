@@ -96,7 +96,7 @@ onUpdated(() => {
         плейлист на стримингах, поделитесь контрактом с друзьями в ВК и скачайте .pdf версию!
       </div>
       <div class="flex gap-[8px] items-center justify-center">
-        <div class="subscribe handjet-normal">Активировать контракт:</div>
+        <div class="text-3xl text-white handjet-normal">Активировать контракт:</div>
         <button
           class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
           type="button"
@@ -191,5 +191,16 @@ onUpdated(() => {
 .subscribe {
   font-size: 32px;
   color: #ffffff;
+  text-shadow:
+    -2px -2px 0 #5449A8,
+    2px -2px 0 #5449A8,
+    -2px 2px 0 #5449A8,
+    2px 2px 0 #5449A8;
+}
+
+@media (max-width: 640px) {
+  .subscribe {
+    font-size: 24px;
+  }
 }
 </style>

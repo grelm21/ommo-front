@@ -24,7 +24,7 @@ onMounted(async () => {
 <template>
   <div class="form-container">
     <img src="@/assets/arrow-back.svg" class="absolute top-0 left-0 opacity-50 w-[28px] h-[28px]
-      ms-[40px] mt-[20px] cursor-pointer" @click="backHandler" v-show="contractStore.state !== 'names'" />
+      ms-[40px] mt-[20px] cursor-pointer" @click="backHandler" v-show="contractStore.state === 'promises'"/>
     <div class="flashing-square"></div>
     <div class="heart"></div>
     <div class="title-container">
@@ -39,7 +39,7 @@ onMounted(async () => {
 
 <style scoped>
 .form-container {
-  @apply flex flex-col gap-y-[0px] w-[460px] items-center min-h-[512px] mt-[311px] mb-[100px]
+  @apply flex flex-col gap-y-[0px] w-[460px] items-center min-h-[512px] xl:mt-[311px] mt-24
   pt-[38px] pb-[80px];
   position: relative;
   background: linear-gradient(to bottom, #0b002d, #170325);

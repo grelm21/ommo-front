@@ -12,8 +12,8 @@ import FooterComponent from '@/components/FooterComponent.vue'
       <NavbarComponent />
       <router-view />
     </div>
+    <FooterComponent />
   </div>
-  <FooterComponent />
 </template>
 
 <style scoped>

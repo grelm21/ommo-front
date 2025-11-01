@@ -1,21 +1,32 @@
-<script setup></script>
+<script setup>
+</script>
 
 <template>
-  <div class="footer-container handjet-extra-bold">
-    <span class="produced-by">Produced by</span>
-    <span class="group-name-container">
+  <div class="footer-wrapper">
+    <div class="footer-container handjet-extra-bold">
+      <span class="produced-by">Produced by</span>
+      <span class="group-name-container">
       <span class="group-name">Чумоданная</span>
       <span class="group-name-shadow">Чумоданная</span>
     </span>
-    <span class="year-text">2025</span>
+      <span class="year-text">2025</span>
+    </div>
   </div>
 </template>
 
 <style scoped>
+
+.footer-wrapper {
+  @apply absolute xl:-bottom-96 -bottom-40 left-0 right-0 overflow-clip;
+}
+
 .footer-container {
   @apply flex gap-x-10 text-4xl text-white justify-center py-7 items-center;
   position: relative;
   background: linear-gradient(135deg, rgba(21, 0, 54, 1), rgba(27, 3, 35, 1));
+  width: 100%;
+  max-width: 100vw; /* Ограничивает максимальную ширину */
+  box-sizing: border-box;
 }
 
 .footer-container::before {
@@ -63,5 +74,50 @@
 
 .year-text {
   @apply text-[#D4AFFF] text-3xl;
+}
+
+@media (max-width: 480px) {
+  .footer-wrapper {
+    @apply -bottom-80;
+  }
+  .footer-container {
+    @apply text-xl;
+  }
+  .group-name-container, .year-text {
+    @apply text-[28px];
+  }
+  .group-name-shadow {
+    @apply -top-1 -left-1 ;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-wrapper {
+    @apply -bottom-80;
+  }
+  .footer-container {
+    @apply text-xl;
+  }
+  .group-name-container, .year-text {
+    @apply text-[28px];
+  }
+  .group-name-shadow {
+    @apply -top-1 -left-1 ;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-wrapper {
+    @apply -bottom-80;
+  }
+  .footer-container {
+    @apply text-xl;
+  }
+  .group-name-container, .year-text {
+    @apply text-[28px];
+  }
+  .group-name-shadow {
+    @apply -top-1 -left-1 ;
+  }
 }
 </style>

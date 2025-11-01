@@ -48,10 +48,14 @@ const scrollToNamesForm = () => {
     // Добавляем класс для подсветки
     element.classList.add('highlight-form')
 
+    // Определяем коэффициент для разных устройств
+    const isMobile = window.innerWidth <= 640
+    const heightCoefficient = isMobile ? 2 : 1.5
+
     // Точное центрирование
     const elementRect = element.getBoundingClientRect()
     const absoluteElementTop = elementRect.top + window.pageYOffset
-    const middle = absoluteElementTop - window.innerHeight / 2 + elementRect.height / 1.5
+    const middle = absoluteElementTop - window.innerHeight / 2 + elementRect.height / heightCoefficient
 
     window.scrollTo({
       top: middle,
@@ -152,14 +156,14 @@ onUnmounted(() => {
     <!-- Дата -->
     <div class="date-container">
       <img src="@/assets/premier-date.svg" class="w-[72%] relative z-10" />
-      <div class="w-[15%] absolute flex justify-center gap-36">
+      <div class="w-[15%] absolute flex justify-center xl:gap-36 gap-8">
         <img src="@/assets/left-note.svg" class="" />
         <img src="@/assets/right-note.svg" class="" />
       </div>
     </div>
 
     <!-- Кнопка -->
-    <div class="grid gap-y-5 justify-end md:pr-24 sm:pr-12 xl:pr-48 mt-8">
+    <div class="grid gap-y-5 xl:justify-end justify-center md:pr-24 sm:pr-12 xl:pr-48 mt-10">
       <button class="contract-button russo-one-regular" @click="scrollToNamesForm">
         <span class="contract-button-inner">
           <img :src="heart" class="little-heart" />
@@ -176,14 +180,8 @@ onUnmounted(() => {
     </div>
   </div>
 
-  <div ref="namesFormRef" class="flex w-full justify-center mt-10">
+  <div ref="namesFormRef" class="flex w-full justify-center xl:mt-10 mt-0">
     <FormComponent />
-  </div>
-
-  <OptionsComponent />
-
-  <div id="dropdown" class="z-25 hidden divide-y divide-gray-100 shadow-sm dark:bg-gray-700">
-    <PlaylistComponent />
   </div>
 </template>
 
@@ -524,7 +522,7 @@ onUnmounted(() => {
 
   .premiere-text {
     @apply text-[18px];
-    top: 15%;
+    top: 20%;
     transform: translate(-50%, -50%) rotate(-3deg);
   }
 
@@ -532,18 +530,18 @@ onUnmounted(() => {
     @apply text-[36px];
   }
   .main-title-container {
-    top: 25%;
+    top: 35%;
   }
   .main-title-shadow {
     @apply text-[36px];
   }
 
   .date-container {
-    @apply pt-36;
+    @apply pt-72;
   }
 
   .timer-container {
-    top: 25%;
+    top: 28%;
     left: 50%;
     transform: translateX(-50%) scale(0.7);
   }
