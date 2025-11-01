@@ -41,6 +41,9 @@ const openVk = () => {
 const openTelegram = () => {
   window.open('https://t.me/OMMO_spb', '_blank')
 }
+const openYMusic = () => {
+  window.open('https://music.yandex.ru/users/PortGrad/playlists/1002?ref_id=6C255153-B5A6-468D-BC87-0835CAB0B8F4&utm_medium=copy_link', '_blank');
+};
 
 // onUpdated(() => {
 //   if (window.VK && window.VK.Share) {
@@ -78,19 +81,28 @@ onUpdated(() => {
       <div>
         <label for="partnerOne" class="input-label caveat-bold">{{ nameOne }}</label>
         <div class="promise-text caveat-extrabold">
-          {{ promiseOne?.description || '' }}
+          Обязуюсь {{ promiseOne?.description || '' }}
         </div>
       </div>
       <div>
         <label for="partnerTwo" class="input-label caveat-bold">{{ nameTwo }}</label>
         <div class="promise-text caveat-extrabold">
-          {{ promiseTwo?.description || '' }}
+          Обязуюсь {{ promiseTwo?.description || '' }}
         </div>
       </div>
       <div class="flex text-justify handjet-normal text-[20px] text-white">
         Поздравляем! Вы составили контракт любви. Он вступит в силу 10 ноября, когда выйдет наша новая
         песня. Для полной активации необходимо прослушать нашу песню =).<br />А пока, подпишитесь на наш
         плейлист на стримингах, поделитесь контрактом с друзьями в ВК и скачайте .pdf версию!
+      </div>
+      <div class="flex gap-[8px] items-center justify-center">
+        <div class="subscribe handjet-normal">Активировать контракт:</div>
+        <button
+          class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
+          type="button"
+          @click="openYMusic" >
+          <YouTubeIcon />
+        </button>
       </div>
       <div class="flex gap-[8px] items-center justify-center">
         <div class="subscribe handjet-normal">Подписаться на нас:</div>
@@ -170,11 +182,10 @@ onUpdated(() => {
   text-align: center;
   line-height: 1.2;
   width: 100%;
-  color: #4de5f6;
-  -webkit-text-fill-color: #4de5f6;
-  -webkit-text-stroke: 1.2px #0287e6;
+  color: white;
+  -webkit-text-fill-color: white;
   text-shadow: 0 0 8px 0 #0287e659;
-  font-size: 24px;
+  font-size: 26px;
 }
 
 .subscribe {

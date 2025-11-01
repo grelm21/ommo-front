@@ -17,7 +17,7 @@ const minutes = ref(0)
 const seconds = ref(0)
 
 let timer = null
-
+// https://music.yandex.ru/users/PortGrad/playlists/1002?ref_id=6C255153-B5A6-468D-BC87-0835CAB0B8F4&utm_medium=copy_link
 const updateTimer = () => {
   const now = new Date().getTime()
   const distance = targetDate - now
@@ -64,6 +64,10 @@ const scrollToNamesForm = () => {
     }, 2000)
   }
 }
+
+const openYMusic = () => {
+  window.open('https://music.yandex.ru/users/PortGrad/playlists/1002?ref_id=6C255153-B5A6-468D-BC87-0835CAB0B8F4&utm_medium=copy_link', '_blank');
+};
 
 onMounted(() => {
   updateTimer() // Первый запуск сразу
@@ -137,10 +141,7 @@ onUnmounted(() => {
             <img :src="audio" class="relative" />
 
             <button
-              class="absolute left-44 top-36 transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-500 ease-in-out hover:scale-125 z-50"
-              type="button"
-              data-dropdown-toggle="dropdown"
-            >
+              class="absolute left-44 top-36 transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-500 ease-in-out hover:scale-125 z-50" type="button" @click="openYMusic">
               <NoteIcon class="w-[70px]" />
             </button>
           </div>
