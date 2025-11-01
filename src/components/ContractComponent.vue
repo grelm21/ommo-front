@@ -9,6 +9,7 @@ import { onUpdated, ref, watch } from 'vue'
 import VkIcon from '@/components/icons/VkIcon.vue'
 import YouTubeIcon from '@/components/icons/YouTubeIcon.vue'
 import TelegramIcon from '@/components/icons/TelegramIcon.vue'
+import AgainIcon from '@/components/icons/AgainIcon.vue'
 
 const vkContainer = ref(null)
 
@@ -18,6 +19,27 @@ const promiseTwo = ref(null)
 const nameOne = ref(null)
 const nameTwo = ref(null)
 const id = ref(contractStore.contract?.id)
+
+const resetContract = () => {
+  // Сохраняем позицию скролла
+  const scrollPosition = window.scrollY
+
+  // Сбрасываем состояние
+  contractStore.state = 'names'
+  contractStore.partner_one = { name: '' }
+  contractStore.partner_two = { name: '' }
+  contractStore.contract = null
+
+  // Очищаем URL параметры
+  const url = new URL(window.location)
+  url.searchParams.delete('contract')
+  window.history.replaceState({}, '', url)
+
+  // Восстанавливаем позицию скролла после обновления DOM
+  setTimeout(() => {
+    window.scrollTo(0, scrollPosition)
+  }, 0)
+}
 
 watch(
   () => contractStore.contract,
@@ -94,6 +116,14 @@ onUpdated(() => {
         Поздравляем! Вы составили контракт любви. Он вступит в силу 10 ноября, когда выйдет наша новая
         песня. Для полной активации необходимо прослушать нашу песню =).<br />А пока, подпишитесь на наш
         плейлист на стримингах, поделитесь контрактом с друзьями в ВК и скачайте .pdf версию!
+      </div>
+      <div class="flex gap-[8px] items-center justify-center">
+        <button
+          class="flex items-center justify-end xl:text-[22px] text-base h-[40px] text-[#7B3994] hover-scale underline handjet-normal"
+          type="button"
+          @click="resetContract" >
+          <AgainIcon /> Попробовать снова
+        </button>
       </div>
       <div class="flex gap-[8px] items-center justify-center">
         <div class="text-3xl text-white handjet-normal">Активировать контракт:</div>
