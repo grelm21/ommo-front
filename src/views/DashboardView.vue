@@ -238,7 +238,7 @@ onUnmounted(() => {
 
 /* Контентный блок */
 .content-wrapper {
-  @apply relative min-h-96;
+  @apply relative;
 }
 
 /* Треугольник */
@@ -248,16 +248,33 @@ onUnmounted(() => {
 
 /* Текст "Скоро премьера песни" */
 .premiere-text {
-  @apply inline-block absolute text-white text-[28px] font-normal leading-[100%] m-0 z-10 whitespace-nowrap;
+  @apply inline-block absolute text-white text-[28px] font-normal leading-[100%] mx-auto z-10 whitespace-nowrap;
   top: 23%;
   left: 50%;
-  transform: translate(-48%, -50%) rotate(-3deg);
-  filter: url('#textDistortion') url('#textStroke') drop-shadow(0 0 12px rgba(50, 63, 190, 0.7));
+  transform: translate(-50%, -50%) rotate(-3deg);
+  transform-origin: center center;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+  filter: url('#textDistortion') url('#textStroke')
+  drop-shadow(0 0 12px rgba(50, 63, 190, 0.7));
   text-shadow:
     -3px -3px 0 #202c97,
     3px -3px 0 #202c97,
     -3px 3px 0 #202c97,
     3px 3px 0 #202c97;
+}
+.is-safari .premiere-text {
+  transform: translate(-60%, -50%) rotate(-3deg);
+}
+
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) {
+    .premiere-text {
+      transform: translate(-60%, -50%) rotate(-3deg);
+    }
+  }
 }
 
 /* Main title */

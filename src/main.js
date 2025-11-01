@@ -16,3 +16,7 @@ app.use(router)
 
 app.directive('required-error', RequiredError)
 app.mount('#app')
+
+if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
+  document.body.classList.add('is-safari')
+}
