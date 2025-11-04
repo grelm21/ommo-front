@@ -6,8 +6,8 @@
     <div class="footer-container handjet-extra-bold">
       <span class="produced-by">Produced by</span>
       <span class="group-name-container">
-      <span class="group-name">Чумоданная</span>
-      <span class="group-name-shadow">Чумоданная</span>
+      <span class="group-name">Чемоданная</span>
+      <span class="group-name-shadow">Чемоданная</span>
     </span>
       <span class="year-text">2025</span>
     </div>

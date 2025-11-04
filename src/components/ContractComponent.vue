@@ -25,10 +25,11 @@ const resetContract = () => {
   const scrollPosition = window.scrollY
 
   // Сбрасываем состояние
-  contractStore.state = 'names'
-  contractStore.partner_one = { name: '' }
-  contractStore.partner_two = { name: '' }
-  contractStore.contract = null
+  // contractStore.state = 'names'
+  // contractStore.partner_one = { name: '' }
+  // contractStore.partner_two = { name: '' }
+  // contractStore.contract = null
+  contractStore.stateBackward()
 
   // Очищаем URL параметры
   const url = new URL(window.location)
