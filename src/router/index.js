@@ -11,9 +11,10 @@ const router = createRouter({
       component: DashboardView,
     },
     {
-      path: '/contract',
+      path: '/contract/:id',
       name: 'PdfContract',
       component: PdfContractView,
+      props: true,
     },
   ],
 })

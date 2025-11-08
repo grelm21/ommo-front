@@ -24,13 +24,13 @@
 
       <!-- #данные -->
       <div class="flex flex-grow flex-col items-center justify-center">
-        <div class="flex w-fit mx-auto playfair-normal text-[22px]">ЯРОСЛАВ:</div>
-        <p class="flex w-full px-[40px] playfair-normal text-[20px] text-center mt-[1px] text-wrap">
-          Обязуюсь пылесосить, как только ты почувствуешь, что крошки впиваются в ноги.
+        <div class="flex w-fit mx-auto playfair-bold text-[22px]">{{ nameOne.toUpperCase() }}</div>
+        <p class="flex w-fit px-[40px] playfair-italic text-[20px] text-center mt-[1px] text-wrap">
+          {{ promiseOne?.description }}
         </p>
-        <div class="flex w-fit mx-auto playfair-normal text-[22px] mt-[30px]">ДАША:</div>
-        <p class="flex w-full px-[40px] playfair-normal text-[20px] mt-[1px] text-wrap">
-          Обязуюсь поднимать крышку унитаза и протирать за собой брызги.
+        <div class="flex w-fit mx-auto playfair-bold text-[22px] mt-[30px]">{{ nameTwo.toUpperCase() }}</div>
+        <p class="flex w-fit px-[40px] playfair-italic text-[20px] mt-[1px] text-wrap ">
+          {{ promiseTwo?.description }}
         </p>
       </div>
 
@@ -73,25 +73,54 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, defineProps, onMounted, watch } from 'vue'
+import { useContractStore } from '@/stores/contractStore'
+const contractStore = useContractStore()
+import { usePromiseStore } from '@/stores/promiseStore'
+const promiseStore = usePromiseStore()
 
 const pdf = ref(true)
-
 const pdfOptions = {
   margin: 0,
   html2canvas: { scale: 4 },
   jsPDF: { unit: 'mm', format: 'a4', orientation: 'p' },
 }
 
-onMounted(() => {
-  pdf.value.download()
+const props = defineProps({
+  id: String,
 })
-// эта функция вызывается снаружи
-function downloadPdf() {
-  pdf.value.download()
-}
 
-defineExpose({ downloadPdf })
+const promiseOne = ref(null)
+const promiseTwo = ref(null)
+
+const nameOne = ref('')
+const nameTwo = ref('')
+
+onMounted(async () => {
+  await promiseStore.fetchItems()
+  await contractStore.fetchContract(props.id)
+})
+
+watch(
+  () => contractStore.contract,
+  (newContract) => {
+    if (newContract) {
+    promiseStore.fetchItems()
+
+    console.log(newContract)
+
+      nameOne.value = newContract.partners[0]?.name
+      nameTwo.value = newContract.partners[1]?.name
+      promiseOne.value = promiseStore.byId(newContract.partners[0]?.promise_id)
+      promiseTwo.value = promiseStore.byId(newContract.partners[1]?.promise_id)
+      setTimeout(() => {
+        pdf.value.download()
+        // window.close()
+      }, 1000)
+    }
+  },
+)
+
 </script>
 
 <style scoped>

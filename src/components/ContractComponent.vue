@@ -11,19 +11,6 @@ import YouTubeIcon from '@/components/icons/YouTubeIcon.vue'
 import TelegramIcon from '@/components/icons/TelegramIcon.vue'
 import AgainIcon from '@/components/icons/AgainIcon.vue'
 
-import PdfContent from './PdfContractComponent.vue'
-
-const pdfContent = ref(true)
-
-const items = [
-  { name: 'Кофе', qty: 2, price: '300 ₽' },
-  { name: 'Печенье', qty: 1, price: '150 ₽' },
-  { name: 'Молоко', qty: 1, price: '90 ₽' },
-]
-
-const handleDownload = () => {
-  pdfContent.value.downloadPdf()
-}
 
 const vkContainer = ref(null)
 
@@ -78,9 +65,12 @@ const openVk = () => {
 const openTelegram = () => {
   window.open('https://t.me/OMMO_spb', '_blank')
 }
+
+// Это теперь пресейв
 const openYMusic = () => {
   window.open(
-    'https://music.yandex.ru/users/PortGrad/playlists/1002?ref_id=6C255153-B5A6-468D-BC87-0835CAB0B8F4&utm_medium=copy_link',
+    // 'https://music.yandex.ru/users/PortGrad/playlists/1002?ref_id=6C255153-B5A6-468D-BC87-0835CAB0B8F4&utm_medium=copy_link',
+    'https://band.link/MVTNL',
     '_blank',
   )
 }
@@ -188,15 +178,12 @@ onUpdated(() => {
             class="flex justify-center handjet-normal text-[32px] text-white underline cursor-pointer"
           />
         </div>
-        <div
+        <RouterLink v-if="id" :to="{ name: 'PdfContract', params: { id } }" target="_blank"
           class="flex justify-center handjet-normal text-[20px] text-white underline cursor-pointer"
           @click="handleDownload"
         >
           Скачать контракт .pdf
-        </div>
-
-        <!-- Скрытый компонент с HTML -->
-        <PdfContent ref="pdfContent" :order-id="42" :items="items" />
+        </RouterLink>
       </div>
     </div>
   </div>

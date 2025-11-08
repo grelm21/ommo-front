@@ -74,6 +74,13 @@
     font-weight: 800;
     font-style: normal;
   }
+
+  .playfair-italic {
+    font-family: 'Playfair Display', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: italic;
+  }
   html,
   body {
     @apply m-0 p-0;
