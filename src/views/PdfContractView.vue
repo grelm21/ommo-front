@@ -1,8 +1,9 @@
 <template>
+  <div class="w-full overflow-auto">
   <v-pdf
     ref="pdf"
     :options="pdfOptions"
-    filename="my-awesome-report.pdf"
+    filename="контракт_любви_оммо.pdf"
     class="w-[210mm] h-[296mm] relative bg-white mx-auto"
   >
     <div class="contract-bg flex flex-col py-2">
@@ -70,6 +71,7 @@
       </p>
     </div>
   </v-pdf>
+    </div>
 </template>
 
 <script setup>
