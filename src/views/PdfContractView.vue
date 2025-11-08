@@ -27,11 +27,11 @@
       <div class="flex flex-grow flex-col items-center justify-center">
         <div class="flex w-fit mx-auto playfair-bold text-[22px]">{{ nameOne.toUpperCase() }}</div>
         <p class="flex w-fit px-[40px] playfair-italic text-[20px] text-center mt-[1px] text-wrap">
-          {{ promiseOne?.description }}
+          Обязуюсь {{ promiseOne?.description }}
         </p>
         <div class="flex w-fit mx-auto playfair-bold text-[22px] mt-[30px]">{{ nameTwo.toUpperCase() }}</div>
-        <p class="flex w-fit px-[40px] playfair-italic text-[20px] mt-[1px] text-wrap ">
-          {{ promiseTwo?.description }}
+        <p class="flex w-fit px-[40px] playfair-italic text-[20px] text-center mt-[1px] text-wrap ">
+          Обязуюсь {{ promiseTwo?.description }}
         </p>
       </div>
 
