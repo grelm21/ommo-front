@@ -11,6 +11,7 @@ import YouTubeIcon from '@/components/icons/YouTubeIcon.vue'
 import TelegramIcon from '@/components/icons/TelegramIcon.vue'
 import AgainIcon from '@/components/icons/AgainIcon.vue'
 
+
 const vkContainer = ref(null)
 
 const promiseOne = ref(null)
@@ -64,9 +65,15 @@ const openVk = () => {
 const openTelegram = () => {
   window.open('https://t.me/OMMO_spb', '_blank')
 }
+
+// Это теперь пресейв
 const openYMusic = () => {
-  window.open('https://music.yandex.ru/users/PortGrad/playlists/1002?ref_id=6C255153-B5A6-468D-BC87-0835CAB0B8F4&utm_medium=copy_link', '_blank');
-};
+  window.open(
+    // 'https://music.yandex.ru/users/PortGrad/playlists/1002?ref_id=6C255153-B5A6-468D-BC87-0835CAB0B8F4&utm_medium=copy_link',
+    'https://band.link/MVTNL',
+    '_blank',
+  )
+}
 
 // onUpdated(() => {
 //   if (window.VK && window.VK.Share) {
@@ -114,15 +121,17 @@ onUpdated(() => {
         </div>
       </div>
       <div class="flex text-justify handjet-normal text-[20px] text-white">
-        Поздравляем! Вы составили контракт любви. Он вступит в силу 10 ноября, когда выйдет наша новая
-        песня. Для полной активации необходимо прослушать нашу песню =).<br />А пока, подпишитесь на наш
-        плейлист на стримингах, поделитесь контрактом с друзьями в ВК и скачайте .pdf версию!
+        Поздравляем! Вы составили контракт любви. Он вступит в силу 10 ноября, когда выйдет наша
+        новая песня. Для полной активации необходимо прослушать нашу песню =).<br />А пока,
+        подпишитесь на наш плейлист на стримингах, поделитесь контрактом с друзьями в ВК и скачайте
+        .pdf версию!
       </div>
       <div class="flex gap-[8px] items-center justify-center">
         <button
           class="flex items-center justify-end xl:text-[22px] text-base h-[40px] text-[#7B3994] hover-scale underline handjet-normal"
           type="button"
-          @click="resetContract" >
+          @click="resetContract"
+        >
           <AgainIcon /> Попробовать снова
         </button>
       </div>
@@ -131,7 +140,8 @@ onUpdated(() => {
         <button
           class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
           type="button"
-          @click="openYMusic" >
+          @click="openYMusic"
+        >
           <YouTubeIcon />
         </button>
       </div>
@@ -168,11 +178,12 @@ onUpdated(() => {
             class="flex justify-center handjet-normal text-[32px] text-white underline cursor-pointer"
           />
         </div>
-        <div
+        <RouterLink v-if="id" :to="{ name: 'PdfContract', params: { id } }" target="_blank"
           class="flex justify-center handjet-normal text-[20px] text-white underline cursor-pointer"
+          @click="handleDownload"
         >
-          Скачать контракт в .pdf
-        </div>
+          Скачать контракт .pdf
+        </RouterLink>
       </div>
     </div>
   </div>
@@ -223,10 +234,10 @@ onUpdated(() => {
   font-size: 32px;
   color: #ffffff;
   text-shadow:
-    -2px -2px 0 #5449A8,
-    2px -2px 0 #5449A8,
-    -2px 2px 0 #5449A8,
-    2px 2px 0 #5449A8;
+    -2px -2px 0 #5449a8,
+    2px -2px 0 #5449a8,
+    -2px 2px 0 #5449a8,
+    2px 2px 0 #5449a8;
 }
 
 @media (max-width: 640px) {

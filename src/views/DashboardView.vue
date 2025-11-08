@@ -1,6 +1,5 @@
 <script setup>
 import FormComponent from '../components/FormComponent.vue'
-import OptionsComponent from '../components/OptionsComponent.vue'
 import heart from '@/assets/heart-button.svg'
 import triangle from '@/assets/triangle.svg'
 import audio from '@/assets/audio.svg'
