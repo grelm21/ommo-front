@@ -8,6 +8,7 @@ import { onMounted, onUnmounted, ref } from 'vue'
 import TimerTitle from '@/components/icons/TimerTitle.vue'
 import NoteIcon from '@/components/icons/NoteIcon.vue'
 import PlaylistComponent from '@/components/PlaylistComponent.vue'
+import HeartButtonIcon from '@/components/icons/HeartButtonIcon.vue'
 
 const targetDate = new Date('2025-11-28T00:00:00').getTime()
 const days = ref(0)
@@ -176,9 +177,9 @@ onUnmounted(() => {
 
     <!-- Кнопка -->
     <div class="grid gap-y-5 xl:justify-end justify-center md:pr-24 sm:pr-12 xl:pr-48 mt-10 z-50">
-      <button class="contract-button russo-one-regular" @click="scrollToNamesForm">
+      <button class="contract-button group russo-one-regular" @click="scrollToNamesForm">
         <span class="contract-button-inner">
-          <img :src="heart" class="little-heart" />
+          <HeartButtonIcon class="little-heart group-hover:text-red-600"/>
           Подписать контракт любви
         </span>
       </button>
@@ -192,7 +193,7 @@ onUnmounted(() => {
     </div>
   </div>
 
-  <div ref="namesFormRef" class="flex w-full justify-center xl:mt-10 mt-0">
+  <div ref="namesFormRef" class="flex w-full justify-center xl:mt-10 mt-0 form-container overflow-hidden relative">
     <FormComponent />
   </div>
 </template>
@@ -260,7 +261,7 @@ onUnmounted(() => {
 .premiere-text {
   @apply inline-block absolute text-white text-[28px] font-normal leading-[100%] mx-auto z-10 whitespace-nowrap;
   top: 23%;
-  left: 50%;
+  left: 53%;
   transform: translate(-50%, -50%) rotate(-3deg);
   transform-origin: center center;
   will-change: transform;
@@ -276,13 +277,13 @@ onUnmounted(() => {
 }
 
 .is-safari .premiere-text {
-  transform: translate(-60%, -50%) rotate(-3deg);
+  transform: translate(-70%, -50%) rotate(-3deg);
 }
 
 @media not all and (min-resolution: 0.001dpcm) {
   @supports (-webkit-appearance: none) {
     .premiere-text {
-      transform: translate(-60%, -50%) rotate(-3deg);
+      transform: translate(-70%, -50%) rotate(-3deg);
     }
   }
 }
@@ -386,12 +387,12 @@ onUnmounted(() => {
 
 /* Кнопка контракта - внутренний контент */
 .contract-button-inner {
-  @apply flex justify-center items-center gap-3 py-7 px-14;
+  @apply flex justify-center items-center xl:gap-3 gap-1.5 py-4 px-14;
 }
 
 /* Маленькое сердечко в кнопке */
 .little-heart {
-  @apply w-[32px];
+  @apply text-white mt-4 transition-colors duration-300;
 }
 
 /* Текст под кнопкой */
@@ -427,6 +428,10 @@ onUnmounted(() => {
   pointer-events: none;
 }
 
+
+/* Усиленная подсветка для 400–420px */
+
+
 @keyframes gradient-pulse {
   0% {
     opacity: 0;
@@ -447,6 +452,18 @@ onUnmounted(() => {
   100% {
     opacity: 0;
     transform: translateZ(0) scale(0.95);
+  }
+}
+
+
+@keyframes form-glow {
+  0%, 100% {
+    opacity: 0.6;
+    filter: blur(20px) brightness(0.5);
+  }
+  50% {
+    opacity: 1;
+    filter: blur(26px) brightness(0.9);
   }
 }
 
@@ -533,7 +550,7 @@ onUnmounted(() => {
   }
 
   .little-heart {
-    @apply w-[20px];
+    @apply w-[28px];
   }
 
   .under-button-text {
@@ -562,7 +579,7 @@ onUnmounted(() => {
   .premiere-text {
     @apply text-[18px];
     top: 20%;
-    transform: translate(-50%, -50%) rotate(-3deg);
+    transform: translate(-40%, -50%) rotate(-3deg);
   }
 
   .main-title, .ommo,
@@ -608,7 +625,7 @@ onUnmounted(() => {
   }
 
   .little-heart {
-    @apply w-[20px];
+    @apply w-[28px];
   }
 
   .under-button-text {
@@ -617,6 +634,25 @@ onUnmounted(() => {
 
   .arrow {
     display: none;
+  }
+  .form-container::before {
+    content: '';
+    position: absolute;
+    top: -27%;
+    left: 0;
+    right: 0;
+    bottom: -45%;
+    background: radial-gradient(
+      circle at center,
+      rgba(7, 98, 209, 0.2) 10%,
+      rgba(176, 111, 255, 0.6) 40%,
+      transparent 70%
+    );
+    z-index: -1;
+    pointer-events: none;
+    filter: blur(25px);
+    opacity: 0.8;
+    animation: form-glow 5s ease-in-out infinite;
   }
 }
 
@@ -637,12 +673,34 @@ onUnmounted(() => {
   .main-title-container {
     @apply grid gap-1;
   }
+  .form-container::before {
+    content: '';
+    position: absolute;
+    top: -27%;
+    left: 0;
+    right: 0;
+    bottom: -45%;
+    background: radial-gradient(
+      circle at center,
+      rgba(7, 98, 209, 0.2) 10%,
+      rgba(176, 111, 255, 0.6) 40%,
+      transparent 70%
+    );
+    z-index: -1;
+    pointer-events: none;
+    filter: blur(25px);
+    opacity: 0.8;
+    animation: form-glow 5s ease-in-out infinite;
+  }
 }
 
 @media (max-width: 400px) {
   .container-dash::after {
     top: 0;
     width: 100%;
+  }
+  .contract-button-inner {
+    @apply py-2;
   }
   .ommo-shadow {
     top: 0.3rem;
@@ -654,6 +712,51 @@ onUnmounted(() => {
   }
   .main-title-container {
     @apply grid gap-1;
+  }
+  .form-container::before {
+    content: '';
+    position: absolute;
+    top: -27%;
+    left: 0;
+    right: 0;
+    bottom: -45%;
+    background: radial-gradient(
+      circle at center,
+      rgba(7, 98, 209, 0.2) 10%,
+      rgba(176, 111, 255, 0.6) 40%,
+      transparent 70%
+    );
+    z-index: -1;
+    pointer-events: none;
+    filter: blur(25px);
+    opacity: 0.8;
+    animation: form-glow 5s ease-in-out infinite;
+  }
+}
+
+@media  (min-width: 400px) and (max-width: 420px){
+  .premiere-text {
+    left: 60%;
+  }
+  .contract-button-inner {
+    @apply py-2;
+  }
+}
+@media (max-width: 430px){
+
+  .premiere-text {
+    left: 60%;
+  }
+  .contract-button-inner {
+    @apply py-2;
+  }
+}
+@media (max-width: 390px){
+  .premiere-text {
+    left: 62%;
+  }
+  .contract-button-inner {
+    @apply py-2;
   }
 }
 </style>

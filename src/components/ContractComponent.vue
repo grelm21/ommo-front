@@ -107,7 +107,7 @@ onUpdated(() => {
 
 <template>
   <Transition>
-    <div class="flex flex-col w-full items-center justify-center">
+    <div class="flex flex-col w-full items-center justify-center display-none" v-show="!loading">
       <div class="name-inputs">
         <div class="title-placeholder handjet-normal">Ваш договор</div>
         <div>

@@ -105,7 +105,7 @@ const handleSubmit = async () => {
   @apply mb-[16px] pb-[2px];
   display: flex;
   color: #d32fe8;
-  font-size: 36px;
+  font-size: 34px;
   text-shadow: 3px 1px #ff00f233;
   text-shadow: 0 0 8px 0 #4e027a80;
 }
