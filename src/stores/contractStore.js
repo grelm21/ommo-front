@@ -15,7 +15,7 @@ export const useContractStore = defineStore('contractStore', {
       name: '',
       promise_id: null,
     },
-    isLoading: true,
+    isLoading: false,
     error: null,
     state: 'names',
     states: ['names', 'promises', 'contract'],
@@ -83,7 +83,7 @@ export const useContractStore = defineStore('contractStore', {
         })
     },
 
-    async fetchContract(id){
+    async fetchContract(id) {
       return await axios
         .get(`/contracts/${id}`)
         .then((response) => {
