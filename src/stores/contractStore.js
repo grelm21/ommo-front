@@ -79,13 +79,11 @@ export const useContractStore = defineStore('contractStore', {
           this.error = err
         })
         .finally(() => {
-          setTimeout(() => {
-            this.isLoading = false
-          },5000)
+          this.isLoading = false
         })
     },
 
-    async fetchContract(id){
+    async fetchContract(id) {
       return await axios
         .get(`/contracts/${id}`)
         .then((response) => {
