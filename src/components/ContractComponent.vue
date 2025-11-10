@@ -2,7 +2,7 @@
 import { useContractStore } from '@/stores/contractStore'
 const contractStore = useContractStore()
 
-import { onUpdated, ref, watch, onMounted } from 'vue'
+import { onUpdated, ref, watch} from 'vue'
 
 import VkIcon from '@/components/icons/VkIcon.vue'
 import YouTubeIcon from '@/components/icons/YouTubeIcon.vue'
@@ -17,6 +17,8 @@ const promiseTwo = ref(null)
 const nameOne = ref(null)
 const nameTwo = ref(null)
 const id = ref(contractStore.contract?.id)
+
+const loading = ref(true)
 
 const resetContract = () => {
   // Сохраняем позицию скролла
@@ -42,13 +44,12 @@ const resetContract = () => {
 watch(
   () => contractStore.contract,
   (newContract, oldContract) => {
-    console.log('REFRESHED')
     promiseOne.value = newContract?.partners[0]?.promise?.description
     promiseTwo.value = newContract?.partners[1]?.promise?.description
     nameOne.value = newContract?.partners[0]?.name || ''
     nameTwo.value = newContract?.partners[1]?.name || ''
     id.value = newContract?.id
-    // fillVkContainer()
+    loading.value = false
   },
   { deep: true },
 )
@@ -103,84 +104,89 @@ onUpdated(() => {
 </script>
 
 <template>
-  <div class="flex flex-col w-full items-center justify-center">
-    <div class="name-inputs">
-      <div class="title-placeholder handjet-normal">Ваш договор</div>
-      <div>
-        <label for="partnerOne" class="input-label caveat-bold">{{ nameOne }}</label>
-        <div class="promise-text caveat-extrabold">Обязуюсь {{ promiseOne || '' }}</div>
-      </div>
-      <div>
-        <label for="partnerTwo" class="input-label caveat-bold">{{ nameTwo }}</label>
-        <div class="promise-text caveat-extrabold">Обязуюсь {{ promiseTwo || '' }}</div>
-      </div>
-      <div class="flex text-justify handjet-normal text-[20px] text-white">
-        Поздравляем! Вы составили контракт любви. Он вступит в силу 10 ноября, когда выйдет наша
-        новая песня. Для полной активации необходимо прослушать нашу песню =).<br />А пока,
-        подпишитесь на наш плейлист на стримингах, поделитесь контрактом с друзьями в ВК и скачайте
-        .pdf версию!
-      </div>
-      <div class="flex gap-[8px] items-center justify-center">
-        <button
-          class="flex items-center justify-end xl:text-[22px] text-base h-[40px] text-[#7B3994] hover-scale underline handjet-normal"
-          type="button"
-          @click="resetContract"
-        >
-          <AgainIcon /> Попробовать снова
-        </button>
-      </div>
-      <div class="flex gap-[8px] items-center justify-center">
-        <div class="text-3xl text-white handjet-normal">Активировать контракт:</div>
-        <button
-          class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
-          type="button"
-          @click="openYMusic"
-        >
-          <YouTubeIcon />
-        </button>
-      </div>
-      <div class="flex gap-[8px] items-center justify-center">
-        <div class="subscribe handjet-normal">Подписаться на нас:</div>
-        <button
-          class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
-          type="button"
-          @click="openYouTube"
-        >
-          <YouTubeIcon />
-        </button>
-        <button
-          class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
-          type="button"
-          @click="openVk"
-        >
-          <VkIcon />
-        </button>
-        <button
-          class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
-          type="button"
-          @click="openTelegram"
-        >
-          <TelegramIcon />
-        </button>
-      </div>
-      <div>
-        <div
-          class="flex justify-center handjet-normal text-[32px] text-white underline cursor-pointer"
-        >
-          <div
-            ref="vkContainer"
-            class="flex justify-center handjet-normal text-[32px] text-white underline cursor-pointer"
-          />
+  <Transition>
+    <div class="flex flex-col w-full items-center justify-center display-none" v-show="!loading">
+      <div class="name-inputs">
+        <div class="title-placeholder handjet-normal">Ваш договор</div>
+        <div>
+          <label for="partnerOne" class="input-label caveat-bold">{{ nameOne }}</label>
+          <div class="promise-text caveat-extrabold">Обязуюсь {{ promiseOne || '' }}</div>
         </div>
-        <RouterLink v-if="id" :to="{ name: 'PdfContract', params: { id } }" target="_blank"
-          class="flex justify-center handjet-normal text-[20px] text-white underline cursor-pointer"
-          @click="handleDownload"
-        >
-          Скачать контракт .pdf
-        </RouterLink>
+        <div>
+          <label for="partnerTwo" class="input-label caveat-bold">{{ nameTwo }}</label>
+          <div class="promise-text caveat-extrabold">Обязуюсь {{ promiseTwo || '' }}</div>
+        </div>
+        <div class="flex text-justify handjet-normal text-[20px] text-white">
+          Поздравляем! Вы составили контракт любви. Он вступит в силу 10 ноября, когда выйдет наша
+          новая песня. Для полной активации необходимо прослушать нашу песню =).<br />А пока,
+          подпишитесь на наш плейлист на стримингах, поделитесь контрактом с друзьями в ВК и
+          скачайте .pdf версию!
+        </div>
+        <div class="flex gap-[8px] items-center justify-center">
+          <button
+            class="flex items-center justify-end xl:text-[22px] text-base h-[40px] text-[#7B3994] hover-scale underline handjet-normal"
+            type="button"
+            @click="resetContract"
+          >
+            <AgainIcon /> Попробовать снова
+          </button>
+        </div>
+        <div class="flex gap-[8px] items-center justify-center">
+          <div class="text-3xl text-white handjet-normal">Активировать контракт:</div>
+          <button
+            class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
+            type="button"
+            @click="openYMusic"
+          >
+            <YouTubeIcon />
+          </button>
+        </div>
+        <div class="flex gap-[8px] items-center justify-center">
+          <div class="subscribe handjet-normal">Подписаться на нас:</div>
+          <button
+            class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
+            type="button"
+            @click="openYouTube"
+          >
+            <YouTubeIcon />
+          </button>
+          <button
+            class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
+            type="button"
+            @click="openVk"
+          >
+            <VkIcon />
+          </button>
+          <button
+            class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
+            type="button"
+            @click="openTelegram"
+          >
+            <TelegramIcon />
+          </button>
+        </div>
+        <div>
+          <div
+            class="flex justify-center handjet-normal text-[32px] text-white underline cursor-pointer"
+          >
+            <div
+              ref="vkContainer"
+              class="flex justify-center handjet-normal text-[32px] text-white underline cursor-pointer"
+            />
+          </div>
+          <RouterLink
+            v-if="id"
+            :to="{ name: 'PdfContract', params: { id } }"
+            target="_blank"
+            class="flex justify-center handjet-normal text-[20px] text-white underline cursor-pointer"
+            @click="handleDownload"
+          >
+            Скачать контракт .pdf
+          </RouterLink>
+        </div>
       </div>
     </div>
-  </div>
+  </Transition>
 </template>
 
 <style scoped>

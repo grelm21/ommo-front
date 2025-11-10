@@ -15,7 +15,7 @@ export const useContractStore = defineStore('contractStore', {
       name: '',
       promise_id: null,
     },
-    isLoading: true,
+    isLoading: false,
     error: null,
     state: 'names',
     states: ['names', 'promises', 'contract'],
@@ -79,7 +79,9 @@ export const useContractStore = defineStore('contractStore', {
           this.error = err
         })
         .finally(() => {
-          this.isLoading = false
+          setTimeout(() => {
+            this.isLoading = false
+          },5000)
         })
     },
 
