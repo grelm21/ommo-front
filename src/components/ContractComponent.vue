@@ -1,16 +1,13 @@
 <script setup>
 import { useContractStore } from '@/stores/contractStore'
 const contractStore = useContractStore()
-import { usePromiseStore } from '@/stores/promiseStore'
-const promiseStore = usePromiseStore()
 
-import { onUpdated, ref, watch } from 'vue'
+import { onUpdated, ref, watch, onMounted } from 'vue'
 
 import VkIcon from '@/components/icons/VkIcon.vue'
 import YouTubeIcon from '@/components/icons/YouTubeIcon.vue'
 import TelegramIcon from '@/components/icons/TelegramIcon.vue'
 import AgainIcon from '@/components/icons/AgainIcon.vue'
-
 
 const vkContainer = ref(null)
 
@@ -29,7 +26,6 @@ const resetContract = () => {
   // contractStore.state = 'names'
   // contractStore.partner_one = { name: '' }
   // contractStore.partner_two = { name: '' }
-  // contractStore.contract = null
   contractStore.stateBackward()
 
   // Очищаем URL параметры
@@ -45,15 +41,16 @@ const resetContract = () => {
 
 watch(
   () => contractStore.contract,
-  (newContract) => {
-    if (newContract) {
-      promiseOne.value = newContract.partners[0]?.promise?.description
-      promiseTwo.value = newContract.partners[1]?.promise?.description
-      nameOne.value = newContract.partners[0]?.name || contractStore.partnerOne.name
-      nameTwo.value = newContract.partners[1]?.name || contractStore.partnerTwo.name
-      id.value = newContract.id
-    }
+  (newContract, oldContract) => {
+    console.log('REFRESHED')
+    promiseOne.value = newContract?.partners[0]?.promise?.description
+    promiseTwo.value = newContract?.partners[1]?.promise?.description
+    nameOne.value = newContract?.partners[0]?.name || ''
+    nameTwo.value = newContract?.partners[1]?.name || ''
+    id.value = newContract?.id
+    // fillVkContainer()
   },
+  { deep: true },
 )
 
 const openYouTube = () => {
@@ -75,23 +72,11 @@ const openYMusic = () => {
   )
 }
 
-// onUpdated(() => {
-//   if (window.VK && window.VK.Share) {
-//     vkContainer.value.innerHTML = window.VK.Share.button(
-//       {
-//         url: import.meta.env.VITE_URL + "?contract=" + id.value,
-//         title: 'Я подписал контракт любви со своей второй половинкой! А ты?'
-//       },
-//       {
-//         type: 'custom',
-//         text: `<div class='flex justify-center handjet-normal text-[20px] text-white underline
-//           cursor-pointer'> Поделиться в ВК </div>`,
-//       },
-//     )
-//   }
-// })
-
 onUpdated(() => {
+  fillVkContainer()
+})
+
+const fillVkContainer = () => {
   const url = import.meta.env.VITE_URL + '?contract=' + id.value
   const text = 'Я подписал контракт любви со свой второй половинкой! А ты?'
   const shareUrl = `https://vk.com/share.php?url=${encodeURIComponent(url)}&comment=${encodeURIComponent(text)}`
@@ -101,6 +86,19 @@ onUpdated(() => {
       class="flex justify-center handjet-normal text-[20px] text-white underline cursor-pointer">
       Поделиться в ВК
     </a>`
+}
+
+onUpdated(() => {
+  // const url = import.meta.env.VITE_URL + '?contract=' + id.value
+  // const text = 'Я подписал контракт любви со свой второй половинкой! А ты?'
+  // const shareUrl = `https://vk.com/share.php?url=${encodeURIComponent(url)}&comment=${encodeURIComponent(text)}`
+  //
+  // vkContainer.value.innerHTML = `
+  //   <a href="${shareUrl}" target="_blank" rel="noopener noreferrer"
+  //     class="flex justify-center handjet-normal text-[20px] text-white underline cursor-pointer">
+  //     Поделиться в ВК
+  //   </a>`
+  // fillVkContainer()
 })
 </script>
 
@@ -110,15 +108,11 @@ onUpdated(() => {
       <div class="title-placeholder handjet-normal">Ваш договор</div>
       <div>
         <label for="partnerOne" class="input-label caveat-bold">{{ nameOne }}</label>
-        <div class="promise-text caveat-extrabold">
-          Обязуюсь {{ promiseOne || '' }}
-        </div>
+        <div class="promise-text caveat-extrabold">Обязуюсь {{ promiseOne || '' }}</div>
       </div>
       <div>
         <label for="partnerTwo" class="input-label caveat-bold">{{ nameTwo }}</label>
-        <div class="promise-text caveat-extrabold">
-          Обязуюсь {{ promiseTwo || '' }}
-        </div>
+        <div class="promise-text caveat-extrabold">Обязуюсь {{ promiseTwo || '' }}</div>
       </div>
       <div class="flex text-justify handjet-normal text-[20px] text-white">
         Поздравляем! Вы составили контракт любви. Он вступит в силу 10 ноября, когда выйдет наша

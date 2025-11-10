@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from 'vue'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useContractStore } from '@/stores/contractStore'
 const contractStore = useContractStore()
 import { usePromiseStore } from '@/stores/promiseStore'
@@ -23,7 +23,8 @@ const handleSubmit = async () => {
   await contractStore.stateForward(contractStore.state)
 
   await contractStore.createContract()
-  }
+}
+
 </script>
 
 <template>
@@ -35,7 +36,11 @@ const handleSubmit = async () => {
           contractStore.partnerOne.name || 'Ваше имя'
         }}</label>
         <div class="input-wrapper">
-          <DropDown :options="promiseStore.promisesWithImages" id="partnerOne" v-model="partnerOne"  />
+          <DropDown
+            :options="promiseStore.promisesWithImages"
+            id="partnerOne"
+            v-model="partnerOne"
+          />
         </div>
       </div>
       <div class="flex w-full justify-center items-center mt-[8px]">
@@ -46,7 +51,11 @@ const handleSubmit = async () => {
           contractStore.partnerTwo.name || 'Имя партнера'
         }}</label>
         <div class="input-wrapper">
-          <DropDown :options="promiseStore.promisesWithImages" id="partnerTwo"  v-model="partnerTwo" />
+          <DropDown
+            :options="promiseStore.promisesWithImages"
+            id="partnerTwo"
+            v-model="partnerTwo"
+          />
         </div>
       </div>
     </div>
@@ -154,7 +163,7 @@ select option {
   }
 
   &:hover svg {
-    color: #FF0004;
+    color: #ff0004;
   }
 }
 

@@ -73,6 +73,7 @@ export const useContractStore = defineStore('contractStore', {
         .then((response) => {
           this.contract = response.data
           console.log(this.contract)
+          this.isLoading = true
         })
         .catch((err) => {
           this.error = err
@@ -88,6 +89,7 @@ export const useContractStore = defineStore('contractStore', {
         .then((response) => {
           this.contract = response.data
           console.log(this.contract)
+          this.isLoading = true
         })
         .catch((err) => {
           this.error = err
