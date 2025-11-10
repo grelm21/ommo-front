@@ -95,9 +95,7 @@ export const useContractStore = defineStore('contractStore', {
           this.error = err
         })
         .finally(() => {
-          setTimeout(() => {
           this.isLoading = false
-          },10000)
         })
     },
   },

@@ -13,80 +13,88 @@
         </p>
         <p class="flex w-fit mx-auto playfair-bold mt-2 text-[20px]">ПРЕАМБУЛА:</p>
         <p class="flex w-full px-[40px] playfair-normal text-[20px] text-center mt-[1px] text-wrap">
-          Стороны,руководствуясь парадоксальным желанием обезопасить себя от хаоса чувств, заключили
+          стороны,руководствуясь парадоксальным желанием обезопасить себя от хаоса чувств, заключили
           настоящий договор о нижеследующем. Настоящим подтверждается,что любовь, хоть и является
           формой высшего безумия, может быть подвержена разумному регулированию.
         </p>
         <p class="flex w-fit mx-auto playfair-bold mt-2 text-[20px]">ВЗАИМНЫЕ ОБЯЗАТЕЛЬСТВА</p>
         <p class="flex w-full px-[40px] playfair-normal text-[20px] text-center mt-[1px] text-wrap">
-          Во исполнение целей настоящего договора Стороны принимают на себя следующие добровольные
+          Во исполнение целей настоящего договора стороны принимают на себя следующие добровольные
           обязательства:
         </p>
 
         <!-- #данные -->
-        <Transition>        <div class="flex flex-grow flex-col items-center justify-center" v-show="!contractStore.isLoading">
-          <div class="flex w-fit mx-auto playfair-bold text-[22px]">
-            {{ nameOne.toUpperCase() }}
-          </div>
-          <p
-            class="flex w-fit px-[40px] playfair-italic text-[20px] text-center mt-[1px] text-wrap"
+        <Transition>
+          <div
+            class="flex flex-grow flex-col items-center justify-center"
+            v-show="!contractStore.isLoading"
           >
-            Обязуюсь {{ promiseOne || '' }}
-          </p>
+            <div class="flex w-fit mx-auto playfair-bold text-[22px]">
+              {{ nameOne.toUpperCase() }}
+            </div>
+            <p
+              class="flex w-fit px-[40px] playfair-italic text-[20px] text-center mt-[1px] text-wrap"
+            >
+              Обязуюсь {{ promiseOne || '' }}
+            </p>
 
-          <div class="flex w-fit mx-auto playfair-bold text-[22px] mt-[30px]">
-            {{ nameTwo.toUpperCase() }}
+            <div class="flex w-fit mx-auto playfair-bold text-[22px] mt-[30px]">
+              {{ nameTwo.toUpperCase() }}
+            </div>
+            <p
+              class="flex w-fit px-[40px] playfair-italic text-[20px] text-center mt-[1px] text-wrap"
+            >
+              Обязуюсь {{ promiseTwo || '' }}
+            </p>
           </div>
-          <p
-            class="flex w-fit px-[40px] playfair-italic text-[20px] text-center mt-[1px] text-wrap"
+        </Transition>
+        <Transition>
+          <div
+            ref="placeholder"
+            class="flex flex-grow flex-col items-center justify-center"
+            v-if="contractStore.isLoading"
           >
-            Обязуюсь {{ promiseTwo || '' }}
-          </p>
-        </div>
-          </Transition>
-<Transition>
-        <div class="flex flex-grow flex-col items-center justify-center" v-show="contractStore.isLoading">
-          <div role="status" class="space-y-3 animate-pulse w-fit">
-            <div class="flex items-center w-full justify-center">
-              <div class="h-[20px] bg-[#9D9D9D] rounded-full w-1/2"></div>
+            <div role="status" class="space-y-3 animate-pulse w-fit">
+              <div class="flex items-center w-full justify-center">
+                <div class="h-[20px] bg-[#9D9D9D] rounded-full w-1/2"></div>
+              </div>
+              <div class="flex items-center justify-center">
+                <div class="h-[20px] bg-[#9D9D9D] rounded-full w-full"></div>
+                <div class="h-[20px] ms-2 bg-[#9D9D9D] rounded-full w-full"></div>
+                <div class="h-[20px] ms-2 bg-[#9D9D9D] rounded-full w-24"></div>
+              </div>
+              <div class="flex items-center justify-center">
+                <div class="h-[20px] bg-[#9D9D9D] rounded-full w-full"></div>
+                <div class="h-[20px] ms-2 bg-[#9D9D9D] rounded-full w-80"></div>
+                <div class="h-[20px] ms-2 bg-[#9D9D9D] rounded-full w-full"></div>
+              </div>
+              <span class="sr-only">Loading...</span>
             </div>
-            <div class="flex items-center justify-center">
-              <div class="h-[20px] bg-[#9D9D9D] rounded-full w-full"></div>
-              <div class="h-[20px] ms-2 bg-[#9D9D9D] rounded-full w-full"></div>
-              <div class="h-[20px] ms-2 bg-[#9D9D9D] rounded-full w-24"></div>
-            </div>
-            <div class="flex items-center justify-center">
-              <div class="h-[20px] bg-[#9D9D9D] rounded-full w-full"></div>
-              <div class="h-[20px] ms-2 bg-[#9D9D9D] rounded-full w-80"></div>
-              <div class="h-[20px] ms-2 bg-[#9D9D9D] rounded-full w-full"></div>
-            </div>
-            <span class="sr-only">Loading...</span>
-          </div>
 
-          <div role="status" class="space-y-3 animate-pulse w-fit mt-[30px]">
-            <div class="flex items-center w-full justify-center">
-              <div class="h-[20px] bg-[#9D9D9D] rounded-full w-1/2"></div>
+            <div role="status" class="space-y-3 animate-pulse w-fit mt-[30px]">
+              <div class="flex items-center w-full justify-center">
+                <div class="h-[20px] bg-[#9D9D9D] rounded-full w-1/2"></div>
+              </div>
+              <div class="flex items-center justify-center">
+                <div class="h-[20px] bg-[#9D9D9D] rounded-full w-full"></div>
+                <div class="h-[20px] ms-2 bg-[#9D9D9D] rounded-full w-full"></div>
+                <div class="h-[20px] ms-2 bg-[#9D9D9D] rounded-full w-24"></div>
+              </div>
+              <div class="flex items-center justify-center">
+                <div class="h-[20px] bg-[#9D9D9D] rounded-full w-full"></div>
+                <div class="h-[20px] ms-2 bg-[#9D9D9D] rounded-full w-80"></div>
+                <div class="h-[20px] ms-2 bg-[#9D9D9D] rounded-full w-full"></div>
+              </div>
+              <span class="sr-only">Loading...</span>
             </div>
-            <div class="flex items-center justify-center">
-              <div class="h-[20px] bg-[#9D9D9D] rounded-full w-full"></div>
-              <div class="h-[20px] ms-2 bg-[#9D9D9D] rounded-full w-full"></div>
-              <div class="h-[20px] ms-2 bg-[#9D9D9D] rounded-full w-24"></div>
-            </div>
-            <div class="flex items-center justify-center">
-              <div class="h-[20px] bg-[#9D9D9D] rounded-full w-full"></div>
-              <div class="h-[20px] ms-2 bg-[#9D9D9D] rounded-full w-80"></div>
-              <div class="h-[20px] ms-2 bg-[#9D9D9D] rounded-full w-full"></div>
-            </div>
-            <span class="sr-only">Loading...</span>
           </div>
-        </div>
-          </Transition>
+        </Transition>
 
         <p class="flex w-fit mx-auto playfair-bold mt-2 text-[20px]">ВСТУПЛЕНИЕ В СИЛУ</p>
         <p class="flex w-full px-[40px] playfair-normal text-[20px] text-center mt-[1px] text-wrap">
-          Настоящий договор вступает в силу 28 ноября,после того как Стороны прослушают песню
-          "страховка любви", предоставленную Агентом. Для активации Полиса необходимо нажать кнопку
-          «пресейв».
+          Настоящий договор вступает в силу 28 ноября,после того как стороны прослушают песню
+          "страховка любви", предоставленную агентом. Для активации контракта необходимо нажать
+          кнопку «пресейв».
         </p>
         <p class="flex w-full justify-center playfair-normal text-[20px] mt-2">
           Поздравляем! Вы составили контракт любви.
@@ -122,7 +130,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, onMounted, watch } from 'vue'
+import { ref, defineProps, onMounted, watch, nextTick } from 'vue'
 import { useContractStore } from '@/stores/contractStore'
 const contractStore = useContractStore()
 
@@ -143,18 +151,32 @@ const promiseTwo = ref(null)
 const nameOne = ref('')
 const nameTwo = ref('')
 
+const placeholder = ref(true)
+
 onMounted(async () => {
   await contractStore.fetchContract(props.id)
 })
 
+const removePlaceholder = () => {
+  if (placeholder.value) {
+    placeholder.value = false
+  }
+}
+
 watch(
   () => contractStore.contract,
-  (newContract) => {
+  async (newContract) => {
     if (newContract) {
       nameOne.value = newContract.partners[0]?.name
       nameTwo.value = newContract.partners[1]?.name
       promiseOne.value = newContract.partners[0]?.promise?.description
       promiseTwo.value = newContract.partners[1]?.promise?.description
+
+      await nextTick()
+
+      setTimeout(() => {
+        pdf.value.download()
+      }, 200)
     }
   },
 )
