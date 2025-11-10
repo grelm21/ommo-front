@@ -193,7 +193,7 @@ onUnmounted(() => {
     </div>
   </div>
 
-  <div ref="namesFormRef" class="flex w-full justify-center xl:mt-10 mt-0 form-container overflow-hidden relative">
+  <div ref="namesFormRef" class="flex w-full justify-center xl:mt-10 mt-0 form-container relative">
     <FormComponent />
   </div>
 </template>
@@ -261,7 +261,7 @@ onUnmounted(() => {
 .premiere-text {
   @apply inline-block absolute text-white text-[28px] font-normal leading-[100%] mx-auto z-10 whitespace-nowrap;
   top: 23%;
-  left: 53%;
+  left: 50%;
   transform: translate(-50%, -50%) rotate(-3deg);
   transform-origin: center center;
   will-change: transform;
@@ -277,13 +277,13 @@ onUnmounted(() => {
 }
 
 .is-safari .premiere-text {
-  transform: translate(-70%, -50%) rotate(-3deg);
+  transform: translate(-60%, -50%) rotate(-3deg);
 }
 
 @media not all and (min-resolution: 0.001dpcm) {
   @supports (-webkit-appearance: none) {
     .premiere-text {
-      transform: translate(-70%, -50%) rotate(-3deg);
+      transform: translate(-60%, -50%) rotate(-3deg);
     }
   }
 }
@@ -743,9 +743,8 @@ onUnmounted(() => {
   }
 }
 @media (max-width: 430px){
-
   .premiere-text {
-    left: 60%;
+    left: 45%;
   }
   .contract-button-inner {
     @apply py-2;
@@ -753,7 +752,7 @@ onUnmounted(() => {
 }
 @media (max-width: 390px){
   .premiere-text {
-    left: 62%;
+    left: 45%;
   }
   .contract-button-inner {
     @apply py-2;
