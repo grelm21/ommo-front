@@ -141,4 +141,22 @@ onMounted(async () => {
   -webkit-text-fill-color: transparent;
   z-index: 0;
 }
+
+@media  (min-width: 400px) and (max-width: 420px) {
+  .title-shadow {
+    top: 30%;
+    left: 8.5%;
+  }
+}
+@media (max-width: 430px) {
+  .title-shadow {
+    top: 30%;
+    left: 10.5%;
+  }
+}
+@media (max-width: 390px) {
+  top: 0;
+  left: 0;
+}
+
 </style>

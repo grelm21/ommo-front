@@ -28,11 +28,11 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <form class="flex flex-col w-full items-center justify-center" @submit.prevent="handleSubmit">
+  <form class="flex flex-col w-full items-center justify-center handjet-normal" @submit.prevent="handleSubmit">
     <div class="name-inputs">
       <div class="title-placeholder handjet-normal">Выберите пункты договора</div>
       <div>
-        <label for="partnerOne" class="input-label caveat-bold">{{
+        <label for="partnerOne" class="input-label caveat-bold capitalize">{{
           contractStore.partnerOne.name || 'Ваше имя'
         }}</label>
         <div class="input-wrapper">
@@ -47,7 +47,7 @@ const handleSubmit = async () => {
         <img src="@/assets/plus.svg" class="flex w-[32px] text-center" />
       </div>
       <div>
-        <label for="partnerTwo" class="input-label caveat-bold">{{
+        <label for="partnerTwo" class="input-label caveat-bold capitalize">{{
           contractStore.partnerTwo.name || 'Имя партнера'
         }}</label>
         <div class="input-wrapper">
@@ -105,7 +105,7 @@ const handleSubmit = async () => {
   @apply mb-[16px] pb-[2px];
   display: flex;
   color: #d32fe8;
-  font-size: 32px;
+  font-size: 36px;
   text-shadow: 3px 1px #ff00f233;
   text-shadow: 0 0 8px 0 #4e027a80;
 }

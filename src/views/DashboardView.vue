@@ -9,7 +9,7 @@ import TimerTitle from '@/components/icons/TimerTitle.vue'
 import NoteIcon from '@/components/icons/NoteIcon.vue'
 import PlaylistComponent from '@/components/PlaylistComponent.vue'
 
-const targetDate = new Date('2025-11-11T00:00:00').getTime()
+const targetDate = new Date('2025-11-28T00:00:00').getTime()
 const days = ref(0)
 const hours = ref(0)
 const minutes = ref(0)
@@ -54,7 +54,8 @@ const scrollToNamesForm = () => {
     // Точное центрирование
     const elementRect = element.getBoundingClientRect()
     const absoluteElementTop = elementRect.top + window.pageYOffset
-    const middle = absoluteElementTop - window.innerHeight / 2 + elementRect.height / heightCoefficient
+    const middle =
+      absoluteElementTop - window.innerHeight / 2 + elementRect.height / heightCoefficient
 
     window.scrollTo({
       top: middle,
@@ -68,9 +69,12 @@ const scrollToNamesForm = () => {
   }
 }
 
-const openYMusic = () => {
-  window.open('https://music.yandex.ru/users/PortGrad/playlists/1002?ref_id=6C255153-B5A6-468D-BC87-0835CAB0B8F4&utm_medium=copy_link', '_blank');
-};
+const openPreSave = () => {
+  window.open(
+    'https://band.link/MVTNL',
+    '_blank',
+  )
+}
 
 onMounted(() => {
   updateTimer() // Первый запуск сразу
@@ -126,8 +130,14 @@ onUnmounted(() => {
         <h1 class="premiere-text russo-one-regular">Скоро премьера песни</h1>
 
         <div class="main-title-container">
-          <span class="main-title handjet-extra-bold"> ОММО-Страховка любви </span>
-          <span class="main-title-shadow handjet-extra-bold"> ОММО-Страховка любви </span>
+          <span>
+            <span class="ommo handjet-extra-bold"> ОММО</span>
+            <span class="ommo-shadow handjet-extra-bold"> ОММО</span>
+          </span>
+          <span>
+            <span class="main-title handjet-extra-bold">Страховка любви </span>
+            <span class="main-title-shadow handjet-extra-bold">Страховка любви </span>
+          </span>
         </div>
       </div>
     </div>
@@ -144,7 +154,10 @@ onUnmounted(() => {
             <img :src="audio" class="relative" />
 
             <button
-              class="absolute left-44 top-36 transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-500 ease-in-out hover:scale-125 z-50" type="button" @click="openYMusic">
+              class="absolute left-44 top-36 transform -translate-x-1/2 -translate-y-1/2 transition-transform duration-500 ease-in-out hover:scale-125 z-50"
+              type="button"
+              @click="openPreSave"
+            >
               <NoteIcon class="w-[70px]" />
             </button>
           </div>
@@ -162,7 +175,7 @@ onUnmounted(() => {
     </div>
 
     <!-- Кнопка -->
-    <div class="grid gap-y-5 xl:justify-end justify-center md:pr-24 sm:pr-12 xl:pr-48 mt-10">
+    <div class="grid gap-y-5 xl:justify-end justify-center md:pr-24 sm:pr-12 xl:pr-48 mt-10 z-50">
       <button class="contract-button russo-one-regular" @click="scrollToNamesForm">
         <span class="contract-button-inner">
           <img :src="heart" class="little-heart" />
@@ -254,14 +267,14 @@ onUnmounted(() => {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 
-  filter: url('#textDistortion') url('#textStroke')
-  drop-shadow(0 0 12px rgba(50, 63, 190, 0.7));
+  filter: url('#textDistortion') url('#textStroke') drop-shadow(0 0 12px rgba(50, 63, 190, 0.7));
   text-shadow:
     -3px -3px 0 #202c97,
     3px -3px 0 #202c97,
     -3px 3px 0 #202c97,
     3px 3px 0 #202c97;
 }
+
 .is-safari .premiere-text {
   transform: translate(-60%, -50%) rotate(-3deg);
 }
@@ -276,8 +289,8 @@ onUnmounted(() => {
 
 /* Main title */
 .main-title-container {
-  @apply absolute z-10 whitespace-nowrap;
-  top: 37%;
+  @apply absolute z-10 whitespace-nowrap text-center grid gap-4;
+  top: 40%;
   left: 50%;
   transform: translate(-48%, -50%) rotate(-3deg);
   letter-spacing: 4px;
@@ -295,9 +308,29 @@ onUnmounted(() => {
     0 0 36px rgba(82, 94, 208, 0.9);
 }
 
+.ommo {
+  @apply relative block text-[64px];
+  color: #00eeff;
+  filter: url('#textDistortion');
+  text-shadow:
+    -2px -2px 0 #525ed0,
+    2px -2px 0 #525ed0,
+    -2px 2px 0 #525ed0,
+    2px 2px 0 #525ed0,
+    0 0 36px rgba(82, 94, 208, 0.9);
+}
+
 .main-title-shadow {
   @apply absolute block text-[64px] w-full;
-  top: 0.7rem;
+  top: 3.5rem;
+  left: 0.5rem;
+  color: rgba(255, 0, 242, 0.3);
+  z-index: -1;
+}
+
+.ommo-shadow {
+  @apply absolute block text-[64px] w-full;
+  top: 0.5rem;
   left: 0.5rem;
   color: rgba(255, 0, 242, 0.3);
   z-index: -1;
@@ -416,6 +449,7 @@ onUnmounted(() => {
     transform: translateZ(0) scale(0.95);
   }
 }
+
 @media (max-width: 1280px) {
   .timer-container {
     top: 10%;
@@ -443,8 +477,14 @@ onUnmounted(() => {
   .main-title-shadow {
     @apply text-[36px];
   }
+
+  .ommo,
+  .ommo-shadow {
+    @apply text-[36px];
+  }
+
   .main-title-container {
-    top: 25%;
+    top: 40%;
   }
 
   .date-container {
@@ -471,7 +511,7 @@ onUnmounted(() => {
   }
 
   .main-title-container {
-    top: 25%;
+    top: 40%;
   }
 
   .timer-container {
@@ -525,14 +565,24 @@ onUnmounted(() => {
     transform: translate(-50%, -50%) rotate(-3deg);
   }
 
-  .main-title {
+  .main-title, .ommo,
+  .main-title-shadow, .ommo-shadow {
     @apply text-[36px];
   }
+
   .main-title-container {
-    top: 35%;
+    top: 42%;
+  }
+  .ommo-shadow {
+    top: 0.3rem;
+    left: 0.3rem;
   }
   .main-title-shadow {
-    @apply text-[36px];
+    top: 2.6rem;
+    left: 0.3rem;
+  }
+  .main-title-container {
+    @apply grid gap-1;
   }
 
   .date-container {
@@ -562,7 +612,7 @@ onUnmounted(() => {
   }
 
   .under-button-text {
-    @apply text-sm;
+    @apply text-sm hidden;
   }
 
   .arrow {
@@ -572,9 +622,20 @@ onUnmounted(() => {
 
 @media (max-width: 480px) {
   /* main-title sizes */
-  .main-title,
-  .main-title-shadow {
+  .main-title, .ommo,
+  .main-title-shadow, .ommo-shadow {
     @apply text-[32px];
+  }
+  .ommo-shadow {
+    top: 0.3rem;
+    left: 0.3rem;
+  }
+  .main-title-shadow {
+    top: 2.6rem;
+    left: 0.3rem;
+  }
+  .main-title-container {
+    @apply grid gap-1;
   }
 }
 
@@ -583,6 +644,16 @@ onUnmounted(() => {
     top: 0;
     width: 100%;
   }
+  .ommo-shadow {
+    top: 0.3rem;
+    left: 0.3rem;
+  }
+  .main-title-shadow {
+    top: 2.6rem;
+    left: 0.3rem;
+  }
+  .main-title-container {
+    @apply grid gap-1;
+  }
 }
-
 </style>

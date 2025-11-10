@@ -1,13 +1,15 @@
 <script setup>
 import { useContractStore } from '@/stores/contractStore'
+
 const contractStore = useContractStore()
 
-import { onUpdated, ref, watch} from 'vue'
+import { onUpdated, ref, watch } from 'vue'
 
 import VkIcon from '@/components/icons/VkIcon.vue'
 import YouTubeIcon from '@/components/icons/YouTubeIcon.vue'
 import TelegramIcon from '@/components/icons/TelegramIcon.vue'
 import AgainIcon from '@/components/icons/AgainIcon.vue'
+import PreSaveIcon from '@/components/icons/PreSaveIcon.vue'
 
 const vkContainer = ref(null)
 
@@ -65,7 +67,7 @@ const openTelegram = () => {
 }
 
 // Это теперь пресейв
-const openYMusic = () => {
+const openPreSave = () => {
   window.open(
     // 'https://music.yandex.ru/users/PortGrad/playlists/1002?ref_id=6C255153-B5A6-468D-BC87-0835CAB0B8F4&utm_medium=copy_link',
     'https://band.link/MVTNL',
@@ -105,7 +107,7 @@ onUpdated(() => {
 
 <template>
   <Transition>
-    <div class="flex flex-col w-full items-center justify-center display-none" v-show="!loading">
+    <div class="flex flex-col w-full items-center justify-center">
       <div class="name-inputs">
         <div class="title-placeholder handjet-normal">Ваш договор</div>
         <div>
@@ -128,17 +130,18 @@ onUpdated(() => {
             type="button"
             @click="resetContract"
           >
-            <AgainIcon /> Попробовать снова
+            <AgainIcon />
+            Попробовать снова
           </button>
         </div>
         <div class="flex gap-[8px] items-center justify-center">
           <div class="text-3xl text-white handjet-normal">Активировать контракт:</div>
           <button
-            class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
+            class="flex items-center justify-end h-[32px] w-[32px] hover-scale"
             type="button"
-            @click="openYMusic"
+            @click="openPreSave"
           >
-            <YouTubeIcon />
+            <PreSaveIcon />
           </button>
         </div>
         <div class="flex gap-[8px] items-center justify-center">
