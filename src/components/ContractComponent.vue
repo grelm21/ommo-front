@@ -47,8 +47,8 @@ watch(
   () => contractStore.contract,
   (newContract) => {
     if (newContract) {
-      promiseOne.value = promiseStore.byId(newContract.partners[0]?.promise_id)
-      promiseTwo.value = promiseStore.byId(newContract.partners[1]?.promise_id)
+      promiseOne.value = newContract.partners[0]?.promise?.description
+      promiseTwo.value = newContract.partners[1]?.promise?.description
       nameOne.value = newContract.partners[0]?.name || contractStore.partnerOne.name
       nameTwo.value = newContract.partners[1]?.name || contractStore.partnerTwo.name
       id.value = newContract.id
@@ -111,13 +111,13 @@ onUpdated(() => {
       <div>
         <label for="partnerOne" class="input-label caveat-bold">{{ nameOne }}</label>
         <div class="promise-text caveat-extrabold">
-          Обязуюсь {{ promiseOne?.description || '' }}
+          Обязуюсь {{ promiseOne || '' }}
         </div>
       </div>
       <div>
         <label for="partnerTwo" class="input-label caveat-bold">{{ nameTwo }}</label>
         <div class="promise-text caveat-extrabold">
-          Обязуюсь {{ promiseTwo?.description || '' }}
+          Обязуюсь {{ promiseTwo || '' }}
         </div>
       </div>
       <div class="flex text-justify handjet-normal text-[20px] text-white">

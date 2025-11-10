@@ -27,11 +27,11 @@
       <div class="flex flex-grow flex-col items-center justify-center">
         <div class="flex w-fit mx-auto playfair-bold text-[22px]">{{ nameOne.toUpperCase() }}</div>
         <p class="flex w-fit px-[40px] playfair-italic text-[20px] text-center mt-[1px] text-wrap">
-          Обязуюсь {{ promiseOne?.description }}
+          Обязуюсь {{ promiseOne || '' }}
         </p>
         <div class="flex w-fit mx-auto playfair-bold text-[22px] mt-[30px]">{{ nameTwo.toUpperCase() }}</div>
         <p class="flex w-fit px-[40px] playfair-italic text-[20px] text-center mt-[1px] text-wrap ">
-          Обязуюсь {{ promiseTwo?.description }}
+          Обязуюсь {{ promiseTwo || '' }}
         </p>
       </div>
 
@@ -78,8 +78,6 @@
 import { ref, defineProps, onMounted, watch } from 'vue'
 import { useContractStore } from '@/stores/contractStore'
 const contractStore = useContractStore()
-import { usePromiseStore } from '@/stores/promiseStore'
-const promiseStore = usePromiseStore()
 
 const pdf = ref(true)
 const pdfOptions = {
@@ -99,7 +97,6 @@ const nameOne = ref('')
 const nameTwo = ref('')
 
 onMounted(async () => {
-  await promiseStore.fetchItems()
   await contractStore.fetchContract(props.id)
 })
 
@@ -107,14 +104,10 @@ watch(
   () => contractStore.contract,
   (newContract) => {
     if (newContract) {
-    promiseStore.fetchItems()
-
-    console.log(newContract)
-
       nameOne.value = newContract.partners[0]?.name
       nameTwo.value = newContract.partners[1]?.name
-      promiseOne.value = promiseStore.byId(newContract.partners[0]?.promise_id)
-      promiseTwo.value = promiseStore.byId(newContract.partners[1]?.promise_id)
+      promiseOne.value = newContract.partners[0]?.promise?.description
+      promiseTwo.value = newContract.partners[1]?.promise?.description
       setTimeout(() => {
         pdf.value.download()
         // window.close()
