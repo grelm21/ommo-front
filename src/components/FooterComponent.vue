@@ -17,11 +17,11 @@
 <style scoped>
 
 .footer-wrapper {
-  @apply absolute xl:-bottom-96 -bottom-40 left-0 right-0 overflow-clip;
+  @apply absolute xl:-bottom-[600px] -bottom-0 left-0 right-0 overflow-clip;
 }
 
 .footer-container {
-  @apply flex gap-x-10 text-4xl text-white justify-center py-7 items-center;
+  @apply flex gap-x-10 text-4xl text-white justify-center py-12 items-center;
   position: relative;
   background: linear-gradient(135deg, rgba(21, 0, 54, 1), rgba(27, 3, 35, 1));
   width: 100%;

@@ -1,8 +1,7 @@
 <script setup>
 import { useContractStore } from '@/stores/contractStore'
+
 const contractStore = useContractStore()
-import { usePromiseStore } from '@/stores/promiseStore'
-const promiseStore = usePromiseStore()
 
 import { onUpdated, ref, watch } from 'vue'
 
@@ -10,7 +9,7 @@ import VkIcon from '@/components/icons/VkIcon.vue'
 import YouTubeIcon from '@/components/icons/YouTubeIcon.vue'
 import TelegramIcon from '@/components/icons/TelegramIcon.vue'
 import AgainIcon from '@/components/icons/AgainIcon.vue'
-
+import PreSaveIcon from '@/components/icons/PreSaveIcon.vue'
 
 const vkContainer = ref(null)
 
@@ -21,6 +20,8 @@ const nameOne = ref(null)
 const nameTwo = ref(null)
 const id = ref(contractStore.contract?.id)
 
+const loading = ref(true)
+
 const resetContract = () => {
   // Сохраняем позицию скролла
   const scrollPosition = window.scrollY
@@ -29,7 +30,6 @@ const resetContract = () => {
   // contractStore.state = 'names'
   // contractStore.partner_one = { name: '' }
   // contractStore.partner_two = { name: '' }
-  // contractStore.contract = null
   contractStore.stateBackward()
 
   // Очищаем URL параметры
@@ -45,15 +45,15 @@ const resetContract = () => {
 
 watch(
   () => contractStore.contract,
-  (newContract) => {
-    if (newContract) {
-      promiseOne.value = promiseStore.byId(newContract.partners[0]?.promise_id)
-      promiseTwo.value = promiseStore.byId(newContract.partners[1]?.promise_id)
-      nameOne.value = newContract.partners[0]?.name || contractStore.partnerOne.name
-      nameTwo.value = newContract.partners[1]?.name || contractStore.partnerTwo.name
-      id.value = newContract.id
-    }
+  (newContract, oldContract) => {
+    promiseOne.value = newContract?.partners[0]?.promise?.description
+    promiseTwo.value = newContract?.partners[1]?.promise?.description
+    nameOne.value = newContract?.partners[0]?.name || ''
+    nameTwo.value = newContract?.partners[1]?.name || ''
+    id.value = newContract?.id
+    loading.value = false
   },
+  { deep: true },
 )
 
 const openYouTube = () => {
@@ -67,7 +67,7 @@ const openTelegram = () => {
 }
 
 // Это теперь пресейв
-const openYMusic = () => {
+const openPreSave = () => {
   window.open(
     // 'https://music.yandex.ru/users/PortGrad/playlists/1002?ref_id=6C255153-B5A6-468D-BC87-0835CAB0B8F4&utm_medium=copy_link',
     'https://band.link/MVTNL',
@@ -75,23 +75,11 @@ const openYMusic = () => {
   )
 }
 
-// onUpdated(() => {
-//   if (window.VK && window.VK.Share) {
-//     vkContainer.value.innerHTML = window.VK.Share.button(
-//       {
-//         url: import.meta.env.VITE_URL + "?contract=" + id.value,
-//         title: 'Я подписал контракт любви со своей второй половинкой! А ты?'
-//       },
-//       {
-//         type: 'custom',
-//         text: `<div class='flex justify-center handjet-normal text-[20px] text-white underline
-//           cursor-pointer'> Поделиться в ВК </div>`,
-//       },
-//     )
-//   }
-// })
-
 onUpdated(() => {
+  fillVkContainer()
+})
+
+const fillVkContainer = () => {
   const url = import.meta.env.VITE_URL + '?contract=' + id.value
   const text = 'Я подписал контракт любви со свой второй половинкой! А ты?'
   const shareUrl = `https://vk.com/share.php?url=${encodeURIComponent(url)}&comment=${encodeURIComponent(text)}`
@@ -101,92 +89,107 @@ onUpdated(() => {
       class="flex justify-center handjet-normal text-[20px] text-white underline cursor-pointer">
       Поделиться в ВК
     </a>`
+}
+
+onUpdated(() => {
+  // const url = import.meta.env.VITE_URL + '?contract=' + id.value
+  // const text = 'Я подписал контракт любви со свой второй половинкой! А ты?'
+  // const shareUrl = `https://vk.com/share.php?url=${encodeURIComponent(url)}&comment=${encodeURIComponent(text)}`
+  //
+  // vkContainer.value.innerHTML = `
+  //   <a href="${shareUrl}" target="_blank" rel="noopener noreferrer"
+  //     class="flex justify-center handjet-normal text-[20px] text-white underline cursor-pointer">
+  //     Поделиться в ВК
+  //   </a>`
+  // fillVkContainer()
 })
 </script>
 
 <template>
-  <div class="flex flex-col w-full items-center justify-center">
-    <div class="name-inputs">
-      <div class="title-placeholder handjet-normal">Ваш договор</div>
-      <div>
-        <label for="partnerOne" class="input-label caveat-bold">{{ nameOne }}</label>
-        <div class="promise-text caveat-extrabold">
-          Обязуюсь {{ promiseOne?.description || '' }}
+  <Transition>
+    <div class="flex flex-col w-full items-center justify-center display-none" v-show="!loading">
+      <div class="name-inputs">
+        <div class="title-placeholder handjet-normal">Ваш договор</div>
+        <div>
+          <label for="partnerOne" class="input-label caveat-bold">{{ nameOne }}</label>
+          <div class="promise-text caveat-extrabold">Обязуюсь {{ promiseOne || '' }}</div>
         </div>
-      </div>
-      <div>
-        <label for="partnerTwo" class="input-label caveat-bold">{{ nameTwo }}</label>
-        <div class="promise-text caveat-extrabold">
-          Обязуюсь {{ promiseTwo?.description || '' }}
+        <div>
+          <label for="partnerTwo" class="input-label caveat-bold">{{ nameTwo }}</label>
+          <div class="promise-text caveat-extrabold">Обязуюсь {{ promiseTwo || '' }}</div>
         </div>
-      </div>
-      <div class="flex text-justify handjet-normal text-[20px] text-white">
-        Поздравляем! Вы составили контракт любви. Он вступит в силу 10 ноября, когда выйдет наша
-        новая песня. Для полной активации необходимо прослушать нашу песню =).<br />А пока,
-        подпишитесь на наш плейлист на стримингах, поделитесь контрактом с друзьями в ВК и скачайте
-        .pdf версию!
-      </div>
-      <div class="flex gap-[8px] items-center justify-center">
-        <button
-          class="flex items-center justify-end xl:text-[22px] text-base h-[40px] text-[#7B3994] hover-scale underline handjet-normal"
-          type="button"
-          @click="resetContract"
-        >
-          <AgainIcon /> Попробовать снова
-        </button>
-      </div>
-      <div class="flex gap-[8px] items-center justify-center">
-        <div class="text-3xl text-white handjet-normal">Активировать контракт:</div>
-        <button
-          class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
-          type="button"
-          @click="openYMusic"
-        >
-          <YouTubeIcon />
-        </button>
-      </div>
-      <div class="flex gap-[8px] items-center justify-center">
-        <div class="subscribe handjet-normal">Подписаться на нас:</div>
-        <button
-          class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
-          type="button"
-          @click="openYouTube"
-        >
-          <YouTubeIcon />
-        </button>
-        <button
-          class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
-          type="button"
-          @click="openVk"
-        >
-          <VkIcon />
-        </button>
-        <button
-          class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
-          type="button"
-          @click="openTelegram"
-        >
-          <TelegramIcon />
-        </button>
-      </div>
-      <div>
-        <div
-          class="flex justify-center handjet-normal text-[32px] text-white underline cursor-pointer"
-        >
+        <div class="flex text-justify handjet-normal text-[20px] text-white">
+          Поздравляем! Вы составили контракт любви. Он вступит в силу 10 ноября, когда выйдет наша
+          новая песня. Для полной активации необходимо прослушать нашу песню =).<br />А пока,
+          подпишитесь на наш плейлист на стримингах, поделитесь контрактом с друзьями в ВК и
+          скачайте .pdf версию!
+        </div>
+        <div class="flex gap-[8px] items-center justify-center">
+          <button
+            class="flex items-center justify-end xl:text-[22px] text-base h-[40px] text-[#7B3994] hover-scale underline handjet-normal"
+            type="button"
+            @click="resetContract"
+          >
+            <AgainIcon />
+            Попробовать снова
+          </button>
+        </div>
+        <div class="flex gap-[8px] items-center justify-center">
+          <div class="text-3xl text-white handjet-normal">Активировать контракт:</div>
+          <button
+            class="flex items-center justify-end h-[32px] w-[32px] hover-scale"
+            type="button"
+            @click="openPreSave"
+          >
+            <PreSaveIcon />
+          </button>
+        </div>
+        <div class="flex gap-[8px] items-center justify-center">
+          <div class="subscribe handjet-normal">Подписаться на нас:</div>
+          <button
+            class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
+            type="button"
+            @click="openYouTube"
+          >
+            <YouTubeIcon />
+          </button>
+          <button
+            class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
+            type="button"
+            @click="openVk"
+          >
+            <VkIcon />
+          </button>
+          <button
+            class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
+            type="button"
+            @click="openTelegram"
+          >
+            <TelegramIcon />
+          </button>
+        </div>
+        <div>
           <div
-            ref="vkContainer"
             class="flex justify-center handjet-normal text-[32px] text-white underline cursor-pointer"
-          />
+          >
+            <div
+              ref="vkContainer"
+              class="flex justify-center handjet-normal text-[32px] text-white underline cursor-pointer"
+            />
+          </div>
+          <RouterLink
+            v-if="id"
+            :to="{ name: 'PdfContract', params: { id } }"
+            target="_blank"
+            class="flex justify-center handjet-normal text-[20px] text-white underline cursor-pointer"
+            @click="handleDownload"
+          >
+            Скачать контракт .pdf
+          </RouterLink>
         </div>
-        <RouterLink v-if="id" :to="{ name: 'PdfContract', params: { id } }" target="_blank"
-          class="flex justify-center handjet-normal text-[20px] text-white underline cursor-pointer"
-          @click="handleDownload"
-        >
-          Скачать контракт .pdf
-        </RouterLink>
       </div>
     </div>
-  </div>
+  </Transition>
 </template>
 
 <style scoped>

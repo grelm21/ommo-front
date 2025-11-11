@@ -15,7 +15,7 @@ export const useContractStore = defineStore('contractStore', {
       name: '',
       promise_id: null,
     },
-    isLoading: true,
+    isLoading: false,
     error: null,
     state: 'names',
     states: ['names', 'promises', 'contract'],
@@ -73,12 +73,13 @@ export const useContractStore = defineStore('contractStore', {
         .then((response) => {
           this.contract = response.data
           console.log(this.contract)
+          this.isLoading = true
         })
         .catch((err) => {
           this.error = err
         })
         .finally(() => {
-          this.isLoading = false
+            this.isLoading = false
         })
     },
 
@@ -88,6 +89,7 @@ export const useContractStore = defineStore('contractStore', {
         .then((response) => {
           this.contract = response.data
           console.log(this.contract)
+          this.isLoading = true
         })
         .catch((err) => {
           this.error = err

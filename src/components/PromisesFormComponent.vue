@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from 'vue'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useContractStore } from '@/stores/contractStore'
 const contractStore = useContractStore()
 import { usePromiseStore } from '@/stores/promiseStore'
@@ -23,30 +23,39 @@ const handleSubmit = async () => {
   await contractStore.stateForward(contractStore.state)
 
   await contractStore.createContract()
-  }
+}
+
 </script>
 
 <template>
-  <form class="flex flex-col w-full items-center justify-center" @submit.prevent="handleSubmit">
+  <form class="flex flex-col w-full items-center justify-center handjet-normal" @submit.prevent="handleSubmit">
     <div class="name-inputs">
       <div class="title-placeholder handjet-normal">Выберите пункты договора</div>
       <div>
-        <label for="partnerOne" class="input-label caveat-bold">{{
+        <label for="partnerOne" class="input-label caveat-bold capitalize">{{
           contractStore.partnerOne.name || 'Ваше имя'
         }}</label>
         <div class="input-wrapper">
-          <DropDown :options="promiseStore.promisesWithImages" id="partnerOne" v-model="partnerOne"  />
+          <DropDown
+            :options="promiseStore.promisesWithImages"
+            id="partnerOne"
+            v-model="partnerOne"
+          />
         </div>
       </div>
       <div class="flex w-full justify-center items-center mt-[8px]">
         <img src="@/assets/plus.svg" class="flex w-[32px] text-center" />
       </div>
       <div>
-        <label for="partnerTwo" class="input-label caveat-bold">{{
+        <label for="partnerTwo" class="input-label caveat-bold capitalize">{{
           contractStore.partnerTwo.name || 'Имя партнера'
         }}</label>
         <div class="input-wrapper">
-          <DropDown :options="promiseStore.promisesWithImages" id="partnerTwo"  v-model="partnerTwo" />
+          <DropDown
+            :options="promiseStore.promisesWithImages"
+            id="partnerTwo"
+            v-model="partnerTwo"
+          />
         </div>
       </div>
     </div>
@@ -96,7 +105,7 @@ const handleSubmit = async () => {
   @apply mb-[16px] pb-[2px];
   display: flex;
   color: #d32fe8;
-  font-size: 32px;
+  font-size: 34px;
   text-shadow: 3px 1px #ff00f233;
   text-shadow: 0 0 8px 0 #4e027a80;
 }
@@ -154,7 +163,7 @@ select option {
   }
 
   &:hover svg {
-    color: #FF0004;
+    color: #ff0004;
   }
 }
 
