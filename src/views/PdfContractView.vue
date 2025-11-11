@@ -127,11 +127,51 @@
       </div>
     </v-pdf>
   </div>
+
+
+  <div class="flex gap-[8px] items-center justify-center mt-8">
+    <div class="text-3xl text-white handjet-normal">Активировать контракт:</div>
+    <button
+      class="flex items-center justify-end h-[32px] w-[32px] hover-scale"
+      type="button"
+      @click="openPreSave"
+    >
+      <PreSaveIcon />
+    </button>
+  </div>
+  <div class="flex gap-[8px] items-center justify-center">
+    <div class="subscribe handjet-normal">Подписаться на нас:</div>
+    <button
+      class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
+      type="button"
+      @click="openYouTube"
+    >
+      <YouTubeIcon />
+    </button>
+    <button
+      class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
+      type="button"
+      @click="openVk"
+    >
+      <VkIcon />
+    </button>
+    <button
+      class="flex items-center justify-end h-[40px] w-[40px] hover-scale"
+      type="button"
+      @click="openTelegram"
+    >
+      <TelegramIcon />
+    </button>
+  </div>
 </template>
 
 <script setup>
 import { ref, defineProps, onMounted, watch, nextTick } from 'vue'
 import { useContractStore } from '@/stores/contractStore'
+import VkIcon from '@/components/icons/VkIcon.vue'
+import YouTubeIcon from '@/components/icons/YouTubeIcon.vue'
+import PreSaveIcon from '@/components/icons/PreSaveIcon.vue'
+import TelegramIcon from '@/components/icons/TelegramIcon.vue'
 const contractStore = useContractStore()
 
 const pdf = ref(true)
@@ -152,6 +192,24 @@ const nameOne = ref('')
 const nameTwo = ref('')
 
 const placeholder = ref(true)
+const openYouTube = () => {
+  window.open('https://youtube.com/@ommo_ommo_ommo?si=WaPUf-Z6CVzSkuv', '_blank')
+}
+const openVk = () => {
+  window.open('https://vk.com/club232985627', '_blank')
+}
+const openTelegram = () => {
+  window.open('https://t.me/OMMO_spb', '_blank')
+}
+
+// Это теперь пресейв
+const openPreSave = () => {
+  window.open(
+    // 'https://music.yandex.ru/users/PortGrad/playlists/1002?ref_id=6C255153-B5A6-468D-BC87-0835CAB0B8F4&utm_medium=copy_link',
+    'https://band.link/MVTNL',
+    '_blank',
+  )
+}
 
 onMounted(async () => {
   await contractStore.fetchContract(props.id)
@@ -210,5 +268,16 @@ td {
 }
 th {
   background: #f0f0f0;
+}
+
+
+.subscribe {
+  font-size: 32px;
+  color: #ffffff;
+  text-shadow:
+    -2px -2px 0 #5449a8,
+    2px -2px 0 #5449a8,
+    -2px 2px 0 #5449a8,
+    2px 2px 0 #5449a8;
 }
 </style>
