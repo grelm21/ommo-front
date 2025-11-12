@@ -1,6 +1,7 @@
 <script setup>
 import BlueSqIcon from '@/components/icons/BlueSqIcon.vue'
 import OrangeSqIcon from '@/components/icons/OrangeSqIcon.vue'
+import SqIcon from '@/components/icons/SqIcon.vue'
 
 const galleryImages = Object.values(
   import.meta.glob('../assets/gallery/*.{jpg,jpeg,png,webp}', {
@@ -11,8 +12,7 @@ const galleryImages = Object.values(
 </script>
 <template>
   <div id="custom-controls-gallery" class="relative w-full pt-24" data-carousel="slide">
-    <BlueSqIcon class="blue-sq"/>
-    <OrangeSqIcon class="orange-sq"/>
+<!--    <OrangeSqIcon class="orange-sq"/>-->
     <div class="relative overflow-hidden rounded-lg h-[78vh] md:h-[88vh]">
       <div
         v-for="(image, index) in galleryImages"
@@ -23,6 +23,7 @@ const galleryImages = Object.values(
         <img :src="image" class="foto-item" alt="Gallery image" />
       </div>
     </div>
+    <SqIcon class="absolute top-1/2 left-1/2 max-h-full h-full w-auto transform -translate-x-1/2 -translate-y-1/2"/>
 
     <div class="flex justify-center items-start">
       <button type="button" class="flex justify-center items-center me-4 h-full cursor-pointer group focus:outline-none" data-carousel-prev>
