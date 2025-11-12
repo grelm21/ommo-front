@@ -163,6 +163,17 @@
       <TelegramIcon />
     </button>
   </div>
+
+  <div class="flex gap-2 items-center justify-center mt-3">
+    <button
+      class="flex items-center justify-end xl:text-[22px] text-base h-[40px] text-[#7B3994] hover-scale underline handjet-normal"
+      type="button"
+      @click="resetContract"
+    >
+      <AgainIcon />
+      Попробовать снова
+    </button>
+  </div>
 </template>
 
 <script setup>
@@ -172,6 +183,8 @@ import VkIcon from '@/components/icons/VkIcon.vue'
 import YouTubeIcon from '@/components/icons/YouTubeIcon.vue'
 import PreSaveIcon from '@/components/icons/PreSaveIcon.vue'
 import TelegramIcon from '@/components/icons/TelegramIcon.vue'
+import AgainIcon from '@/components/icons/AgainIcon.vue'
+import { useRouter } from 'vue-router'
 const contractStore = useContractStore()
 
 const pdf = ref(true)
@@ -219,6 +232,12 @@ const removePlaceholder = () => {
   if (placeholder.value) {
     placeholder.value = false
   }
+}
+
+const router = useRouter()
+
+const resetContract = () => {
+  router.push('/')
 }
 
 watch(
