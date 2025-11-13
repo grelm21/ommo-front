@@ -56,10 +56,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="dropdown-wrapper caveat-bold" ref="dropDown">
+  <div class="dropdown-wrapper" ref="dropDown">
 
     <div
-      class="dropdown-selected-option"
+      class="dropdown-selected-option caveat-bold"
       :class="{ 'dropdown-selected-option--active': isDropdownVisible }"
       @click="isDropdownVisible = true"
     >
@@ -70,7 +70,7 @@ onBeforeUnmount(() => {
         class="option-image-selected"
       />
       <span class="text-[22px]"
-            :class="{ 'text-gray-placeholder': !selectedOption, 'text-white': selectedOption }">{{ displayText }}</span>
+            :class="{ 'text-gray-placeholder': !selectedOption, 'selected-text': selectedOption }">{{ displayText }}</span>
     </div>
     <transition name="slide-fade">
       <div class="options-wrapper" v-if="isDropdownVisible">
@@ -113,7 +113,7 @@ onBeforeUnmount(() => {
   padding: 0 32px;
   box-shadow: 0 0 12px 0 #802b8699;
   color: #ffffff;
-  font-size: 24px;
+  font-size: 26px;
 
     &.has-error {
     border: 5px solid #d2115e !important;
@@ -127,8 +127,8 @@ onBeforeUnmount(() => {
 }
 
 .option-image-selected {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
 }
 
@@ -188,10 +188,11 @@ onBeforeUnmount(() => {
 }
 
 .option-text {
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 20px;
   text-align: center;
-  line-height: 1.2;
+  line-height: 1;
+  font-family: 'Handjet', sans-serif;
+  font-weight: 300;
 }
 
 .text-gray-placeholder {
@@ -214,5 +215,13 @@ onBeforeUnmount(() => {
 .slide-fade-leave-to {
   transform: translateY(-10px);
   opacity: 0;
+}
+
+.selected-text {
+  font-size: 24px;
+  line-height: 1;
+  font-family: 'Handjet', sans-serif;
+  font-weight: 300;
+  color: #ffffff;
 }
 </style>

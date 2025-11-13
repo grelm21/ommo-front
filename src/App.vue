@@ -1,6 +1,7 @@
 <script setup>
 import NavbarComponent from './components/NavbarComponent.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
+import GalleryCarouselComponent from '@/components/GalleryCarouselComponent.vue'
 </script>
 
 <template>
@@ -12,6 +13,7 @@ import FooterComponent from '@/components/FooterComponent.vue'
       <NavbarComponent />
       <router-view />
     </div>
+    <GalleryCarouselComponent id="gallery-section"/>
     <FooterComponent />
   </div>
 </template>

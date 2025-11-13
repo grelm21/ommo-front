@@ -84,9 +84,9 @@ onMounted(async () => {
   pt-[38px] pb-[80px];
   position: relative;
   background: linear-gradient(to bottom, #0b002d, #170325);
-  /* background: gray; */
-  box-shadow: 0 4px 4px 0 #00000040;
+  box-shadow: 0 4px 4px 0 #00000040; /* чтобы подсветка не вылезала за края */
 }
+
 
 .flashing-square {
   position: absolute;
@@ -141,4 +141,42 @@ onMounted(async () => {
   -webkit-text-fill-color: transparent;
   z-index: 0;
 }
+
+@media  (min-width: 400px) and (max-width: 420px) {
+  .title-shadow {
+    top: 30%;
+    left: 8.5%;
+  }
+  .form-container {
+
+  }
+  .flashing-square {
+    display: none;
+  }
+}
+@media (max-width: 430px) {
+  .title-shadow {
+    top: 30%;
+    left: 10.5%;
+  }
+  .form-container {
+
+  }
+  .flashing-square {
+    display: none;
+  }
+}
+@media (max-width: 390px) {
+
+  .title-shadow {
+    left: 6%;
+  }
+  .form-container {
+
+  }
+  .flashing-square {
+    display: none;
+  }
+}
+
 </style>
