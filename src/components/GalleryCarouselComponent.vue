@@ -1,14 +1,22 @@
 <script setup>
-import BlueSqIcon from '@/components/icons/BlueSqIcon.vue'
-import OrangeSqIcon from '@/components/icons/OrangeSqIcon.vue'
 import SqIcon from '@/components/icons/SqIcon.vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 
-const galleryImages = Object.values(
+const isMobile = window.innerWidth <= 480;
+const excludedForMobile = ['4.png', '3T1A8455.png', '3T1A8449.png', '3T1A8448.png', '3T1A8424.png' ]
+const galleryImages = Object.entries(
   import.meta.glob('../assets/gallery/*.{jpg,jpeg,png,webp}', {
     eager: true,
     import: 'default'
   })
-).map(path => new URL(path, import.meta.url).href);
+)
+  .filter(([path]) => {
+    if (isMobile) {
+      return !excludedForMobile.some(name => path.includes(name));
+    }
+    return true;
+  })
+  .map(([_, path]) => new URL(path, import.meta.url).href);
 </script>
 <template>
   <div id="custom-controls-gallery" class="relative w-full pt-24" data-carousel="slide">
