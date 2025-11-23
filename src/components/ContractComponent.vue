@@ -81,7 +81,7 @@ onUpdated(() => {
 
 const fillVkContainer = () => {
   const url = import.meta.env.VITE_URL + '?contract=' + id.value
-  const text = `Я подписал контракт любви со свой второй половинкой! А ты? #страховкалюбви #оммо`
+  const text = `Страховка любви от ОММО подписана! Твой черед! #страховкалюбви #ОММО`
   const shareUrl = `https://vk.com/share.php?url=${encodeURIComponent(url)}&comment=${encodeURIComponent(text)}`
 
   vkContainer.value.innerHTML = `
