@@ -57,7 +57,7 @@ watch(
 )
 
 const openYouTube = () => {
-  window.open('https://youtube.com/@ommo_ommo_ommo?si=WaPUf-Z6CVzSkuv', '_blank')
+  window.open('https://youtube.com/@ommo_russia?si=6NomgGNGd0fFeZa_', '_blank')
 }
 const openVk = () => {
   window.open('https://vk.com/club232985627', '_blank')
@@ -111,18 +111,19 @@ onUpdated(() => {
       <div class="name-inputs">
         <div class="title-placeholder handjet-normal">Ваш договор</div>
         <div>
-          <label for="partnerOne" class="input-label caveat-bold">{{ nameOne }}</label>
+          <label for="partnerOne" class="input-label caveat-bold capitalize">{{ nameOne }}</label>
           <div class="promise-text caveat-extrabold">Обязуюсь {{ promiseOne || '' }}</div>
         </div>
         <div>
-          <label for="partnerTwo" class="input-label caveat-bold">{{ nameTwo }}</label>
+          <label for="partnerTwo" class="input-label caveat-bold capitalize">{{ nameTwo }}</label>
           <div class="promise-text caveat-extrabold">Обязуюсь {{ promiseTwo || '' }}</div>
         </div>
-        <div class="flex text-justify handjet-normal text-[20px] text-white">
-          Поздравляем! Вы составили контракт любви. Он вступит в силу 10 ноября, когда выйдет наша
-          новая песня. Для полной активации необходимо прослушать нашу песню =).<br />А пока,
-          подпишитесь на наш плейлист на стримингах, поделитесь контрактом с друзьями в ВК и
-          скачайте .pdf версию!
+        <div class="block text-justify handjet-normal text-[20px] text-white">
+          Поздравляем! Вы составили контракт любви. Он вступит в силу <p class="inline-flex text-[#E5E82F]">28 ноября</p>, когда выйдет наша
+          новая песня. Для полной активации необходимо добавить нашу песню себе в пресейв на любой
+          из доступных платформ =).<br />А пока,
+          подпишитесь на наши соцсети, поделитесь контрактом с друзьями в ВК и
+          скачайте его .pdf версию!
         </div>
         <div class="flex gap-[8px] items-center justify-center">
           <button

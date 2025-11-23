@@ -7,7 +7,7 @@ import NoteIcon from '@/components/icons/NoteIcon.vue'
 import TelegramIcon from '@/components/icons/TelegramIcon.vue'
 
 const openYouTube = () => {
-  window.open('https://youtube.com/@ommo_ommo_ommo?si=WaPUf-Z6CVzSkuv', '_blank');
+  window.open('https://youtube.com/@ommo_russia?si=6NomgGNGd0fFeZa_', '_blank');
 };
 const openVk = () => {
   window.open('https://vk.com/club232985627', '_blank');
