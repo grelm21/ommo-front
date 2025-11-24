@@ -260,6 +260,7 @@ const resetContract = () => {
 const manualDownload = async () => {
   const element = pdf.value.$el
 
+  // 1️⃣ Генерим PDF как Blob
   const pdfBlob = await new Promise(resolve => {
     html2pdf()
       .from(element)
@@ -272,6 +273,7 @@ const manualDownload = async () => {
       .then(resolve)
   })
 
+  // 2️⃣ Отправляем на Rails
   const formData = new FormData()
   formData.append('file', pdfBlob, 'contract.pdf')
 
@@ -281,14 +283,10 @@ const manualDownload = async () => {
   })
 
   const data = await response.json()
-  const pdfUrl = data.url // URL уже на том же домене
+  const pdfUrl = `api/${data.url}`
 
-  const a = document.createElement('a')
-  a.href = pdfUrl
-  a.download = 'contract.pdf' // Safari теперь уважает
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
+  // 3️⃣ Открываем PDF в новой вкладке
+  window.open(pdfUrl, '_blank')
 }
 
 // авто-скачивание только НЕ iOS
