@@ -283,7 +283,7 @@ const manualDownload = async () => {
   })
 
   const data = await response.json()
-  const pdfUrl = `api/${data.url}`
+  const pdfUrl = `/api${data.url}`
 
   // 3️⃣ Открываем PDF в новой вкладке
   window.open(pdfUrl, '_blank')
