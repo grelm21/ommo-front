@@ -128,6 +128,16 @@
     </v-pdf>
   </div>
 
+<div class="flex items-center justify-center mt-8">
+  <button
+    class="flex gap-[8px] items-center justify-center hover-scale"
+    type="button"
+    @click="manualDownload"
+  >
+    <span class="flex text-3xl text-white handjet-normal">Скачать контракт</span>
+    <DownloadIcon class="flex items-center justify-end h-[32px] w-[32px]" />
+  </button>
+</div>
 
   <div class="flex gap-[8px] items-center justify-center mt-8">
     <div class="text-3xl text-white handjet-normal">Активировать контракт:</div>
@@ -185,6 +195,8 @@ import PreSaveIcon from '@/components/icons/PreSaveIcon.vue'
 import TelegramIcon from '@/components/icons/TelegramIcon.vue'
 import AgainIcon from '@/components/icons/AgainIcon.vue'
 import { useRouter } from 'vue-router'
+import DownloadIcon from '@/components/icons/DownloadIcon.vue'
+
 const contractStore = useContractStore()
 
 const pdf = ref(true)
@@ -193,6 +205,9 @@ const pdfOptions = {
   html2canvas: { scale: 4 },
   jsPDF: { unit: 'mm', format: 'a4', orientation: 'p' },
 }
+
+// определяем iOS
+const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent)
 
 const props = defineProps({
   id: String,
@@ -205,6 +220,7 @@ const nameOne = ref('')
 const nameTwo = ref('')
 
 const placeholder = ref(true)
+
 const openYouTube = () => {
   window.open('https://youtube.com/@ommo_ommo_ommo?si=WaPUf-Z6CVzSkuv', '_blank')
 }
@@ -217,11 +233,7 @@ const openTelegram = () => {
 
 // Это теперь пресейв
 const openPreSave = () => {
-  window.open(
-    // 'https://music.yandex.ru/users/PortGrad/playlists/1002?ref_id=6C255153-B5A6-468D-BC87-0835CAB0B8F4&utm_medium=copy_link',
-    'https://band.link/MVTNL',
-    '_blank',
-  )
+  window.open('https://band.link/MVTNL', '_blank')
 }
 
 onMounted(async () => {
@@ -240,6 +252,12 @@ const resetContract = () => {
   router.push('/')
 }
 
+// ручное скачивание (кнопка)
+const manualDownload = async () => {
+  pdf.value.download()
+}
+
+// авто-скачивание только НЕ iOS
 watch(
   () => contractStore.contract,
   async (newContract) => {
@@ -251,13 +269,14 @@ watch(
 
       await nextTick()
 
-      setTimeout(() => {
-        pdf.value.download()
-      }, 200)
+      if (!isIOS) {
+        setTimeout(() => pdf.value.download(), 300)
+      }
     }
   },
 )
 </script>
+
 
 <style scoped>
 .contract-bg {
