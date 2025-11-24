@@ -134,7 +134,9 @@
     type="button"
     @click="manualDownload"
   >
-    <span class="flex text-3xl text-white handjet-normal">Скачать контракт</span>
+  <span class="flex text-3xl text-white handjet-normal">
+   Скачать контракт
+  </span>
     <DownloadIcon class="flex items-center justify-end h-[32px] w-[32px]" />
   </button>
 </div>
@@ -254,7 +256,68 @@ const resetContract = () => {
 
 // ручное скачивание (кнопка)
 const manualDownload = async () => {
-  pdf.value.download()
+  alert('🚀 Начало скачивания')
+
+  try {
+    // Метод 1: Через blobPdf с уникальным URL
+    if (typeof pdf.value.blobPdf === 'function') {
+      const pdfBlob = await pdf.value.blobPdf()
+      const timestamp = new Date().getTime()
+      const pdfUrl = URL.createObjectURL(pdfBlob)
+
+      // Создаем iframe для надежности
+      const iframe = document.createElement('iframe')
+      iframe.style.display = 'none'
+      iframe.src = pdfUrl
+      document.body.appendChild(iframe)
+
+      // Создаем ссылку с УНИКАЛЬНЫМ ИМЕНЕМ
+      const link = document.createElement('a')
+      link.href = pdfUrl
+      link.download = `контракт_любви_оммо_${timestamp}.pdf` // ← Уникальное имя
+      link.target = '_blank'
+      link.style.display = 'none'
+
+      document.body.appendChild(link)
+
+      // Пробуем оба метода
+      link.click()
+
+      // Добавляем задержку и пробуем еще раз
+      setTimeout(() => {
+        // Второй клик
+        link.click()
+
+        // Третий подход - открываем в новом окне
+        window.open(pdfUrl, '_blank')
+
+        alert('📄 Если файл не скачался:\n1. Проверьте папку Загрузки\n2. Или сохраните из открывшейся вкладки')
+      }, 1000)
+
+      // Очистка
+      setTimeout(() => {
+        document.body.removeChild(link)
+        document.body.removeChild(iframe)
+        URL.revokeObjectURL(pdfUrl)
+      }, 10000)
+
+    } else {
+      // Метод 2: Прямой download с УНИКАЛЬНЫМ ИМЕНЕМ
+      const timestamp = new Date().getTime()
+      pdf.value.filename = `контракт_любви_оммо_${timestamp}.pdf` // ← Уникальное имя
+      await pdf.value.download()
+      alert('✅ Скачивание завершено!')
+    }
+
+  } catch (error) {
+    alert('❌ Ошибка: ' + error.message)
+
+    // Последняя попытка - просто открываем с УНИКАЛЬНЫМ ИМЕНЕМ
+    const timestamp = new Date().getTime()
+    pdf.value.filename = `контракт_любви_оммо_${timestamp}.pdf` // ← Уникальное имя
+    pdf.value.openInNewTab()
+    alert('📄 PDF открыт в новой вкладке. Сохраните его через меню браузера.')
+  }
 }
 
 // авто-скачивание только НЕ iOS
@@ -270,7 +333,7 @@ watch(
       await nextTick()
 
       if (!isIOS) {
-        setTimeout(() => pdf.value.download(), 300)
+        setTimeout(() => pdf.value.download(), 1000)
       }
     }
   },
