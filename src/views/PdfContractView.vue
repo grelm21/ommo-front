@@ -277,13 +277,13 @@ const manualDownload = async () => {
   const formData = new FormData()
   formData.append('file', pdfBlob, 'contract.pdf')
 
-  const response = await fetch('https://ommo-contract/api/uploads', {
+  const response = await fetch('https://ommo-contract.ru/api/uploads', {
     method: 'POST',
     body: formData,
   })
 
   const data = await response.json()
-  const pdfUrl = `https://ommo-contract/api${data.url}`
+  const pdfUrl = `https://ommo-contract.ru/api${data.url}`
 
   // 3️⃣ Открываем PDF в новой вкладке
   window.open(pdfUrl, '_blank')
