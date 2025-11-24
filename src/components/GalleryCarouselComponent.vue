@@ -3,7 +3,7 @@ import SqIcon from '@/components/icons/SqIcon.vue'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 const isMobile = window.innerWidth <= 480;
-const excludedForMobile = ['4.png', '3T1A8455.png', '3T1A8449.png', '3T1A8448.png', '3T1A8424.png' ]
+const excludedForMobile = ['4.png', '3T1A8455.png', '3T1A8449.png', '3T1A8448.png', '3T1A8424.png', '3T1A8599.png' ]
 const galleryImages = Object.entries(
   import.meta.glob('../assets/gallery/*.{jpg,jpeg,png,webp}', {
     eager: true,
