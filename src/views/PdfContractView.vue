@@ -198,6 +198,8 @@ import TelegramIcon from '@/components/icons/TelegramIcon.vue'
 import AgainIcon from '@/components/icons/AgainIcon.vue'
 import { useRouter } from 'vue-router'
 import DownloadIcon from '@/components/icons/DownloadIcon.vue'
+import html2canvas from 'html2canvas'
+import html2pdf from 'html2pdf.js'
 
 const contractStore = useContractStore()
 
@@ -256,68 +258,37 @@ const resetContract = () => {
 
 // ручное скачивание (кнопка)
 const manualDownload = async () => {
-  alert('🚀 Начало скачивания')
+  const element = pdf.value.$el
 
-  try {
-    // Метод 1: Через blobPdf с уникальным URL
-    if (typeof pdf.value.blobPdf === 'function') {
-      const pdfBlob = await pdf.value.blobPdf()
-      const timestamp = new Date().getTime()
-      const pdfUrl = URL.createObjectURL(pdfBlob)
+  const pdfBlob = await new Promise(resolve => {
+    html2pdf()
+      .from(element)
+      .set({
+        margin: 0,
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        html2canvas: { scale: 2 },
+      })
+      .outputPdf('blob')
+      .then(resolve)
+  })
 
-      // Создаем iframe для надежности
-      const iframe = document.createElement('iframe')
-      iframe.style.display = 'none'
-      iframe.src = pdfUrl
-      document.body.appendChild(iframe)
+  const formData = new FormData()
+  formData.append('file', pdfBlob, 'contract.pdf')
 
-      // Создаем ссылку с УНИКАЛЬНЫМ ИМЕНЕМ
-      const link = document.createElement('a')
-      link.href = pdfUrl
-      link.download = `контракт_любви_оммо_${timestamp}.pdf` // ← Уникальное имя
-      link.target = '_blank'
-      link.style.display = 'none'
+  const response = await fetch('/api/uploads', {
+    method: 'POST',
+    body: formData,
+  })
 
-      document.body.appendChild(link)
+  const data = await response.json()
+  const pdfUrl = data.url // URL уже на том же домене
 
-      // Пробуем оба метода
-      link.click()
-
-      // Добавляем задержку и пробуем еще раз
-      setTimeout(() => {
-        // Второй клик
-        link.click()
-
-        // Третий подход - открываем в новом окне
-        window.open(pdfUrl, '_blank')
-
-        alert('📄 Если файл не скачался:\n1. Проверьте папку Загрузки\n2. Или сохраните из открывшейся вкладки')
-      }, 1000)
-
-      // Очистка
-      setTimeout(() => {
-        document.body.removeChild(link)
-        document.body.removeChild(iframe)
-        URL.revokeObjectURL(pdfUrl)
-      }, 10000)
-
-    } else {
-      // Метод 2: Прямой download с УНИКАЛЬНЫМ ИМЕНЕМ
-      const timestamp = new Date().getTime()
-      pdf.value.filename = `контракт_любви_оммо_${timestamp}.pdf` // ← Уникальное имя
-      await pdf.value.download()
-      alert('✅ Скачивание завершено!')
-    }
-
-  } catch (error) {
-    alert('❌ Ошибка: ' + error.message)
-
-    // Последняя попытка - просто открываем с УНИКАЛЬНЫМ ИМЕНЕМ
-    const timestamp = new Date().getTime()
-    pdf.value.filename = `контракт_любви_оммо_${timestamp}.pdf` // ← Уникальное имя
-    pdf.value.openInNewTab()
-    alert('📄 PDF открыт в новой вкладке. Сохраните его через меню браузера.')
-  }
+  const a = document.createElement('a')
+  a.href = pdfUrl
+  a.download = 'contract.pdf' // Safari теперь уважает
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
 }
 
 // авто-скачивание только НЕ iOS
